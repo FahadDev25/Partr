@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "phone_field" do %>
+  <% if params[:show] == "true" %>
+    <div class="my-5">
+      <%= label_tag "team[phone_number]", "Phone number" %>
+      <%= text_field_tag "team[phone_number]", @team&.phone_number, data: { controller: "phone-number" } %>
+    </div>
+  <% end %>
+<% end %>

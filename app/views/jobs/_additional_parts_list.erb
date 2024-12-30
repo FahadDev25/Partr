@@ -1,0 +1,21 @@
+<div class="scrollableTable breakpoint-976 resizable">
+  <table class= "table-auto">
+    <thead>
+      <tr>
+        <th>Part</th>
+        <th>Cost per Unit</th>
+        <th>Quantity</th>
+        <th>Total Cost</th>
+        <th>Ordered</th>
+        <th>Received</th>
+        <th></th>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr id="new_additional_part_row"></tr>
+      <% additional_part_list.each do |ap| %>
+        <%= render partial: 'additional_parts/additional_part_listing', locals: { additional_part: ap } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

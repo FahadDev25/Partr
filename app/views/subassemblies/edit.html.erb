@@ -1,0 +1,9 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <h1>Editing sub<%= assembly_label %></h1>
+  <% end %>
+
+  <div class="mx-auto md:w-2/3 w-full">
+    <%= render "form", subassembly: @subassembly, submit_label: "Update Sub#{assembly_label}" %>
+  </div>
+<% end %>

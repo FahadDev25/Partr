@@ -1,0 +1,36 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+red_button_primary:
+  company_type: Manufacturer
+  company: acme
+  company_name: ACME
+  part_number: brb101
+  part: big_red_button
+  cost_per_unit: 3.50
+  primary: true
+  organization: artificers
+
+red_button_meco:
+  company_type: Customer
+  company: meco
+  company_name: MECO
+  part_number: 123abc
+  part: big_red_button
+  organization: artificers
+
+red_button_ad:
+  company_type: Vendor
+  company: automation_direct
+  company_name: Automation Direct
+  part_number: P57
+  part: big_red_button
+  organization: artificers
+
+two:
+  company_type: Vendor
+  company: warner_bros
+  company_name: "Warner Brothers"
+  cost_per_unit: 2.50
+  part_number: 456def
+  part: big_red_button
+  organization: artificers

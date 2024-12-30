@@ -1,0 +1,104 @@
+<div class="scrollableTable breakpoint-768">
+  <table id="<%= dom_id @part %>" class= "table-auto mt-4">
+    <thead>
+      <tr>
+        <th><%= current_tenant.abbr_name %> Part Number</th>
+        <th>Manufacturer</th>
+        <th>Mfg Part Number</th>
+        <th>In Stock</th>
+        <th>Cost per <%= @part.unit&.singularize || "unit" %></th>
+        <th>Total Cost</th>
+        <% if current_user.current_team.show_optional_part_field_1 %>
+          <th><%= current_user.current_team.optional_part_field_1_name %></th>
+        <% end %>
+        <% if current_user.current_team.show_optional_part_field_2 %>
+          <th><%= current_user.current_team.optional_part_field_2_name %></th>
+        <% end %>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr>
+        <td>
+          <span class="th" aria-hidden="true"><%= current_tenant.abbr_name %> Part Number</span>
+          <span><%= @part.org_part_number %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Manufacturer</span>
+          <span><%= if @part.manufacturer then @part.manufacturer.name else "" end %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Mfg Part Number</span>
+          <span>
+            <%= link_to_if part.url.present?, (part.mfg_part_number || "-"), part.url, :target => "_blank" %>
+          </span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">In Stock</span>
+          <span><%= render partial: "part_in_stock", locals: { part: @part }%></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Cost per <%= @part.unit&.singularize || "unit" %></span>
+          <span class="staleness-<%= part.staleness %>"><%= number_to_cost(@part.cost_per_unit) %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Total Cost</span>
+          <span><%= number_to_cost((@part.cost_per_unit || 0) * (@part.in_stock || 0)) %></span>
+        </td>
+        <% if current_user.current_team.show_optional_part_field_1 %>
+          <td>
+            <span class="th" aria-hidden="true"><%= current_user.current_team.optional_part_field_1_name %></span>
+            <span><%= @part.optional_field_1 %></span>
+          </td>
+        <% end %>
+        <% if current_user.current_team.show_optional_part_field_2 %>
+          <td>
+            <span class="th" aria-hidden="true"><%= current_user.current_team.optional_part_field_2_name %></span>
+            <span><%= @part.optional_field_2 %></span>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+    <script>
+      $('td').each(function() {
+          var $th = $(this).parents('table').find('th').eq($(this).index()).text();
+          if ($th == "") {
+              $(this).toggleClass("no-th", true);
+          }
+          else {
+              $(this).attr('data-before', $th);
+          }
+      });
+    </script>
+  </table>
+
+  <table id="<%= dom_id @part %>" class= "table-auto mt-4">
+    <thead>
+      <tr>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span><%= @part.description %></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table id="<%= dom_id @part %>" class= "table-auto mt-4">
+    <thead>
+      <tr>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span><%= @part.notes %></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Last Price Update: <%= @part.last_price_update %></p>
+</div>

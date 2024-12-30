@@ -1,0 +1,26 @@
+<% unit_list.each do |u| %>
+    <strong class="block font-medium mb-1"><%= u.assembly.name %>:</strong>
+    <table class="table-auto"> 
+        <thead>
+            <tr>
+                <th>Part</th>
+                <th>Vendor</th>
+                <th>Cost per Unit</th>
+                <th>Quantity</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% u.assembly.components.each do |c| %>
+                <tr>
+                    <td><%= link_to c.part.label, part_path(c.part) %></td>
+                    <td><%= c.part.manufacturer && c.part.manufacturer.vendor ? (link_to c.part.manufacturer.vendor.name, vendor_path(c.part.manufacturer.vendor)) : "-" %>
+                    <td><%= number_to_cost(c.part.cost_per_unit) %></td>
+                    <td><%= number_with_precision(c.quantity * u.quantity, strip_insignificant_zeros: true) %></td>
+                    <td><%= number_to_cost(c.part.cost_per_unit * c.quantity * u.quantity) %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <br>
+<% end %>

@@ -1,0 +1,58 @@
+# frozen_string_literal: true
+
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+#
+# Examples:
+#
+#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
+#   Character.create(name: "Luke", movie: movies.first)
+
+Vendor.find_or_create_by({ name: "American Electric" })
+Manufacturer.find_or_create_by({ name: "Bussman", vendor_id: Vendor.find_by({ name: "American Electric" }).id })
+Manufacturer.find_or_create_by({ name: "Hoffman", vendor_id: Vendor.find_by({ name: "American Electric" }).id })
+Manufacturer.find_or_create_by({ name: "Eaton" })
+Manufacturer.find_or_create_by({ name: "BELIMO" })
+Manufacturer.find_or_create_by({ name: "DWYER" })
+Manufacturer.find_or_create_by({ name: "ENTRELEC" })
+Manufacturer.find_or_create_by({ name: "Weidmuller" })
+Manufacturer.find_or_create_by({ name: "AB" })
+Manufacturer.find_or_create_by({ name: "Allen-Bradley" })
+Manufacturer.find_or_create_by({ name: "ABB" })
+Manufacturer.find_or_create_by({ name: "Hammond" })
+Manufacturer.find_or_create_by({ name: "PATLITE" })
+Manufacturer.find_or_create_by({ name: "MURR ELEKTRONIK" })
+Manufacturer.find_or_create_by({ name: "AUTOMATIONDIRECT" })
+Manufacturer.find_or_create_by({ name: "Panduit" })
+Manufacturer.find_or_create_by({ name: "Cutler-Hammer" })
+Manufacturer.find_or_create_by({ name: "Thomas & Betts" })
+Manufacturer.find_or_create_by({ name: "Phoenix Contact" })
+Manufacturer.find_or_create_by({ name: "Graceport" })
+Manufacturer.find_or_create_by({ name: "Festo" })
+Manufacturer.find_or_create_by({ name: "A2Z Cables" })
+Manufacturer.find_or_create_by({ name: "ASCO Numatics" })
+Manufacturer.find_or_create_by({ name: "CORTEC Corp" })
+Manufacturer.find_or_create_by({ name: "WATLOW" })
+Manufacturer.find_or_create_by({ name: "IONPURE" })
+Manufacturer.find_or_create_by({ name: "SANDISK" })
+Manufacturer.find_or_create_by({ name: "Brady" })
+Manufacturer.find_or_create_by({ name: "Rockwell" })
+Manufacturer.find_or_create_by({ name: "Belden" })
+Manufacturer.find_or_create_by({ name: "Ed Smith" })
+Manufacturer.find_or_create_by({ name: "Grainger" })
+Manufacturer.find_or_create_by({ name: "Mettler Toledo" })
+Manufacturer.find_or_create_by({ name: "ENM" })
+Manufacturer.find_or_create_by({ name: "P-TECH" })
+Manufacturer.find_or_create_by({ name: "Ashcroft" })
+Manufacturer.find_or_create_by({ name: "Fisher" })
+Manufacturer.find_or_create_by({ name: "Emerson" })
+Manufacturer.find_or_create_by({ name: "McMaster-Carr" })
+Manufacturer.find_or_create_by({ name: "Apollo" })
+Manufacturer.find_or_create_by({ name: "Parker Paraflex" })
+Manufacturer.find_or_create_by({ name: "PISCO" })
+Manufacturer.find_or_create_by({ name: "Square D" })
+Manufacturer.find_or_create_by({ name: "Schneider Electric" })
+Customer.find_or_create_by({ name: "MECO" })
+if User.where(is_admin: true).count.zero?
+  User.create!({ username: "admin", password: "password", password_confirmation: "password", first_name: "admin", last_name: "admin", email: "admin@bio-next.net", is_admin: true })
+end

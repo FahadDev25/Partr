@@ -1,0 +1,58 @@
+name: "Ruby on Rails CD"
+on:
+  push:
+    branches: [ "staging" ]
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+      REDIS_URL: ${{ secrets.REDIS_URL }}
+      GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+      GHCR_PASSWORD: ${{ secrets.GHCR_TOKEN }}
+      SSH_USER: deploy
+      TRAEFIK_USER: ${{ secrets.TRAEFIK_USER }}
+      SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Github Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_TOKEN }}
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2
+          bundler-cache: true
+
+      - run: gem install kamal
+
+      - name: Set SSH private key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+
+      - run: kamal lock release -d staging
+      - run: kamal env push -d staging
+
+      - name: Build image for deployment
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 10
+          max_attempts: 5
+          command: kamal build push -d staging
+
+      - run: kamal deploy --skip-push -d staging
+      - run: kamal app exec "rails db:migrate" -d staging
+      - run: kamal app exec "rails s3_to_local" -d staging

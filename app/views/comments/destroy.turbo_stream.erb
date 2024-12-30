@@ -1,0 +1,4 @@
+<%= @comment.broadcast_remove_to(
+      "#{dom_id(@comment.commentable)}_comments",
+      target: dom_id(@comment)
+    ) %>

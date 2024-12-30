@@ -1,0 +1,66 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <h1 class="font-bold text-4xl"><%= @additional_part.part.label %> Parts Received</h1>
+  <% end %>
+  <div class="w-full">
+    <div class="flex space-x-5">
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Job:</strong>
+        <%= link_to @additional_part.job.name, job_path(@additional_part.job), data: { turbo_frame: :_top } %>
+      </p>
+      
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Part:</strong>
+        <%= link_to @additional_part.part.label, part_path(@additional_part.part) %>
+      </p>
+
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Quantity:</strong>
+        <%= @additional_part.parts_received_required.gsub(" \u2714","") %>
+      </p>
+    </div>
+
+    <div class="flex space-x-5">
+      <div>
+        <p>From Shipments: </p>
+        <table class= "table-auto">
+          <thead>
+            <tr>
+              <th>Shipment</th>
+              <th>Quantity</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @additional_part.parts_received.where(part_id: @additional_part.part.id).where.not(shipment_id: nil).each do |pr| %>
+              <tr>
+                <td><%= link_to pr.shipment.label, shipment_path(pr.shipment) %></td>
+                <td><%= number_with_precision(pr.quantity, strip_insignificant_zeros: true) %></td>
+                <td><%= link_to "Edit", edit_part_received_path(pr), class: "button edit-button", data: { turbo_frame: :_top } %></td>
+              </tr> 
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <p>From Inventory:</p>
+        <table class= "table-auto">
+          <thead>
+            <tr>
+              <th>Quantity</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @additional_part.parts_received.where(part_id: @additional_part.part.id, shipment_id: nil).each do |pr| %>
+              <tr>
+                <td><%= number_with_precision(pr.quantity, strip_insignificant_zeros: true) %></td>
+                <td><%= link_to "Edit", edit_part_received_path(pr), class: "button edit-button", data: { turbo_frame: :_top } %></td>
+              </tr> 
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

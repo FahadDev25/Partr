@@ -1,0 +1,63 @@
+<hr>
+<h1>Pinned Jobs</h1>
+<div class="defaultTable breakpoint-768">
+  <table class="table-auto" data-controller='table-order' data-turbo-type='job_table'>
+    <thead>
+      <tr>
+        <th>Job Number</th>
+        <th>Name</th>
+        <th>Project Manager</th>
+        <th>Status</th>
+        <th>Start Date</th>
+        <th>Deadline</th>
+        <th>Total Cost (PO Total)</th>
+        <th>Customer</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @team.jobs.where(id: current_user.pinned_jobs.pluck(:job_id)).each do |job| %>
+        <tr id="<%= dom_id job %>_row" class="<%= cycle('bg-snow','bg-electric-blue') %>">
+          <td>
+            <span class="th" aria-hidden="true">Job Number</span>
+            <span><%= job.job_number %></span>
+          </td>
+          <td>
+            <span class="th" aria-hidden="true">Name</span>
+            <span><%= link_to job.name, job, data: { turbo_frame: :_top } %></span>
+          </td>
+          <td>
+            <span class="th" aria-hidden="true">Project Manager</span>
+            <span><%= job.project_manager&.username %></span>
+          </td>
+          <td>
+            <span class="th" aria-hidden="true">Status</span>
+            <span><%= job.status %></span>
+          </td>
+          <td>
+            <span class="th" aria-hidden="true">Start Date</span>
+            <span><%= job.start_date %></span>
+          </td>
+          <td>
+            <span class="th" aria-hidden="true">Deadline</span>
+            <span><%= job.deadline %></span>
+          </td>
+          <td>
+            <span class="th" aria-hidden="true">Total Cost (PO total)</span>
+            <span><%= number_to_cost(job.total_cost) %> (<%= number_to_currency(job.orders.sum(&:total_cost)) %>)</span>
+          </td>
+          <td>
+            <span class="th">Customer</span>
+            <span><%= link_to job.customer.name, job.customer, data: { turbo_frame: :_top } %></span>
+          </td>
+          <td class="no-th">
+            <div class="flex space-x-2">
+              <%= link_to "Create Order", new_order_path(job_id: job.id, team_id: current_user.current_team), class: "button create-order primary normal-top-margin no-break", data: { turbo_frame: "modal" } %>
+              <%= link_to "Edit", edit_job_path(job), class: "button edit-button primary normal-top-margin", data: { turbo_frame: "modal" } %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

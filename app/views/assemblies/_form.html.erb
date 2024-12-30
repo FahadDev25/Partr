@@ -1,0 +1,52 @@
+<%= form_with(model: assembly, class: "contents") do |form| %>
+  <div class="form">
+    <%= render partial: "pages/modal_form_errors", locals: { object: assembly, name: "assembly" }%>
+
+    <div class="form-field">
+      <%= form.label :name, class: "required" %>
+      <%= form.text_field :name %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :notes %>
+      <%= form.text_area :notes %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :customer_id %>
+      <%= form.select :customer_id, customer_select_list(assembly, "none") %>
+    </div>
+
+    <% if action_name != "edit" %>
+      <div class="flex">
+        <div class="form-field">
+          <%= form.label :import_csv %>
+          <%= form.file_field :import_csv, accept: 'text/csv' %>
+        </div>  
+
+        <div class="form-field">
+          <%= form.label :csv_format %>
+          <%= form.select :csv_format, options_for_select(["none", "AUTOCAD","MECO"]) %>
+        </div> 
+      </div>
+    <% end %>
+
+    <% if assembly.team == current_user.current_team || assembly.team.nil? %>
+      <div class="form-field">
+        <%= form.label :share_with %>
+        <%= form.select :share_with, options_from_collection_for_select(
+          current_user.shareable_to_teams, "id", "name", assembly&.shared_teams&.pluck(:id)), {}, multiple: true,
+          class: "dropup",
+          data: { 
+            controller: "tom-select",
+            plugins: "dropdown_input,remove_button",
+            placeholder: "select..."
+          } %>
+      </div>
+    <% end %>
+
+    <div class="inline">
+      <%= form.submit submit_label, class: "button primary" %>
+    </div>
+  </div>
+<% end %>

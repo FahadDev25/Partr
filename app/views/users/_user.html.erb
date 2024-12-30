@@ -1,0 +1,51 @@
+<div class="scrollableTable breakpoint-768">
+  <table id="<%= dom_id user %>" class= "table-auto mt-4">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Admin</th>
+        <% if action_name != "show" %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr>
+        <td>
+          <span class="th" aria-hidden="true">Username</span>
+          <span>
+          <% if action_name != "show" %>
+            <%= link_to user.username, user %>
+          <% else %>
+            <%= user.username %>
+          <% end %>
+          </span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">First Name</span>
+          <span><%= user.first_name %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Last Name</span>
+          <span><%= user.last_name %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Email</span>
+          <span><%= user.email %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Admin</span>
+          <span><%= user.is_admin ? " \u2714" : "" %></span>
+        </td>
+        <% if action_name != "show" %>
+          <td class="no-th">
+            <%= link_to "Edit This User", edit_user_path(user), class: "button edit-button primary" %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>   
+</div>              

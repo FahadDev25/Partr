@@ -1,0 +1,88 @@
+<div class="scrollableTable breakpoint-976 resizable">
+  <table class="table-auto">  
+    <thead>
+      <tr>
+        <th>PO Number</th>
+        <th>Part/Description</th>
+        <th>Vendor</th>
+        <th>Cost per Unit</th>
+        <th>Quantity</th>
+        <th>Received</th>
+        <th>Total Cost</th>
+        <th>Expected Delivery</th>
+        <th>Status / Location</th>
+        <th>O&M Warranty</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% job.orders.where(include_in_bom: true).each do |order| %>
+        <% order.line_items.each do |li| %>
+          <tr>
+            <td>
+              <span class="th" aria-hidden="true">PO Number</span>
+              <%= link_to order.po_number, order %>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Part/Description</span>
+              <% if li.manual %>
+                <span><%= li.description %></span>
+              <% else %>
+                <span><%= link_to li.part.label, li.part, data: { turbo_frame: "modal" } %><%= " (" if li.assembly %><%= link_to li.assembly.name, li.assembly if li.assembly %><%= ")" if li.assembly %></span>
+              <% end %>
+            </td>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Vendor</span>
+              <span><%= link_to_if order.vendor.present?, order.vendor&.name, order.vendor %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Cost per Unit</span>
+              <span class="no-break"><%= number_to_cost(li.cost_per_unit) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Quantity</span>
+              <span><%= number_with_precision(li.quantity, strip_insignificant_zeros: true) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Received</span>
+              <span>
+                <%= link_to li.parts_received_ordered, parts_received_list_line_item_path(li), data: { turbo_frame: "modal" } %>
+              </span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Total Cost</span>
+              <span class="no-break">
+                <%= li.discount ? number_to_cost(li.cost_per_unit * li.quantity * (1 - li.discount)) : number_to_cost(li.cost_per_unit * li.quantity) %>
+              </span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Expected Delivery</span>
+              <span class="no-break">
+                <%= li.expected_delivery %>
+              </span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Status / Location</span>
+              <span class="no-break">
+                <%= li.status_location %>
+              </span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">O&M Warranty</span>
+              <span class="no-break">
+                <%= li.om_warranty %>
+              </span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Notes</span>
+              <span class="no-break">
+                <%= li.notes %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

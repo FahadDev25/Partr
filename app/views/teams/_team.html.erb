@@ -1,0 +1,121 @@
+<div class="scrollableTable breakpoint-976">
+  <table id="<%= dom_id team %>" class= "table-auto mt-4">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Phone number</th>
+        <th>Default Unit</th>
+        <th>Assembly Label</th>
+        <th>Optional Part Field 1</th>
+        <th>Optional Part Field 2</th>
+        <th>Default Tax Rate</th>
+        <th>Part price warn after</th>
+        <th>Part price stale after</th>
+        <th>Order missing parts email after</th>
+        <% if action_name != "show" %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr>
+        <td>
+          <span class="th" aria-hidden="true">Name</span>
+          <span>
+          <% if action_name != "show" %>
+            <%= link_to team.name, team %>
+          <% else %>
+            <%= team.name %>
+          <% end %>
+          </span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Role</span>
+          <span><%= team.role.name %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Phone Number</span>
+          <span><%= number_to_phone(team.phone_number, area_code: true) %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Default Unit</span>
+          <span><%= team.default_unit %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Assembly Label</span>
+          <span><%= team.assembly_label %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Optional Part Field 1</span>
+          <span><%= team.optional_part_field_1_name %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Optional Part Field 2</span>
+          <span><%= team.optional_part_field_2_name %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Default Tax Rate</span>
+          <span><%= team.default_tax_rate ? number_to_percent(team.default_tax_rate * 100.0) : "" %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Part price warn after</span>
+          <span><%= "#{team.warn} days" || "never" %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Part price stale after</span>
+          <span><%= "#{team.stale} days" || "never" %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Order missing parts email after</span>
+          <span><%= team.order_received_email_timer || "never" %></span>
+        </td>
+        <% if action_name != "show" %>
+          <td class="no-th">
+            <%= link_to "Edit", edit_team_path(team), class: "button primary edit-button" %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Address:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= team.team_address&.address_1 &.+ (team.team_address&.address_2.present? ? (", " + team.team_address&.address_2) : "") %></td>
+        <td><%= team.team_address&.city %></td>
+        <td><%= team.team_address&.state %></td>
+        <td><%= team.team_address&.zip_code %></td>
+      </tr>
+    </tbody>
+  </table> 
+
+  <h3>Billing Address:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= team.billing_address&.address_1 &.+ (team.billing_address&.address_2.present? ? (", " + team.billing_address&.address_2) : "") %></td>
+        <td><%= team.billing_address&.city %></td>
+        <td><%= team.billing_address&.state %></td>
+        <td><%= team.billing_address&.zip_code %></td>
+      </tr>
+    </tbody>
+  </table> 
+</div>                      

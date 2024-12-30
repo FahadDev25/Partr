@@ -1,0 +1,29 @@
+<%= turbo_frame_tag "#{params[:address_name]}_fields" do %>
+  <% if params[:show] == "true" %>
+    <% default_address = Address.find_by(id: params[:default_address])%>
+    <div class="my-5">
+      <%= label_tag "team[#{params[:address_name]}_attributes][address_1]", "Address 1" %>
+      <%= text_field_tag "team[#{params[:address_name]}_attributes][address_1]", default_address&.address_1 %>
+    </div>
+    
+    <div class="my-5">
+      <%= label_tag "team[#{params[:address_name]}_attributes][address_2]", "Address 2" %>
+      <%= text_field_tag "team[#{params[:address_name]}_attributes][address_2]", default_address&.address_2 %>
+    </div>
+
+    <div class="my-5">
+      <%= label_tag "team[#{params[:address_name]}_attributes][city]", "City" %>
+      <%= text_field_tag "team[#{params[:address_name]}_attributes][city]", default_address&.city %>
+    </div>
+
+    <div class="my-5">
+      <%= label_tag "team[#{params[:address_name]}_attributes][state]", "State" %>
+      <%= select_tag "team[#{params[:address_name]}_attributes][state]", options_for_select(us_states, default_address&.state)  %>
+    </div>
+
+    <div class="my-5">
+      <%= label_tag "team[#{params[:address_name]}_attributes][zip_code]",  "Zip code" %>
+      <%= text_field_tag "team[#{params[:address_name]}_attributes][zip_code]", default_address&.zip_code %>
+    </div>
+  <% end %>
+<% end %>

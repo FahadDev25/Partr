@@ -1,0 +1,14 @@
+<%= turbo_frame_tag "company" do %>
+  <% if company_type == "Other" %>
+    <div class="my-5">
+      <%= label_tag "other_part_number[company_name]", "Company name" %>
+      <%= text_field_tag "other_part_number[company_name]", "", class: "form-field" %>
+      <%= select_tag "other_part_number[company]", {}, class: "hidden" %>
+    </div>
+  <% else %>
+    <div class="form-field">
+      <%= label_tag "other_part_number[company_id]", "Company" %>
+      <%= select_tag "other_part_number[company_id]", options_for_select(select_list, preset) %>
+    </div>
+  <% end %>
+<% end %>

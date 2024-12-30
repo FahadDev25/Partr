@@ -1,0 +1,35 @@
+<%= turbo_frame_tag "manufacturer_table" do %>
+  <div class="defaultTable breakpoint-768">
+    <table class="table-auto" data-controller='table-order' data-turbo-type='manufacturer_table'>
+      <thead>
+        <% column_array = [['name', "Name"], ['vendor', 'Vendor']] %>
+        <tr>
+          <%= render partial: "pages/order_by_table_headers", locals: { column_array: }%>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @manufacturers.each do |manufacturer| %>
+          <tr id="<%= dom_id manufacturer %>_row" class="<%= cycle('bg-snow','bg-electric-blue') %>">
+            <td>
+              <span class="th" aria-hidden="true">Name</span>
+              <span>
+                <%= link_to manufacturer.name, manufacturer, data: { turbo_frame: :_top } %>
+              </span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Vendor</span>
+              <span>
+                <%= if manufacturer.vendor then manufacturer.vendor.name else "Vendor Missing" end %>
+              </span>
+            </td>
+            <td class="no-th">
+              <%= link_to "Edit", edit_manufacturer_path(manufacturer), class: "button edit-button primary normal-top-margin", data: { turbo_frame: "modal" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= render partial: 'pagy/nav', locals: {pagy: @pagy} if @pagy.pages > 1 %>
+<% end %>

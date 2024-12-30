@@ -1,0 +1,63 @@
+<% if shareable.shared_teams.any? %>
+  <% if shareable.team_id == current_user.team_id %>
+    <div id="shared_teams" class='dd-shipment-shareable-section'>
+      <hr class='hidden'>
+      <strong>Shared With:</strong>
+      <div class="dd-grid-handle gap-3">
+
+        <div class="relative">
+          <%= select_tag :options, options_for_select([['None', 'none'], ['Option 1', 'option1'], ['Option 2', 'option2']]), class: "custom-select w-full px-4 py-2 rounded focus:outline-none focus:border-none " %>
+        </div>
+
+
+        <% shareable.shared_teams.each do |team| %>
+          <div class='flex items-center justify-between gap-4 bg-dd-gray-low py-2 px-2.5 rounded-lg'>
+            <%= team.name %>
+            <%= image_tag "icon-cross-red.svg", alt: "cross-icon", class:"cursor-pointer" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <div id="shared_team" class='dd-shipment-shareable-section'>
+      <hr class='hidden'>
+      <strong>Shared From:</strong>
+      <div class="dd-grid-handle gap-3 ">
+
+        <div class="relative">
+          <%= select_tag :options, options_for_select([['None', 'none'], ['Option 1', 'option1'], ['Option 2', 'option2']]), class: "custom-select w-full px-4 py-2 rounded focus:outline-none focus:border-none " %>
+        </div>
+
+        <div class='flex items-center justify-between gap-4 bg-dd-gray-low py-2 px-2.5 rounded-lg'>
+            <%= shareable.team.name %>
+            <%= image_tag "icon-cross-red.svg", alt: "cross-icon", class:"cursor-pointer" %>
+        </div>
+
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<style>
+.dd-grid-handle {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.dd-grid-handle .relative {
+  grid-column: span 2;
+  width: '100%';
+}
+
+@media (max-width: 1024px) {
+  .dd-grid-handle > .flex {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .dd-grid-handle {
+      grid-template-columns: repeat(1, 1fr);
+  }
+}
+</style>

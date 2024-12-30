@@ -1,0 +1,6 @@
+<%= turbo_frame_tag 'order_select' do %>
+  <div id="order_ids", class="">
+    <%= label_tag object + '[order_id]', 'Order', class: 'label_class' %>
+    <%= select_tag object + '[order_id]', options_for_select(order_list,params[:preset]) %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+<%= turbo_stream.replace "unit_#{@unit.id}", partial: 'units/unit_listing', locals: { unit: @unit, show: false } %>
+<%= turbo_stream.replace "unit_#{@unit.id}_part_list", partial: 'units/part_list', locals: { unit: @unit, hidden: false } %>

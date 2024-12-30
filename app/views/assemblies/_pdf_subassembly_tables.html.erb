@@ -1,0 +1,20 @@
+<% if assembly.subassemblies.length > 0 %>
+  <div style="width: 100%; box-sizing: border-box;">
+    <p style="background: lightgray; color: #000000; padding: 2px 10px; border: 1px solid gray;">
+      <b><%= assembly.name %> Sub<%= assembly.team.assembly_label ? pluralize(2, assembly.team.assembly_label.downcase)[2..] : "assemblies" %>: </b>
+    </p>
+  </div>
+
+  <% assembly.subassemblies.each do |sa| %>
+    <div style="width: 160px; box-sizing: border-box;">
+      <p style="background: lightgray; color: #000000; padding: 2px 10px; border: 1px solid gray;"><b>Sub<%= assembly.team&.assembly_label || "assembly" %>:</b></p>
+      <p><%= sa.child_assembly.name %></p>
+    </div>
+
+    <%= render partial: "assemblies/pdf_assembly_tables", locals: { assembly: sa.child_assembly, job:, customer:, include_cost: } %>
+  <% end %>
+  
+  <% assembly.subassemblies.each do |sa| %>
+    <%= render partial: "assemblies/pdf_subassembly_tables", locals: { assembly: sa.child_assembly, job:, customer:, include_cost: } %>
+  <% end %>
+<% end %>

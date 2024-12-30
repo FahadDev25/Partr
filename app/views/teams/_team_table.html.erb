@@ -1,0 +1,56 @@
+<%= turbo_frame_tag "team_table" do %>
+  <div class="defaultTable">
+    <table class="table-auto" data-controller="table-order" data-turbo-type="team_table">
+      <thead>
+        <tr>
+          <% column_array = [["name", "Name"], ["address_1", "Address"], ["city", "City"], ["state", "State"], ["zip_code", "Zip Code"],
+                            ["phone_number", "Phone Number"], ["default_unit", "Default Unit"], ["assembly_label", "Assembly Label"]] %>
+          <%= render partial: "pages/order_by_table_headers", locals: { column_array: } %>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @teams.each do |team| %>
+          <tr id="<%= dom_id team %>_row" class="<%= cycle("bg-snow","bg-electric-blue") %>">
+            <td>
+              <span class="th" aria-hidden="true">Name</span>
+              <span><%= link_to team.name, team, data: { turbo_frame: :_top } %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Address</span>
+              <span><%= (team.team_address&.address_1 || "") + (team.team_address&.address_2 ? ", #{team.team_address&.address_2}" : "") %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">City</span>
+              <span><%= team.team_address&.city %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">State</span>
+              <span><%= team.team_address&.state %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Zip Code</span>
+              <span><%= team.team_address&.zip_code %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Phone Number</span>
+              <span><%= number_to_phone(team.phone_number, area_code: true) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Default Unit</span>
+              <span><%= team.default_unit %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Assembly Label</span>
+              <span><%= team.assembly_label %></span>
+            </td>
+            <td class="no-th">
+              <%= link_to "Edit", edit_team_path(team), class: "button edit-button primary normal-top-margin", data: { turbo_frame: "modal" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= render partial: "pagy/nav", locals: {pagy: @pagy} if @pagy.pages > 1 %>
+  <% end %>
+</div>

@@ -1,0 +1,3 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <%= render inline: Redcarpet::Markdown.new(Redcarpet::Render::HTML).render(File.read("changelog.md")) %>
+<% end %>

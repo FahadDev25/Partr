@@ -1,0 +1,29 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+    
+    <%= link_to "Back to team roles", team_roles_path, class: "button back-button" %>
+
+    <div class="scrollableTable breakpoint-976">
+      <table id="<%= dom_id @team_role %>" class= "table-auto mt-4">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Create and destroy Jobs</th>
+            <th>Access all Jobs</th>
+            <th>Access all Orders</th>
+            <th>Access all Shipments</th>
+          </tr>
+        </thead>  
+        <tbody>
+          <%= render @team_role %>
+        </tbody>
+      </table>
+    </div>
+
+    <%= link_to "Edit this team role", edit_team_role_path(@team_role), class: "button edit-button" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy this team role", @team_role, method: :delete, class: "button delete" %>
+    </div>
+  </div>
+</div>

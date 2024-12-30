@@ -1,0 +1,29 @@
+<%= form_with(model: [team, team_member], class: "contents") do |form| %>
+  <% if team_member.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(team_member.errors.count, "error") %> prohibited this team_member from being saved:</h2>
+
+      <ul>
+        <% team_member.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :team_id %>
+    <%= form.select :team_id, options_for_select({ (@team&.name || team_member.team&.name) => (@team&.id || team_member.team_id) }),
+      class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :user_id %>
+    <%= form.select :user_id, user_select_list(team_member, "none"),
+      class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "button primary" %>
+  </div>
+<% end %>

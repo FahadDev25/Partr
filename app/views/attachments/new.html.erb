@@ -1,0 +1,8 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <h1 class="font-bold text-4xl">Add attachment</h1>
+  <% end %>
+  <div class="mx-auto md:w-2/3 w-full">
+    <%= render "form", attachment: @attachment, attachable_id: params[:attachable_id], attachable_type: params[:attachable_type], submit_label: "Attach" %>
+  </div>
+<% end %>

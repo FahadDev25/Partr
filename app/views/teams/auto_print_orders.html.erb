@@ -1,0 +1,40 @@
+<%= turbo_frame_tag "attachment" do %>
+    <% if attachment.present? %>
+      <table style="max-width: calc(100% - 6px);">
+        <tbody>
+            <tr>
+              <th rowspan="2" style="width: 150px;"><%= image_tag("partr_white.svg", alt: 'logo', id: "logo") %></th>
+              <td style="text-align: left; padding-left: 20px;border-top: 3px solid var(--jet);">
+                <strong>Job:</strong> <%= attachment.attachable.job&.job_number || "none" %>
+              </td>
+              <td style="text-align: left; padding-left: 20px;border-top: 3px solid var(--jet);">
+                <strong>PO #:</strong> <%= attachment.attachable.po_number %>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: left; padding-left: 20px; border-top: 3px solid var(--jet); border-left: none;">
+                <strong>Issuer:</strong> <%= attachment.attachable.user.first_name %> <%= attachment.attachable.user.last_name %>
+              </td>
+              <td style="text-align: left; padding-left: 20px;border-top: 3px solid var(--jet);">
+                <strong>Date:</strong> <%= attachment.attachable.order_date %>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+      <div data-controller="auto-print" data-url=<%= auto_print_orders_team_path(team, attachment_id: attachment.id) %> data-turbo-type="attachment">
+        <% if attachment.file.content_type == "application/pdf" %>
+          <h1>No automatic print method for <%= attachment.file.content_type %>.</h1>
+          <%# <iframe id="pdf" src=<%= rails_blob_path(attachment.file) width="100%" height="100%" style="border: none; position: absolute;"></iframe> %>
+        <% elsif attachment.file.representable? %>
+          <%= image_tag attachment.file.representation(resize_to_limit: [840, 840]), id: "image", class: "centered-img" %>
+        <% else %>
+          <h1>No automatic print method for <%= attachment.file.content_type %>.</h1>
+        <% end %>
+      </div>
+    <% else %>
+      <div style="border: 1px solid #cdcdcd; display: inline-block; padding: 10px 20px;">
+        <h2 style="color: #000000;">No attachments to print</h2>
+      </div>
+      <%= turbo_stream_from "team_#{params[:id]}_order_attachments" %>
+    <% end %>
+<% end %>

@@ -1,0 +1,6 @@
+<div id="404" class="dog-bg">
+    <h1>Whoops...Not Found!</h1>
+    <p>Sorry, it looks like the page you're looking for doesn't exist.</p>
+    <%= link_to "Back", "javascript:history.back()", class: "button back-button" %>
+    <%= link_to "Home", current_user ? "/teams/#{current_user.current_team.id}/home" : "/", class: "button primary" %>
+</div>

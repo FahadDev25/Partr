@@ -1,0 +1,27 @@
+<div id="<%= dom_id part_received %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Shipment:</strong>
+    <%= part_received&.shipment&.label || "-" %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Component:</strong>
+    <%= part_received&.assembly&.name || "-" %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Component:</strong>
+    <%= part_received.part.label %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Quantity:</strong>
+    <%= number_with_precision(part_received.quantity, strip_insignificant_zeros: true) %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show This Part Received", part_received, class: "button show-button" %>
+    <%= link_to "Edit This Part Received", edit_part_received_path(part_received), class: "button edit-button primary" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

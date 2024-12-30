@@ -1,0 +1,12 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <div>
+      <h1>New <%= capital_assembly %></h1>
+    </div>
+  <% end %>
+  <div class="mx-auto md:w-2/3 w-full">
+
+    <%= render "form", assembly: @assembly, submit_label: "Create #{capital_assembly}" %>
+
+  </div>
+<% end %>

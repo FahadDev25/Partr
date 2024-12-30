@@ -1,0 +1,57 @@
+<div id="dd-simple-modal" class="dd-hidden dd-simple-modal-styles fixed z-10 w-full bg-red-500">
+  <div class="dd-modal-content">
+    <div class="flex justify-between items-center border-b-[1px] border-[#0000000D] px-4 py-3">
+      <h2 class="text-2xl font-bold">New Part Received</h2>
+      <%= image_tag("icons-cross-sea-green.svg", alt: 'Close', id: "dd-close-modal", class: "dd-close cursor-pointer") %>
+    </div>
+    <div class="pt-3">
+      <form>
+        <div class="dd-form-field filter-modal-field px-4 pb-2">
+          <label class="m-0">Shipment:</label>
+          <%= select_tag :options, options_for_select([['mm/dd/yyyy', 'mm/dd/yyyy'], ['Option 1', 'option1'], ['Option 2', 'option2']]), class: "custom-select w-full px-4 py-2 rounded focus:outline-none focus:border-none" %>
+        </div>
+        <div class="dd-form-field filter-modal-field px-4 pb-2">
+          <label class="m-0">Part:</label>
+          <%= select_tag :options, options_for_select([['None', 'None'], ['Option 1', 'option1'], ['Option 2', 'option2']]), class: "custom-select w-full px-4 py-2 rounded focus:outline-none focus:border-none" %>
+        </div>
+        <div class="dd-form-field filter-modal-field px-4 pb-2">
+          <label class="m-0">Panel:</label>
+          <%= select_tag :options, options_for_select([['None', 'None'], ['Option 1', 'option1'], ['Option 2', 'option2']]), class: "custom-select w-full px-4 py-2 rounded focus:outline-none focus:border-none" %>
+        </div>
+        <div class="dd-form-field filter-modal-field px-4 pb-2">
+          <label class="m-0">Quantity:</label>
+          <%= select_tag :options, options_for_select([['1', '1'], ['2', '2'], ['3', '3'], ['4', '4'], ['5', '5'], ['6', '6']]), class: "custom-select w-full px-4 py-2 rounded focus:outline-none focus:border-none" %>
+        </div>
+        <div class="dd-shipment-submit w-full mt-5 px-4 py-3 bg-white border-t border-dd-gray-white">
+          <button class="bg-persian-green mt-0 w-full rounded-md text-base">Create Part Received</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function ddModal() {
+    const openModalButton = document.getElementById('dd-open-modal');
+    const closeModalButton = document.getElementById('dd-close-modal');
+    const modal = document.getElementById('dd-simple-modal');
+
+    openModalButton.addEventListener('click', () => {
+        modal.classList.remove('dd-hidden');
+        modal.classList.add('dd-show');
+    });
+
+    closeModalButton.addEventListener('click', () => {
+        modal.classList.remove('dd-show');
+        modal.classList.add('dd-hidden');
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.classList.remove('dd-show');
+            modal.classList.add('dd-hidden');
+        }
+    });
+}
+ddModal();
+</script>

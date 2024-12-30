@@ -1,0 +1,2 @@
+ignore:
+  - CVE-2023-26141 # Waiting for redis to update so we can update sidekiq to a version without this vulnerability

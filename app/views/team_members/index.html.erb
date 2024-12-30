@@ -1,0 +1,12 @@
+<div class="w-full">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="flex justify-between items-center">
+    <h1>Team Members</h1>
+    <%= link_to "New Team Member", new_team_team_member_path, class: "button add-button primary mb-3 normal-top-margin" %>
+  </div>
+
+  <div id="team_members" class="min-w-full">
+    <%= render @team_members %>
+  </div>
+</div>

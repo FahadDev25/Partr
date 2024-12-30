@@ -1,0 +1,11 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <div class="flex space-x-2 leading-5">
+      <%= link_to image_tag("chevron-left-solid.svg", alt: 'back', class: 'filter-to-white icon'), part_path(@part), class: "button primary no-top-margin mini" %>
+      <h2 class="font-bold text-2xl mt-2">Add part number</h2>
+    </div>
+  <% end %>
+  <div class="mx-auto md:w-2/3 w-full">
+    <%= render "form", other_part_number: @other_part_number, part: @part %>
+  </div>
+<% end %>

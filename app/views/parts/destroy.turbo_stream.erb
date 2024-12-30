@@ -1,0 +1,5 @@
+<%= turbo_stream.remove "part_#{@part.id}_row" %>
+
+<%= turbo_stream.replace 'notice' do %>
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+<% end %>

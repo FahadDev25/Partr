@@ -1,0 +1,26 @@
+<%= form_with(model: component, class: "contents") do |form| %>
+  <div class="form">
+    <%= render partial: "pages/modal_form_errors", locals: { object: component, name: "component" }%>
+
+    <div class="form-field">
+      <% component.assembly_id = @assembly.id if @assembly.present? %>
+      <%= form.label :assembly_id, "#{capital_assembly}", class: "required" %>
+      <%= form.select :assembly_id, options_for_select(assembly_select_list(component), component.assembly_id), {} %>
+    </div>
+
+    <div class="form-field">
+      <% component.part_id = params[:part_id] if params[:part_id] %>
+      <%= form.label :part_id, class: "required" %>
+      <%= form.select :part_id, options_for_select(part_select_list(component)), {} %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :quantity, class: "required" %>
+      <%= form.number_field :quantity %>
+    </div>
+
+    <div class="inline">
+      <%= form.submit class: "button primary" %>
+    </div>
+  </div>
+<% end %>

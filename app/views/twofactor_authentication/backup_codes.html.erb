@@ -1,0 +1,9 @@
+<div>
+  <h1>Backup Codes</h1>
+  <p>In the event you lose access to your authenticator app, these codes can be used in place of an OTP.</p>
+  <p class="mb-5">You will not be able to view these codes again, so copy them now.</p>
+
+  <% codes.each do |code| %>
+    <p><%= code %></p>
+  <% end %>
+</div>

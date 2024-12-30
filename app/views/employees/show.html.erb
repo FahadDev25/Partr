@@ -1,0 +1,14 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+    
+    <%= link_to "Back to Employees", employees_path, class: "button back-button" %>
+
+    <%= render @employee %>
+
+    <%= link_to "Edit This Employee", edit_employee_path(@employee), class: "button edit-button primary" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This Employee", employee_path(@employee), method: :delete, class: "button delete" %>
+    </div>
+  </div>
+</div>

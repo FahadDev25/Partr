@@ -1,0 +1,22 @@
+<%= turbo_frame_tag dom_id comment do %>
+  <div class="flex justify-between">
+    <div><strong><%= comment.user.username %></strong> <%= local_relative_time(comment.created_at, "time-or-date") %></div>
+    <% if comment.created_at.to_i != comment.updated_at.to_i %>
+      <div><i>edited <%= local_relative_time(comment.updated_at, "time-or-date") %></i></div>
+    <% end %>
+  </div>
+  <div id=<%= "#{dom_id(comment)}_content" %> class="trix-content">
+    <%= comment.content %>
+  </div>
+
+  <div class="dd-shipment-part-edit-delete-btn comment-btn-hidden " style="display: none">
+    <%= button_to edit_comment_path(comment), method: :get, class: "button edit-button" do %>
+      <%= image_tag "edit-icon.svg", alt: "Edit Icon", class: "inline-icon" %>
+    <% end %>
+
+    <%= button_to comment, method: :delete, class: "button delete-button", data: { turbo_confirm: "Are you sure?" } do %>
+      <%= image_tag "trash-icon.svg", alt: "Delete Icon", class: "inline-icon" %>
+    <% end %>
+  </div>
+<hr>
+<% end %>

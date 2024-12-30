@@ -1,0 +1,49 @@
+<%= turbo_frame_tag "component_list" do %>
+  <div class="scrollableTable breakpoint-768 resizable">
+    <table class="table-auto" data-controller='table-order' data-turbo-type='component_list'>  
+      <thead>
+        <tr>
+          <% column_array = [['part', 'Part'], ["parts.description", "Description"], ['parts.cost_per_unit', 'Cost per Unit'], ['quantity', 'Quantity'], ['total_cost', 'Total Cost']] %>
+          <% column_array.each do |column| %>
+            <th data-table-order-target='orderBy' data-order-by=<%= column[0] %> data-order=<%= column[0] == params[:order_by] ? "#{params[:order]}" : "DESC"%>>
+              <%= column[1] %><%= (params[:order] == "ASC" ? " \u25b2" : " \u25bc") if column[0] == params[:order_by]%></th>
+          <% end %>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+        <% component_list.each do |c| %>
+          <tr>
+            <td>
+              <span class="th" aria-hidden="true">Part</span>
+              <span><%= link_to c.part.label, part_path(c.part), data: { turbo_frame: "modal" } %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Description</span>
+              <span><%= c.part.description %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Cost per Unit</span>
+              <span><%= number_to_cost(c.part.cost_per_unit) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Quantity</span>
+              <span><%= number_with_precision(c.quantity, strip_insignificant_zeros: true) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Total Cost</span>
+              <span><%= number_to_cost(c.part.cost_per_unit * c.quantity) %></span>
+            </td>
+            <td class="no-th">
+              <span class="flex space-x-2">
+                <%= button_to "Edit", edit_component_path(c), method: :get, class: "button edit-button", data: { turbo_frame: "modal" } %>
+                <%= button_to "Remove", component_path(c), method: :delete, class: "button delete", data: {turbo_frame: :_top } %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= render partial: 'pagy/nav', locals: {pagy: @pagy} if @pagy.pages > 1 %>
+<% end %>

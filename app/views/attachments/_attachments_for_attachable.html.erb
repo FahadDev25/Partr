@@ -1,0 +1,23 @@
+<div id="attachments">
+  <hr>
+  <div class="flex justify-between items-center">
+    <div><strong>Attachments:</strong></div>
+    <div>
+      <%= link_to "Add Attachment", new_attachment_path(attachable_id: attachable.id, attachable_type: attachable.class.to_s ),
+          class: "button add-button", data: { turbo_frame: "modal" } %>
+    </div>
+  </div>
+  <div class="grid grid-cols-5 grid-rows-<%= (attachable.attachments.length/10).ceil * 2 %> gap-1">
+    <% attachable.attachments.each_with_index do |attachment,i| %>
+      <div id=<%= dom_id(attachment) %> class="col-start-<%= i %> row-start-1">
+        <% if attachment.file.representable? %>
+          <%= link_to (image_tag attachment.file.representation(resize_to_limit: [100, 100])), attachment.file, target: "_blank" %>
+        <% else %>
+          <%= link_to (image_tag asset_path("file.jpg"), size: "100x100"), attachment.file, target: "_blank" %>
+        <% end %>
+        <div><%= simple_format attachment.file.filename.to_s.gsub(/(.{20})/, '\\1\\n').gsub('\n', "\n") %></div>
+        <div><%= link_to "Remove", attachment_path(attachment), method: :delete, class: "button delete", data: { turbo_confirm: 'Are you sure?' } %></div>
+      </div>
+    <% end %>
+  </div>
+</div>

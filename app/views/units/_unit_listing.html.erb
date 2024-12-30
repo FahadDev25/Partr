@@ -1,0 +1,34 @@
+<tr id="unit_<%= unit.id %>_row">
+  <td>
+    <span class="th" aria-hidden="true"><%= capital_assembly %></span>
+    <span><%= link_to unit.assembly.name, assembly_path(unit.assembly) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Cost per Unit</span>
+    <span class="no-break"><%= number_to_cost(unit.assembly.total_cost) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Quantity</span>
+    <span><%= number_with_precision(unit.quantity, strip_insignificant_zeros: true) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Total Cost</span>
+    <span class="no-break"><%= number_to_cost(unit.assembly.total_cost * unit.quantity) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Parts Ordered</span>
+    <span><%= unit.parts_ordered_required %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Parts Received</span>
+    <span><%= unit.parts_received_required %></span>
+  </td>
+  <td class="td-button-row-parent no-th">
+    <div class="td-button-row">
+      <%= button_to "Edit", edit_unit_path(unit), method: :get, class: "button edit-button primary", data: { turbo_frame: "modal" } %>
+      <%= button_to "Remove", unit, method: :delete, class: "button delete", data: { turbo_frame: :_top } %>
+      <%= link_to "View Parts Ordered / Received", unit, class: "button show-button" %>
+      <%= link_to 'Export', pages_export_form_path(class: unit.class, id: unit.id, cost_optional: true), class: "button primary export-csv-button", data: { turbo_frame: "modal" } %>
+    </div>
+  </td>
+</tr>

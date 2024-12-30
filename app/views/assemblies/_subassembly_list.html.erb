@@ -1,0 +1,41 @@
+<div class="scrollableTable breakpoint-768">
+  <table class="table-auto">  
+    <thead>
+      <tr>
+        <th><%= capital_assembly %></th>
+        <th>Cost per Unit</th>
+        <th>Quantity</th>
+        <th>Total Cost</th>
+        <th></th>
+      </tr>
+    </thead>
+      <tbody>
+        <% subassemblies.each do |s| %>
+          <tr id="subassembly_<%= s.id %>">
+            <td>
+              <span class="th" aria-hidden="true"><%= capital_assembly %></span>
+              <span><%= link_to s.child_assembly.name, assembly_path(s.child_assembly) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Cost per Unit</span>
+              <span><%= number_to_cost(s.child_assembly.total_cost) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Quantity</span>
+              <span><%= number_with_precision(s.quantity, strip_insignificant_zeros: true) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Total Cost</span>
+              <span><%= number_to_cost(s.child_assembly.total_cost * s.quantity) %></span>
+            </td>
+            <td class="no-th">
+              <span class="flex space-x-2">
+                <%= button_to "Edit", edit_subassembly_path(s), method: :get, class: "button edit-button", data: { turbo_frame: "modal" } %>
+                <%= button_to "Remove", subassembly_path(s), method: :delete, class: "button delete" %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+  </table>
+</div>

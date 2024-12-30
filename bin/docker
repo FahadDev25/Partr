@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+case $1 in
+    prod)
+        FILE="docker-compose.prod.yml"
+        ;;
+    dev)
+        FILE="docker-compose.dev.yml"
+        ;;
+    test)
+        FILE="docker-compose.test.yml"
+        ;;
+esac
+
+docker compose -f ${FILE} $2 $3 $4 $5

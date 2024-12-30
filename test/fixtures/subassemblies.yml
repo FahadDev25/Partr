@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+apparatus_controls:
+  parent_assembly: aok
+  child_assembly: control_panel
+  quantity: 1
+  organization: artificers
+  team: submersibles
+
+control_switches:
+  parent_assembly: control_panel
+  child_assembly: switch_array
+  quantity: 1
+  organization: artificers
+  team: submersibles
+
+only_subassembly:
+  parent_assembly: just_subassembly
+  child_assembly: subassembly
+  quantity: 1
+  organization: artificers
+  team: submersibles

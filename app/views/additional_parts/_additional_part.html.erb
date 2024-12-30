@@ -1,0 +1,22 @@
+<div id="<%= dom_id additional_part %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Job:</strong>
+    <%= additional_part.job_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Part:</strong>
+    <%= additional_part.part_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Quantity:</strong>
+    <%= number_with_precision(additional_part.quantity, strip_insignificant_zeros: true) %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show This Additional Part", additional_part, class: "button show-button" %>
+    <%= link_to "Edit This Additional Part", edit_additional_part_path(additional_part), class: "button primary edit-button" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

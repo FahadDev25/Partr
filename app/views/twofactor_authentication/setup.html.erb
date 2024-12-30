@@ -1,0 +1,21 @@
+<div>
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+  <h1>Setup Two Factor Authentication</h1>
+  <p><b>1.</b> Scan the qr code with the authenticator app of your choice (Google Authenticator, Authy, etc.)</p>
+  <div class="flex flex-col">
+    <%= image_tag "data:image/png;base64,#{current_user.twofactor_qr_code}", size: "240x240" %>
+    <p><b>OR</b> Enter this secret key into the authenticator app of your choice</p>
+    <div class="flex my-2 ml-2 space-x-2 items-center" data-controller="clipboard-copy">
+      <p data-clipboard-copy-target="source"><%= current_user.otp_secret %></p>
+      <div class="button normal-top-margin" data-clipboard-copy-target="copyButton">Copy</div>
+    </div>
+    <p><b>2.</b> Enter the code from your authenticator app below</p>
+    <%= form_with url: twofactor_authentication_verify_path, method: :patch do |form| %>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :otp, "OTP" %>
+        <%= form.text_field :otp %>
+        <%= form.submit "Verify" %>
+      </div>
+    <% end %>
+  </div>
+</div>

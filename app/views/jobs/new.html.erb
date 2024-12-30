@@ -1,0 +1,8 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <h1>New Job</h1>
+  <% end %>
+  <div class="mx-auto md:w-2/3 w-full">
+    <%= render "form", team: @team, job: @job %>
+  </div>
+<% end %>

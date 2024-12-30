@@ -1,0 +1,6 @@
+<div id="default-error" class="janitor-bg">
+    <h1>Uh oh...</h1>
+    <p>Sorry, something's broken! We'll get to fixing that.</p>
+    <%= link_to "Back", "javascript:history.back()", class: "button back-button" %>
+    <%= link_to "Home", current_user ? "/teams/#{current_user.current_team.id}/home" : "/" %>
+</div>

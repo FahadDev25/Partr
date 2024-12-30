@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "optional_part_field_#{params[:number]}_name_field" do %>
+  <% if params[:show] == "true" %>
+    <div class="my-5">
+      <%= label_tag "team[optional_part_field_#{params[:number]}_name]", "Optional part field #{params[:number]} name" %>
+      <%= text_field_tag "team[optional_part_field_#{params[:number]}_name]", params[:number] == "1" ? @team&.optional_part_field_1_name : @team&.optional_part_field_2_name %>
+    </div>
+  <% end %>
+<% end %>

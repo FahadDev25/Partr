@@ -1,0 +1,25 @@
+<div class="scrollableTable breakpoint-768">
+  <table class="table-auto">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Start date</th>
+        <th>Deadline</th>
+        <th>Total cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @jobs.each do |job| %>
+        <tr>
+          <td><%= link_to job.name, job_path(job) %></td>
+          <td><%= job.status %></td>
+          <td><%= job.start_date %></td>
+          <td><%= job.deadline %></td>
+          <td><%= number_to_cost job.total_cost || 0 %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<%= render partial: 'pagy/nav', locals: { pagy: @pagy } if @pagy.pages > 1 %>

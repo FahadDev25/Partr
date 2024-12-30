@@ -1,0 +1,234 @@
+<div class="mx-auto w-full flex wheelbarrow-pliers-bg">
+  <div class="mx-auto w-full">
+    <div class=" crane-lift-bg mb-3">
+        <h1 class="text-2xl sm:text-4xl mb-1">Order Details</h1>
+        <p class="text-dd-gray text-sm sm:text-base">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+
+    <div class="lg:flex gap-5 items-center justify-between mt-5 sm:mt-6 mb-5">
+        <div class="sm:flex gap-2 sm:gap-4 items-center">
+            <div class="flex gap-4 items-center mb-3 sm:mb-0">
+                <%= link_to team_orders_path(current_user.current_team), class: "inline-flex border border-persian-green normal-top-margin bg-transparent p-2 sm:p-3 rounded-lg primary" do %>
+                  <%= image_tag "clarity-arrow-line.svg", alt: "Back Icon", class: "w-3 sm:w-5 h-3 sm:h-5 " %>
+                <% end %>
+                <p class="font-bold text-base sm:text-3xl text-dd-black -mt-1">
+                    <% if action_name != "show" %>
+                      <%= link_to @order.po_number, @order %>
+                    <% else %>
+                      <%= @order.po_number %>
+                    <% end %>
+                </p>
+            </div>
+            <p class="partial-received ml-auto ">
+                <%= image_tag "check-circle-light-blue.svg", alt: "Back Icon", class: "w-3 sm:w-5 h-3 sm:h-5 " %>
+                <span class="-mt-0.5 text-dd-sky-blue">Partially Received</span>
+            </p>
+        </div>
+
+        <div class="flex items-center gap-4 mt-4 lg:mt-0">
+          <%= button_tag id: "dd-open-modal-order", class: "m-0 text-base sm:text-lg decoration-0 text-white bg-persian-green hover:bg-persian-green py-2 px-8 sm:px-9 rounded-lg hover:text-white", type: "button" do %>
+              Edit
+          <% end %>
+
+          <%#= link_to "Edit", edit_order_path(@order), class: "text-base sm:text-lg decoration-0 text-white bg-persian-green py-2 px-8 sm:px-8 rounded-lg hover:text-white", data: { turbo_frame: "modal" }, onclick: "setTimeout(() => StepFormOrder(), 1000)" %>
+          <div>
+            <%= button_to "Delete", order_path(@order), method: :delete, class: "text-sm sm:text-base m-0 bg-dd-red py-2.5 px-8 sm:px-8 rounded-lg hover:bg-dd-red", data: { turbo_confirm: 'Are you sure?' } %>
+          </div>
+          <div>
+            <%= link_to pages_export_form_path(
+                              class: @order.class,
+                              id: @order.id,
+                              csv_format_options: @order.csv_format_options,
+                              pdf_format_options: @order.pdf_format_options,
+                              pdf_boolean_options: @order.pdf_boolean_options
+                            ),
+                            class: "export-csv-button normal-top-margin m-0 p-0 rounded-lg md:w-[50%]",
+                            data: { turbo_frame: "modal" } do %>
+                            <%= image_tag "download-sea-green-icon.svg", alt: "Download Icon", class: "w-10 h-10" %>
+            <% end %>
+          </div>
+        </div>
+    </div>
+
+    <div class="tabs ">
+      <!-- Tab Headers -->
+      <ul class="tab-list flex items-center border-y-[1px] border-[#0000000D]">
+        <li class="tab-header p-0" data-tab="tab1">
+          <button class="m-0 text-sm sm:text-base font-bold px-3 sm:px-8 py-3.5 bg-transparent hover:bg-transparent focus:outline-none active-tab" onclick="showTab('tab1')">Order Details</button>
+        </li>
+        <li class="tab-header p-0" data-tab="tab2">
+          <button class="m-0 text-sm sm:text-base font-bold px-3 sm:px-8 py-3.5 bg-transparent hover:bg-transparent focus:outline-none" onclick="showTab('tab2')">
+          Comments
+          <span class="bg-dd-red text-white py-1 px-2.5 rounded-full ml-3 text-sm font-light">2</span>
+          </button>
+        </li>
+      </ul>
+
+        <!-- Tab Content -->
+        <div id="tab1" class="tab-content">
+            <div class="dd-shipment-detail-table pt-1">
+                <%= render @order %>
+            </div>
+
+            <div class="flex flex-col">
+              <%#= link_to "Related shipments", team_shipments_path(team_id: @order.team_id, order_id: @order.id) if @order.shipments.any? %>
+            </div>
+
+
+            <%# we added hidden class to display none %>
+            <div class= "flex items-center justify-between mb-2 hidden">
+              <strong class="block font-medium mb-1">Line Items:</strong>
+              <%= button_to "Add Line Item", new_line_item_path(),params: {order_id: @order.id}, method: :get,  class: "button add-button", data: { turbo_frame: "modal" } %>
+            </div>
+
+             <div class=" border border-dd-persian-green-mid bg-dd-gray-low rounded-lg my-5">
+                <div class="flex flex-col gap-3 sm:flex-row items-start sm:items-center justify-start sm:justify-between px-4 py-3">
+                    <p class='text-dd-black font-bold text-lg '>Parts List</p>
+
+                    <%= button_tag "View Shipment Details", class: "button add-button primary dd-shipment-detail-part-table-btn", type: "button" %>
+                </div>
+
+                <div class="shipment-detail-parts-items-table dd-table-overflow-scroll">
+                    <%= render partial: 'line_item_list',  locals: { line_item_list: LineItem.where(order_id: @order.id) } %>
+                </div>
+            </div>
+
+            <%# end comment %>
+            <%#= render partial: "attachments/attachments_for_attachable", locals: { attachable: @order } %>
+
+            <%# end comment %>
+            <%#= render partial: "pages/shared_teams", locals: { shareable: @order } %>
+        </div>
+
+        <div id="tab2" class="tab-content hidden">
+             <%= render partial: "comments/comments_for_commentable", locals: { commentable: @order } %>
+        </div>
+    </div>
+  </div>
+
+  <%= render 'orders/order_edit_modal' %>
+</div>
+
+<style>
+#modal-header {
+  border-bottom: 1px solid #0000000D;
+}
+#modal-main {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+#order-export > div {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+</style>
+
+
+<script>
+  function showTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach((content) => {
+      content.classList.add('hidden');
+    });
+
+    // Remove active-tab class from all tab headers
+    document.querySelectorAll('.tab-header button').forEach((tab) => {
+      tab.classList.remove('active-tab');
+    });
+
+    // Show the selected tab and activate the tab header
+    document.getElementById(tabId).classList.remove('hidden');
+    document.querySelector(`.tab-header[data-tab="${tabId}"] button`).classList.add('active-tab');
+  }
+
+  function StepFormOrder() {
+    const stepButtons = document.querySelectorAll(".step-button");
+    const formSections = document.querySelectorAll(".steps-form-order-section");
+    const nextPageBtn = document.getElementById("nextPageBtn");
+    const backPageBtn = document.getElementById("backPageBtn");
+    const createFormBtn = document.querySelector(".create-order-form-btn");
+    let activeIndex = 0;
+
+    // Hide back button initially
+    if (activeIndex === 0) {
+      backPageBtn.classList.add("hidden");
+      nextPageBtn.classList.add("w-full");
+    }
+
+    // Function to update form sections visibility
+    function sectionsClasses() {
+      formSections.forEach((section, index) => {
+        if (index === activeIndex) {
+          section.classList.remove("hidden");
+        } else {
+          section.classList.add("hidden");
+        }
+      });
+    }
+
+    // Function to update the active button and icon visibility
+    function updateActiveButton(index) {
+      stepButtons.forEach((button, i) => {
+        const activeIcon = button.querySelector(".active-icon");
+        const nonActiveIcon = button.querySelector(".non-active-icon");
+
+        if (i === index) {
+          button.classList.add("active");
+          activeIcon.classList.remove("hidden");
+          nonActiveIcon.classList.add("hidden");
+        } else {
+          button.classList.remove("active");
+          activeIcon.classList.add("hidden");
+          nonActiveIcon.classList.remove("hidden");
+        }
+      });
+    }
+
+    // Click event for the next button
+    nextPageBtn.addEventListener("click", () => {
+      if (activeIndex < stepButtons.length - 1) {
+        activeIndex++;
+
+        if (activeIndex === stepButtons.length - 1) {
+          createFormBtn.classList.remove("hidden");
+          nextPageBtn.classList.add("hidden");
+        }
+
+        if (activeIndex > 0) {
+          backPageBtn.classList.remove("hidden");
+          nextPageBtn.classList.remove("w-full");
+        }
+
+        updateActiveButton(activeIndex);
+        sectionsClasses();
+      }
+    });
+
+    // Click event for the back button
+    backPageBtn.addEventListener("click", () => {
+      if (activeIndex > 0) {
+        activeIndex--;
+
+        if (activeIndex < stepButtons.length - 1) {
+          createFormBtn.classList.add("hidden");
+          nextPageBtn.classList.remove("hidden");
+        }
+
+        if (activeIndex === 0) {
+          backPageBtn.classList.add("hidden");
+          nextPageBtn.classList.add("w-full");
+        }
+
+        updateActiveButton(activeIndex);
+        sectionsClasses();
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    StepFormOrder();
+  });
+
+</script>

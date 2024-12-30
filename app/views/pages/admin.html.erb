@@ -1,0 +1,17 @@
+<div class="flex flex-col">
+  <div>
+    <%= link_to "Changelog", "/pages/changelog", data: { turbo_frame: "modal" } %>
+  </div>
+  <hr/>
+  <div>
+    <h1>Print Count</h1>
+    <span><%= current_tenant.print_count %></span>
+  </div>
+  <hr/>
+  <h1>Log Tail</h1>
+  <div>
+    <% IO.readlines("./log/#{ENV["RAILS_ENV"]}.log").last(50).each do |line| %>
+      <div><%= line %></div>
+    <% end %>
+  </div>
+</div>

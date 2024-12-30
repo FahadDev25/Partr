@@ -1,0 +1,40 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <h1><%= @object.title %> Export</h1>
+  <% end %>
+  <div class="order-page-top-margin">
+      <%= form_with url: pages_export_path, method: :get do |form| %>
+        <div id="<%= @object.class.to_s.downcase %>-export">
+          <div data-controller="dynamic-select">
+            <div class="form-field dd-form-field">
+              <%= form.label :file_type %>
+              <%= form.select :file_type, options_for_select(["PDF", "CSV"]), {},
+                  data: {
+                    dynamic_select_target: "select",
+                    'turbo-type': "export_options",
+                    url: pages_export_options_path,
+                    preset: {
+                      pdf_format_options: params[:pdf_format_options],
+                      pdf_boolean_options: params[:pdf_boolean_options],
+                      csv_format_options: params[:csv_format_options],
+                      csv_boolean_options: params[:csv_boolean_options]
+                    }
+                  } %>
+            </div>
+            <%= turbo_frame_tag "export_options" do %>
+              <%= form.select :export_format, options_for_select([]), class: "hidden" %>
+            <% end %>
+          </div>
+          <% if @cost_optional %>
+            <%= check_box_tag :include_cost %>
+            <%= form.label :include_cost %>
+          <% end %>
+          <%= form.hidden_field :class, value: @object.class %>
+          <%= form.hidden_field :id, value: @object.id %>
+          <div class="dd-shipment-submit">
+            <%= form.submit "Export", class: "button", data: { turbo: false } %>
+          </div>
+        </div>
+      <% end %>
+  </div>
+<% end %>

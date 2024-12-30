@@ -1,0 +1,16 @@
+<%= @comment.broadcast_append_to(
+      "#{dom_id(@comment.commentable)}_comments",
+      partial: "comments/comment",
+      target: "#{dom_id(@comment.commentable)}_comments",
+      locals: { comment: @comment, user: current_user }
+    ) %>
+
+<%= turbo_stream.append "#{dom_id(@comment.commentable)}_comments" do %>
+  <%= render partial: "comments/comment",  locals: { comment: @comment, user: current_user } %>
+<% end %>
+
+<%= turbo_stream.replace "#{dom_id(@comment.commentable)}_comment_form" do %>
+  <div id="<%= "#{dom_id(@comment.commentable)}_comment_form" %>">
+    <%= render partial: "comments/form",  locals: { comment: Comment.new, type: @comment.commentable_type, id: @comment.commentable_id } %>
+  </div>
+<% end %>

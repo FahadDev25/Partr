@@ -1,0 +1,49 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+sd_button:
+  part: big_red_button
+  assembly: self_destruct_console
+  quantity: 1
+  organization: artificers
+
+button_cover:
+  part: glass_pane
+  assembly: self_destruct_console
+  quantity: 2
+  organization: artificers
+
+no_received_component:
+  part: no_received_part
+  assembly: no_received_assembly
+  quantity: 1
+  organization: artificers
+
+claws:
+  part: big_meaty_claw
+  assembly: aok
+  quantity: 2
+  organization: artificers
+
+panel_lever:
+  part: lever
+  assembly: control_panel
+  quantity: 1
+  organization: artificers
+
+panel_dial:
+  part: dial
+  assembly: control_panel
+  quantity: 1
+  organization: artificers
+
+array_switches:
+  part: switch
+  assembly: switch_array
+  quantity: 10
+  organization: artificers
+
+one_lever:
+  part: lever
+  assembly: subassembly
+  quantity: 1
+  organization: artificers

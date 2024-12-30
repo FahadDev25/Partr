@@ -1,0 +1,23 @@
+<%= form_with(model: manufacturer, class: "contents") do |form| %>
+  <div class="form">
+    <%= render partial: "pages/modal_form_errors", locals: { object: manufacturer, name: "manufacturer" }%>
+
+    <div class="form-field">
+      <%= form.label :name, class: "required" %>
+      <%= form.text_field :name, rows: 1 %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :vendor_id, class: "required" %>
+      <%= form.select :vendor_id, options_for_select(vendor_select_list(manufacturer, "none")), {} %>
+    </div>
+
+    <div class="form-field">
+      <%= form.hidden_field :team_id, value: current_user.current_team.id %>
+    </div>
+
+    <div class="inline">
+      <%= form.submit class: "button primary" %>
+    </div>
+  </div>
+<% end %>

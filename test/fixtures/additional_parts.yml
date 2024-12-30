@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+extra_claws:
+  job: heist
+  part: big_meaty_claw
+  quantity: 1
+  organization: artificers
+
+more_pane:
+  job: trap
+  part: glass_pane
+  quantity: 1
+  organization: artificers
+
+one_button:
+  job: just_one_part
+  part: big_red_button
+  quantity: 1
+  organization: artificers
+
+no_received:
+  job: second_trap
+  part: big_red_button
+  quantity: 1
+  organization: artificers

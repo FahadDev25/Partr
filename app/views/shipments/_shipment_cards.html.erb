@@ -1,0 +1,187 @@
+<div class="shipment-stats-cards flex lg:flex-row flex-col mb-10">
+        <div class="shipment-stat-card flex-1 bg-dd-black p-6 relative border border-dd-persian-green-mid">
+            <div id="1" class="shipment-stat-card-dropdown absolute top-[50px] right-[20px] bg-white-100 z-50 rounded overflow-hidden flex flex-col hidden">
+                <button role="menuitem" tabindex="-1" id="menu-item-0" class="m-0 bg-white-100 text-dd-black hover:text-dd-black border-b-2 border-gray-200">Last Week</button>
+                <button role="menuitem" tabindex="-1" id="menu-item-1" class="m-0 bg-white-100 text-dd-black hover:text-dd-black border-b-2 border-gray-200">Last Month</button>
+                <button role="menuitem" tabindex="-1" id="menu-item-2" class="m-0 bg-white-100 text-dd-black hover:text-dd-black">Last Year</button>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <h3 class="text-md text-white-100 font-bold">Total Shipments</h3>
+                <div class="flex items-center gap-2">
+                    <p class="filter-span-title text-sm text-white-100">Last Week</p>
+                    <button class="shipments-stat-card-dropdown-btn m-0 p-0 bg-transparent hover:bg-transparent">
+                        <%= image_tag "chevron-down-persian-green.svg", alt: "chevron" %>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex mt-8 gap-2">
+                <div class="flex-1 self-center">
+                    <h2 class="text-4xl text-white-100">250</h2>
+
+            <div class="flex gap-1 items-center">
+                    <%= image_tag "arrow-up-persian-green.svg", alt: "arrow up" %>
+                    <p class="text-persian-green text-[14px] font-normal">6%</p>
+                    <span class="text-white-100 text-[14px] font-normal">vs last week</span>
+                </div>
+                </div>
+
+                <div class="flex-1">
+                    <canvas class="shipment-stat-card-graph" id="shipmentChart1"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="shipment-stat-card flex-1 bg-dd-black p-6 relative border border-dd-persian-green-mid">
+                    <div id="2" class="shipment-stat-card-dropdown absolute top-[50px] right-[20px] bg-white-100 z-50 rounded overflow-hidden flex flex-col hidden">
+                        <button role="menuitem" tabindex="-1" id="menu-item-0" class="m-0 bg-white-100 text-dd-black hover:text-dd-black border-b-2 border-gray-200">Last Week</button>
+                        <button role="menuitem" tabindex="-1" id="menu-item-1" class="m-0 bg-white-100 text-dd-black hover:text-dd-black border-b-2 border-gray-200">Last Month</button>
+                        <button role="menuitem" tabindex="-1" id="menu-item-2" class="m-0 bg-white-100 text-dd-black hover:text-dd-black">Last Year</button>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-md text-white-100 font-bold">Inbound Shipments</h3>
+                        <div class="flex items-center gap-2">
+                            <p class="filter-span-title text-sm text-white-100">Last Week</p>
+                            <button class="shipments-stat-card-dropdown-btn m-0 p-0 bg-transparent hover:bg-transparent">
+                                <%= image_tag "chevron-down-persian-green.svg", alt: "chevron" %>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex mt-8 gap-2">
+                        <div class="flex-1 self-center">
+                            <h2 class="text-4xl text-white-100">230</h2>
+
+                    <div class="flex gap-1 items-center">
+                            <%= image_tag "arrow-up-persian-green.svg", alt: "arrow up" %>
+                            <p class="text-persian-green text-[14px] font-normal">6%</p>
+                            <span class="text-white-100 text-[14px] font-normal">vs last week</span>
+                        </div>
+                        </div>
+
+                        <div class="flex-1">
+                            <canvas class="shipment-stat-card-graph" id="shipmentChart2"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+
+        <div class="shipment-stat-card flex-1 bg-dd-black p-6 relative border border-dd-persian-green-mid">
+                    <div id="3" class="shipment-stat-card-dropdown absolute top-[50px] right-[20px] bg-white-100 z-50 rounded overflow-hidden flex flex-col hidden">
+                        <button role="menuitem" tabindex="-1" id="menu-item-0" class="m-0 bg-white-100 text-dd-black hover:text-dd-black border-b-2 border-gray-200">Last Week</button>
+                        <button role="menuitem" tabindex="-1" id="menu-item-1" class="m-0 bg-white-100 text-dd-black hover:text-dd-black border-b-2 border-gray-200">Last Month</button>
+                        <button role="menuitem" tabindex="-1" id="menu-item-2" class="m-0 bg-white-100 text-dd-black hover:text-dd-black">Last Year</button>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-md text-white-100 font-bold">Unclaimed Shipments</h3>
+                        <div class="flex items-center gap-2">
+                            <p class="filter-span-title text-sm text-white-100">Last Week</p>
+                            <button class="shipments-stat-card-dropdown-btn m-0 p-0 bg-transparent hover:bg-transparent">
+                                <%= image_tag "chevron-down-persian-green.svg", alt: "chevron" %>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex mt-8 gap-2">
+                        <div class="flex-1 self-center">
+                            <h2 class="text-4xl text-white-100">120</h2>
+
+                    <div class="flex gap-1 items-center">
+                            <%= image_tag "arrow-up-persian-green.svg", alt: "arrow up" %>
+                            <p class="text-persian-green text-[14px] font-normal">6%</p>
+                            <span class="text-white-100 text-[14px] font-normal">vs last week</span>
+                        </div>
+                        </div>
+
+                        <div class="flex-1">
+                            <canvas class="shipment-stat-card-graph" id="shipmentChart3"></canvas>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", initializeCharts);
+document.addEventListener("turbo:load", initializeCharts);
+document.addEventListener("turbo:frame-load", initializeCharts);
+
+function initializeCharts() {
+  // Check if charts are already initialized to prevent duplicate initialization
+  if (document.getElementById('shipmentChart1') && Chart.getChart('shipmentChart1')) return;
+
+  function initializeChart(canvasId, dataPoints) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const labels = ["January", "February", "March", "April", "May"];
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, ctx.canvas.height);
+    gradient.addColorStop(0, '#8BF3FF4D');
+    gradient.addColorStop(1, '#4f807b00');
+
+    // Destroy existing chart instance if it exists
+    if (Chart.getChart(canvasId)) {
+      Chart.getChart(canvasId).destroy();
+    }
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Shipments Over Time',
+          data: dataPoints,
+          borderColor: '#8BF3FF',
+          borderWidth: 2,
+          fill: true,
+          backgroundColor: gradient,
+          tension: 0.4,
+          pointRadius: 0,
+        }],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            display: false,
+            grid: {
+              display: false,
+            },
+          },
+          y: {
+            display: false,
+            grid: {
+              display: false,
+            },
+          },
+        },
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        elements: {
+          line: {
+            borderWidth: 2,
+          },
+        },
+      },
+    });
+  }
+
+  function initializeShipmentCharts() {
+    initializeChart('shipmentChart1', [5, 10, 7, 3, 8]);
+    initializeChart('shipmentChart2', [6, 8, 4, 5, 10]);
+    initializeChart('shipmentChart3', [3, 5, 6, 9, 7]);
+  }
+
+  initializeShipmentCharts();
+}
+
+
+</script>

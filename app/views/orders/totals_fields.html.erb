@@ -1,0 +1,10 @@
+<%= turbo_frame_tag "toggle_fields" do %>
+  <div class="form-field">
+    <%= label_tag "order[parts_cost]", "Total Part Cost" %>
+    <%= number_field_tag "order[parts_cost]", "0.00", step: 0.01, min: 0 %>
+  </div>
+  <div class="form-field">
+    <%= label_tag "order[tax_total]", "Total Tax" %>
+    <%= number_field_tag "order[tax_total]", "0.00", step: 0.01, min: 0 %>
+  </div>
+<% end %>

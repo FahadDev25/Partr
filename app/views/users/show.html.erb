@@ -1,0 +1,13 @@
+<div class="mx-auto md:w-2/3 w-full flex laptop-girl-bg">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+    <%= link_to "Back to Users", users_path, class: "button back-button secondary mb-3 normal-top-margin" %>
+
+    <%= render @user %>
+
+    <%= link_to "Edit This User", edit_user_path(@user), class: "button edit-button primary" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This User", user_path(@user), method: :delete, class: "button delete" %>
+    </div>
+  </div>
+</div>

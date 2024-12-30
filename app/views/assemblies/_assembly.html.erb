@@ -1,0 +1,57 @@
+<div class="scrollableTable breakpoint-768">
+  <table id="<%= dom_id assembly %>" class="table-auto">  
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Total Cost</th>
+        <th>Total Components</th>
+        <th>Total Quantity</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="th" aria-hidden="true">Name</span>
+          <span>
+          <% if action_name != "show" %>
+            <%= link_to assembly.name, assembly %>
+          <% else %>
+            <%= assembly.name %>
+          <% end %>
+          </span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Total Cost</span>
+          <span><%= number_to_cost(assembly.total_cost) %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Total Components</span>
+          <span><%= assembly.total_components %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Total Quantity</span>
+          <span><%= number_with_precision(assembly.total_quantity, strip_insignificant_zeros: true) %></span>
+        </td>
+        <td class="no-th">
+          <div class="flex space-x-2">
+            <%= link_to "Export", pages_export_form_path(class: assembly.class, id: assembly.id, cost_optional: true), class: "button export-csv-button normal-top-margin", data: { turbo_frame: "modal" } %>
+          <% if action_name != "show" %>
+            <%= link_to "Edit This #{capital_assembly}", edit_assembly_path(assembly), class: "button edit-button primary normal-top-margin" %>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <hr>
+    
+        <% else %>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<% end %>
+

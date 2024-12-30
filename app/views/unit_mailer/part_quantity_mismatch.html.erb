@@ -1,0 +1,61 @@
+<div class="flex space-x-5">
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Job:</strong>
+      <%= @unit.job.name %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1"><%= (@unit.assembly.team.assembly_label || "Assembly").capitalize %>:</strong>
+      <%= @unit.assembly.name %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Quantity:</strong>
+      <%= number_with_precision(@unit.quantity, strip_insignificant_zeros: true) %>
+    </p>
+</div>
+
+<% if @mismatched_parts.any? %>
+  <table class="table-auto" style="border: 2px solid black; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border: 2px solid black; border-collapse: collapse; padding: 5px;">Part</th>
+        <th style="border: 2px solid black; border-collapse: collapse; padding: 5px;">Quantity Received</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @mismatched_parts.each do |k,v| %>
+        <tr>
+          <td style="border: 1px solid black; padding: 5px;"><%= k %></td>
+          <td style="text-align: center; border: 1px solid black; padding: 5px;"><%= v %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% @subassembly_mismatched_parts.each do |subassembly, mismatched_parts| %>
+  <div class="flex space-x-5">
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Sub<%= (@unit.assembly.team.assembly_label || "Assembly").downcase %>:</strong>
+      <%= subassembly %>
+    </p>
+  </div>
+
+  <table class="table-auto" style="border: 2px solid black; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border: 2px solid black; border-collapse: collapse; padding: 5px;">Part</th>
+        <th style="border: 2px solid black; border-collapse: collapse; padding: 5px;">Quantity Received</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% mismatched_parts.each do |mp| %>
+        <tr>
+          <td style="border: 1px solid black; padding: 5px;"><%= mp[0] %></td>
+          <td style="text-align: center; border: 1px solid black; padding: 5px;"><%= mp[1] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

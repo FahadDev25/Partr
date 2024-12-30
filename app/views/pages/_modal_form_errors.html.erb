@@ -1,0 +1,14 @@
+<% if object.errors.any? %>
+  <div id="error_explanation" class="bg-snow shadow rounded-md mx-auto mb-2">
+    <div class="flex space-x-4">
+      <div class="flex-1">
+        <h2><%= pluralize(object.errors.count, "error") %> prohibited this <%= name %> from being saved:</h2>
+        <ul id="errors">
+          <% object.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>

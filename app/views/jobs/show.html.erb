@@ -1,0 +1,59 @@
+<div class="mx-auto w-full flex laptop-girl-bg">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+
+    <div class="flex justify-between">
+      <%= link_to "Back to Jobs", team_jobs_path(current_user.current_team), class: "button back-button mb-3 normal-top-margin" %>
+      <%= turbo_frame_tag "pin_button" do %>
+        <% if current_user.pinned_jobs.pluck(:job_id).include? @job.id %>
+          <%= button_to "Unpin", unpin_job_path(@job), method: :delete, class: "button delete mb-3 normal-top-margin" %>
+        <% else %>
+          <%= button_to "Pin to Home", pin_job_path(@job), method: :post, class: "button mb-3 normal-top-margin" %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= render @job %>
+
+    <div class="flex flex-col">
+      <%= link_to "Related orders", team_orders_path(team_id: @job.team_id, job: @job) if @job.orders.any? %>
+      <%= link_to "Related shipments", team_shipments_path(team_id: @job.team_id, job: @job) if @job.shipments.any? %>
+    </div>
+    <br>
+
+    <% if @job.orders.where(include_in_bom: true).any?%>
+      <div class="flex justify-between items-center my-5">
+        <strong  class="block font-medium">BOM:</strong>
+        <!--<%= button_to "Export BOM", nil, class: "export-csv-button normal-top-margin" %>-->
+      </div>
+      <%= render partial: "bom", locals: { job: @job } %>
+    <% end %>
+
+    <div class="my-5">
+      <div class= "flex items-center justify-between mb-2">
+        <strong class="block font-medium mb-1"><%= plural_capital_assembly %>:</strong>
+        <%= button_to "Add #{capital_assembly}", new_unit_path(),params: {job_id: @job.id}, method: :get,  class: "button add-button primary", data: { turbo_frame: "modal" } %>
+      </div>
+      <%= render partial: 'unit_list',  locals: { unit_list: Unit.where(job_id: @job.id) } if @job.units.any? %>
+    </div>
+
+    <div class="my-5">
+      <div class= "flex items-center justify-between mb-2">
+        <strong class="block font-medium mb-1">Additional Parts:</strong>
+        <%= button_to "Add Part", new_additional_part_path(),params: {job_id: @job.id}, method: :get,  class: "button add-button primary", data: { turbo_frame: "modal" } %>
+      </div>
+      <%= render partial: 'additional_parts_list',  locals: { additional_part_list: AdditionalPart.where(job_id: @job.id) } if @job.additional_parts.any? %>
+    </div>
+
+    <%= render partial: "attachments/attachments_for_attachable", locals: { attachable: @job } %>
+
+    <%= render partial: "pages/shared_teams", locals: { shareable: @job } %>
+
+    <%= render partial: "comments/comments_for_commentable", locals: { commentable: @job } %>
+
+    <%= link_to "Edit This Job", edit_job_path(@job), class: "button edit-button", data: { turbo_frame: "modal" } %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This Job", job_path(@job), method: :delete, class: "button delete", data: { turbo_confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+art_admin:
+  user: admin
+  is_admin: true
+  organization: artificers
+
+art_admin2:
+  user: admin2
+  is_admin: true
+  organization: artificers
+
+art_bob:
+  user: bob
+  is_admin: false
+  organization: artificers
+
+art_johnsmith:
+  user: johnsmith
+  is_admin: false
+  organization: artificers
+  
+art_jim:
+  user: jim
+  is_admin: false
+  organization: artificers

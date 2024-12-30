@@ -1,0 +1,19 @@
+<div id="<%= dom_id team_member %>">
+  <div class="flex space-x-5">
+    <p class="my-5">
+      <strong class="block font-medium mb-1">User:</strong>
+      <%= team_member.user.username %>
+    </p>
+
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Team:</strong>
+      <%= team_member.team.name %>
+    </p>
+  </div>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show This Team Member", team_member_path(team_member), class: "button show-button" %>
+    <%= link_to "Edit This Team Member", edit_team_member_path(team_member), class: "button edit-button primary" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

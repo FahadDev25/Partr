@@ -1,0 +1,46 @@
+<%= turbo_frame_tag "assembly_table" do %>
+  <div class="defaultTable breakpoint-976">
+    <table class="table-auto" data-controller='table-order' data-turbo-type='assembly_table'>
+      <thead>
+        <tr>
+          <% column_array = [['name', "Name"], ['total_cost', 'Total Cost'], ['total_components', 'Total Components'],
+                            ['total_quantity', 'Total Quantity']] %>
+          <% column_array.each do |column| %>
+            <th data-table-order-target='orderBy' data-order-by=<%= column[0] %> data-order=<%= column[0] == params[:order_by] ? "#{params[:order]}" : "DESC"%>>
+                <%= column[1] %><%= (params[:order] == "ASC" ? " \u25b2" : " \u25bc") if column[0] == params[:order_by]%></th>
+          <% end %>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @assemblies.each do |assembly| %>
+          <tr id="<%= dom_id assembly %>_row" class="<%= cycle('bg-snow','bg-electric-blue') %>">
+            <td>
+              <span class="th" aria-hidden="true">Name</span>
+              <span><%= link_to assembly.name, assembly, data: { turbo_frame: :_top } %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Total Cost</span>
+              <span><%= number_to_cost(assembly.total_cost) %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Total Components</span>
+              <span><%= assembly.total_components %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Total Quantity</span>
+              <span><%= number_with_precision(assembly.total_quantity, strip_insignificant_zeros: true) %></span>
+            </td>
+            <td class="no-th">
+              <div class="flex space-x-2">
+                <%= link_to "Export", pages_export_form_path(class: assembly.class, id: assembly.id, cost_optional: true), class: "button export-csv-button normal-top-margin", data: { turbo_frame: "modal" } %>
+                <%= link_to "Edit", edit_assembly_path(assembly), class: "button edit-button primary normal-top-margin", data: { turbo_frame: "modal" } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= render partial: 'pagy/nav', locals: {pagy: @pagy} if @pagy.pages > 1 %>
+<% end %>

@@ -1,0 +1,199 @@
+<%= form_with(model: team, class: "contents") do |form| %>
+  <%= render partial: "pages/modal_form_errors", locals: { object: team, name: "team" }%>
+
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :team_role_id, "Role" %>
+    <%= form.collection_select :team_role_id, TeamRole.all, :id, :name, include_blank: "none", class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :default_unit %>
+    <%= form.text_field :default_unit, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :assembly_label %>
+    <%= form.text_field :assembly_label, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :order_received_email_timer, "Send Order missing parts email after" %>
+    <div class="flex space-x-2">
+      <%= form.number_field :order_email_timer_number, value: team.order_email_timer_number, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <%= form.select :order_email_timer_text, options_for_select(["days", "weeks", "months"]), value: team.order_email_timer_text, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :warn, "Part price warn after" %>
+    <div class="flex space-x-2">
+      <%= form.number_field :warn, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <div>days</div>
+    </div>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :stale, "Part price stale after" %>
+    <div class="flex space-x-2">
+      <%= form.number_field :stale, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      <div>days</div>
+    </div>
+  </div>
+  <%= form.hidden_field :address_id %>
+  <div id="address_fields">
+    <div class="my-5">
+      <%= form.label "Team Address:" %>
+    </div>
+
+    <div class="form-field">
+      <%= form.check_box :use_org_addr,
+        data: {
+          controller: "content-toggle",
+          "turbo-type": "team_address_fields",
+          url1: address_fields_team_path({ show: "true", address_name: "team_address", default_address: team&.team_address&.id || params[:team]&.fetch(:address_id) }),
+          url2: address_fields_team_path({ show: "false", address_name: "team_address", default_address: team&.team_address&.id || params[:team]&.fetch(:address_id) }) 
+        } %>
+      <%= label_tag :use_org_addr, "Use organization address" %>
+    </div>
+
+    <%= turbo_frame_tag "team_address_fields" %>
+  </div>
+
+  <%= form.hidden_field :billing_address_id %>
+  <div id="billing_fields">
+    <div class="my-5">
+      <%= form.label "Billing Address:" %>
+    </div>
+
+    <div class="form-field">
+      <%= form.check_box :use_org_billing,
+        data: {
+          controller: "content-toggle",
+          "turbo-type": "billing_address_fields",
+          url1: address_fields_team_path({ show: "true", address_name: "billing_address", default_address: team.billing_address || params[:team]&.fetch(:billing_address_id) }),
+          url2: address_fields_team_path({ show: "false", address_name: "billing_address", default_address: team.billing_address || params[:team]&.fetch(:billing_address_id) }) 
+          } %>
+      <%= label_tag :use_org_billing, "Use organization billing address" %>
+    </div>
+
+    <%= turbo_frame_tag "billing_address_fields" %>
+  </div>
+
+  <div class="form-field">
+    <%= form.check_box :use_org_phone,
+                  data: {
+                    controller: "content-toggle",
+                    "turbo-type": "phone_field",
+                    url1: phone_field_team_path({ show: "true", id: team.id }),
+                    url2: phone_field_team_path({ show: "false", id: team.id }) 
+                    } %>
+    <%= label_tag :use_org_phone, "Use organization phone number" %>
+  </div>
+
+  <%= turbo_frame_tag "phone_field" %>
+
+  <div class="form-field">
+    <%= form.check_box :show_optional_part_field_1,
+                  data: {
+                    controller: "content-toggle",
+                    "turbo-type": "optional_part_field_1_name_field",
+                    url1: optional_part_field_name_field_team_path({ show: "false", id: team.id, number: 1 }),
+                    url2: optional_part_field_name_field_team_path({ show: "true", id: team.id, number: 1 }) 
+                    } %>
+    <%= label_tag :show_optional_part_field_1 %>
+  </div>
+
+  <%= turbo_frame_tag "optional_part_field_1_name_field" %>
+
+  <div class="form-field">
+    <%= form.check_box :show_optional_part_field_2,
+                  data: {
+                    controller: "content-toggle",
+                    "turbo-type": "optional_part_field_2_name_field",
+                    url1: optional_part_field_name_field_team_path({ show: "false", id: team.id, number: 2 }),
+                    url2: optional_part_field_name_field_team_path({ show: "true", id: team.id, number: 2 }) 
+                    } %>
+    <%= label_tag :show_optional_part_field_2 %>
+  </div>
+
+  <%= turbo_frame_tag "optional_part_field_2_name_field" %>
+
+  <div class="form-field">
+    <%= form.label :default_tax_rate %>
+    <%= form.number_field :default_tax_rate, step: :any %>
+  </div>
+
+  <div class="form-field">
+    <%= form.check_box :enable_manual_line_items %>
+    <%= label_tag :enable_manual_line_items, "Enable manual line item entry" %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :share_jobs_with %>
+    <%= form.select :share_jobs_with, options_from_collection_for_select(
+      current_user.shareable_to_teams, "id", "name", team&.share_jobs_with&.split(",")), {}, multiple: true,
+      class: "dropup",
+      data: { 
+        controller: "tom-select",
+        plugins: "dropdown_input,remove_button",
+        placeholder: "select..."
+      } %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :share_orders_with %>
+    <%= form.select :share_orders_with, options_from_collection_for_select(
+      current_user.shareable_to_teams, "id", "name", team&.share_orders_with&.split(",")), {}, multiple: true,
+      class: "dropup",
+      data: { 
+        controller: "tom-select",
+        plugins: "dropdown_input,remove_button",
+        placeholder: "select..."
+      } %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :share_shipments_with %>
+    <%= form.select :share_shipments_with, options_from_collection_for_select(
+      current_user.shareable_to_teams, "id", "name", team&.share_shipments_with&.split(",")), {}, multiple: true,
+      class: "dropup",
+      data: { 
+        controller: "tom-select",
+        plugins: "dropdown_input,remove_button",
+        placeholder: "select..."
+      } %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :share_parts_with %>
+    <%= form.select :share_parts_with, options_from_collection_for_select(
+      current_user.shareable_to_teams, "id", "name", team&.share_parts_with&.split(",")), {}, multiple: true,
+      class: "dropup",
+      data: { 
+        controller: "tom-select",
+        plugins: "dropdown_input,remove_button",
+        placeholder: "select..."
+      } %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :send_accounting_notifications_to %>
+    <%= form.select :send_accounting_notifications_to, options_from_collection_for_select(
+      User.all.order(:username), "id", "username", team&.send_accounting_notifications_to), {}, multiple: true,
+      class: "dropup",
+      data: { 
+        controller: "tom-select",
+        plugins: "dropdown_input,remove_button",
+        placeholder: "select..."
+      } %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "button primary" %>
+  </div>
+<% end %>

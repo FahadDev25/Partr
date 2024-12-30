@@ -1,0 +1,14 @@
+<%= form_with(model: attachment, class: "contents") do |form| %>
+  <%= render partial: "pages/modal_form_errors", locals: { object: attachment, name: "attachment" }%>
+
+  <div class="form-field">
+    <%= form.file_field :attach_file %>
+  </div>
+
+  <%= form.hidden_field :attachable_id, value: attachable_id %>
+  <%= form.hidden_field :attachable_type, value: attachable_type %>
+
+  <div class="inline">
+    <%= form.submit submit_label, class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

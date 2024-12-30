@@ -1,0 +1,66 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+self_destruct_console:
+  name: go button
+  total_cost: 17
+  total_components: 2
+  total_quantity: 3
+  customer: wile
+  organization: artificers
+  team: trapsmiths
+
+aok:
+  name: Apparatus of Kwalish
+  total_cost: 10
+  total_components: 1
+  total_quantity: 2
+  organization: artificers
+  team: submersibles
+
+no_received_assembly:
+  name: Assembly Not Received
+  total_cost: 5
+  total_components: 1
+  total_quantity: 1
+  organization: artificers
+  team: trapsmiths
+
+empty_assembly:
+  name: empty
+  total_cost: 0
+  total_components: 0
+  total_quantity: 0
+  organization: artificers
+  team: trapsmiths
+
+control_panel:
+  name: Control Panel
+  total_cost: 17
+  total_components: 3
+  total_quantity: 12
+  organization: artificers
+  team: submersibles
+
+switch_array:
+  name: Switch Array
+  total_cost: 5
+  total_components: 1
+  total_quantity: 10
+  organization: artificers
+  team: submersibles
+
+just_subassembly:
+  name: No parts
+  total_cost: 1
+  total_components: 1
+  total_quantity: 1
+  organization: artificers
+  team: submersibles
+
+subassembly:
+  name: One part
+  total_cost: 1
+  total_components: 1
+  total_quantity: 1
+  organization: artificers
+  team: submersibles

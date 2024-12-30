@@ -1,0 +1,39 @@
+<tr id="<%= dom_id vendor %>_row" class="<%= cycle('bg-snow','bg-electric-blue') %>">
+  <td>
+    <span class="th" aria-hidden="true">Name</span>
+    <span><%= link_to vendor.name, vendor, data: { turbo_frame: :_top } %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Address</span>
+    <span><%= (vendor.vendor_address&.address_1 || "") + ((vendor.vendor_address&.address_2 &.!= "") ? ", #{vendor.vendor_address&.address_2}" : "") %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">City</span>
+    <span><%= vendor.vendor_address&.city %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">State</span>
+    <span><%= vendor.vendor_address&.state %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Zip Code</span>
+    <span><%= vendor.vendor_address&.zip_code %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Phone Number</span>
+    <span><%= number_to_phone(vendor.phone_number, area_code: true) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Representative</span>
+    <span><%= vendor.representative %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Website</span>
+    <span>
+      <%= link_to_if vendor.website.present?, vendor.website, vendor.website, target: "_blank" %>
+    </span>
+  </td>
+  <td class="no-th">
+    <%= link_to "Edit", edit_vendor_path(vendor), class: "button edit-button primary normal-top-margin", data: { turbo_frame: "modal" } %>
+  </td>
+</tr>

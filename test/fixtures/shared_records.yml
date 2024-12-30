@@ -1,0 +1,49 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shareable_type: Job
+  shareable: trap
+  team: submersibles
+  organization: artificers
+
+two:
+  shareable_type: Order
+  shareable: button_order
+  team: submersibles
+  organization: artificers
+
+three:
+  shareable_type: Shipment
+  shareable: one
+  team: submersibles
+  organization: artificers
+
+four:
+  shareable_type: Part
+  shareable: big_red_button
+  team: submersibles
+  organization: artificers
+
+five:
+  shareable_type: Part
+  shareable: big_meaty_claw
+  team: trapsmiths
+  organization: artificers
+  
+six:
+  shareable_type: Part
+  shareable: big_red_button
+  team: empty
+  organization: artificers
+
+seven:
+  shareable_type: Assembly
+  shareable: self_destruct_console
+  team: submersibles
+  organization: artificers
+
+eight:
+  shareable_type: Assembly
+  shareable: aok
+  team: trapsmiths
+  organization: artificers

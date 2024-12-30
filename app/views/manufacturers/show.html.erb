@@ -1,0 +1,17 @@
+<div class="mx-auto md:w-2/3 w-full flex crane-lift-bg">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+
+    <%= link_to "Back to Manufacturers", manufacturers_path, class: "button back-button primary mb-3 normal-top-margin" %>
+
+    <%= render @manufacturer %>
+
+    <%= link_to "Related parts", parts_path(manufacturer: @manufacturer) if @manufacturer.parts.any? %>
+    <br>
+
+    <%= link_to "Edit This Manufacturer", edit_manufacturer_path(@manufacturer), class: "button edit-button", data: { turbo_frame: "modal" } %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This Manufacturer", manufacturer_path(@manufacturer), method: :delete, class: "button delete", data: { turbo_confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+</div>

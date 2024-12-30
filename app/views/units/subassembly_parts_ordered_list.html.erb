@@ -1,0 +1,46 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <h1 class="font-bold text-4xl"><%= @part.label %> Parts Ordered</h1>
+  <% end %>
+  <div class="w-full">
+    <div class="flex space-x-5">
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Job:</strong>
+        <%= link_to @unit.job.name, job_path(@unit.job), data: { turbo_frame: :_top } %>
+      </p>
+
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Sub<%= assembly_label %>:</strong>
+        <%= link_to subassembly_name_sequence(@unit_subassembly), assembly_path(@unit_subassembly[:id]), data: { turbo_frame: :_top } %>
+      </p>
+      
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Part:</strong>
+        <%= link_to @part.label, part_path(@part) %>
+      </p>
+
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Quantity:</strong>
+        <%= @unit.subassembly_part_received_required(@part, @unit_subassembly) %>
+      </p>
+    </div>
+    <table class= "table-auto">
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @unit.subassembly_parts_ordered(@unit_subassembly).where(part_id: @part.id).each do |part_ordered| %>
+          <tr>
+            <td><%= link_to part_ordered.order.name, order_path(part_ordered.order), data: { turbo_frame: :_top } %></td>
+            <td><%= number_with_precision(part_ordered.quantity, strip_insignificant_zeros: true) %></td>
+            <td><%= link_to "Edit", edit_line_item_path(part_ordered), class: "button", data: { turbo_frame: :_top } %></td>
+          </tr> 
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

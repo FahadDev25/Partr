@@ -1,0 +1,23 @@
+services:
+  test:
+    build: 
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - .:/partr
+    depends_on:
+      - test-standalone-db
+    env_file: .test.env
+    stdin_open: true
+    tty: true
+    
+  test-standalone-db:
+    image: postgres:14
+    volumes:
+      - pg-standalone-test-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: password
+      
+volumes:
+  pg-standalone-test-data:

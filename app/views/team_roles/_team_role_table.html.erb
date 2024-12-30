@@ -1,0 +1,18 @@
+<%= turbo_frame_tag "team_role_table" do %>
+  <div class="defaultTable">
+    <table class="table-auto" data-controller="table-order" data-turbo-type="team_table">
+      <thead>
+        <tr>
+          <% column_array = [["role_name", "Name"], ["create_destroy_job", "Create and destroy Jobs"], ["all_job", "Access all Jobs"], ["all_order", "Access all Orders"],
+            ["all_shipment", "Access all Shipments"]] %>
+          <%= render partial: "pages/order_by_table_headers", locals: { column_array: } %>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @team_roles %>
+      </tbody>
+    </table>
+    <%= render partial: "pagy/nav", locals: {pagy: @pagy} if @pagy&.pages &.> 1 %>
+  <% end %>
+</div>

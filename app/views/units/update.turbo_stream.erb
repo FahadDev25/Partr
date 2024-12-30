@@ -1,0 +1,11 @@
+<%= turbo_stream.replace "notice" do %>
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+<% end %>
+
+<%= turbo_stream.replace "job_#{@unit.job_id}" do %>
+  <%= render partial: "jobs/job", locals: { job: @unit.job, action_name: "show" } %>
+<% end %>
+
+<%= turbo_stream.replace "unit_#{@unit.id}_row" do %>
+  <%= render partial: "units/unit_listing", locals: { unit: @unit } %>
+<% end %>

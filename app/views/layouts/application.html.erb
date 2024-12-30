@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Partr</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="turbo-refresh-method" content="morph">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="stylesheet" href="https://use.typekit.net/xam4aep.css">
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= favicon_link_tag asset_path('partr_white.svg') %>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <div data-turbo-permanent>
+      <%= turbo_frame_tag "modal" %>
+    </div>
+    <a id="to-top" aria-label="Scroll to top">
+      <%= image_tag("circle-up-solid.svg", alt: 'Link to top of page', id: "to-top-img") %>
+    </a>
+    <header class="bg-jet flex flex-row items-center sm:hidden">
+      <div class="flex flex-col mb-2 mx-2 w-full">
+        <div class="flex flex-row">
+          <div class="flex flex-row items-center">
+            <a id="logo_container" aria-label="Home" href=<%= current_user ? home_team_path(current_user.current_team) : "/" %>>
+              <%= image_tag("partr_white.svg", alt: 'logo', id: "logo") %>
+            </a>
+          </div>
+          <% if current_tenant %>
+            <div id="org-team" class="flex space-x-2 items-center px-4">
+              <% if current_tenant.logo.attached? %>
+                <h1 id="company-logo" aria-label=<%= current_tenant.name %>>
+                  <div class="img-ctn">
+                    <%= image_tag current_tenant.logo.variant(:thumb) %>
+                  </div>
+                </h1>
+              <% else %>
+                <h1><%= current_tenant.name %></h1>
+              <% end %>
+              <% if current_user&.current_team %>
+                <% if current_user.teams.length > 1 || (current_user.is_admin && current_tenant.teams.length > 1) %>
+                  <h2><%= link_to current_user.current_team.name, change_team_team_path, style: "color:grey", data: { turbo_frame: "modal" } %></h2>
+                <% else %>
+                  <h2><%= current_user.current_team.name %></h2>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+          <svg id="mobile-icon" class="ham hamRotate ham1 sm:hidden" viewBox="0 0 100 100" width="50">
+            <path
+              class="ham-line top"
+              d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40"
+              />
+            <path
+              class="ham-line middle"
+              d="m 30,50 h 40"
+              />
+            <path
+              class="ham-line bottom"
+              d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40"
+              />
+          </svg>
+
+          <%= image_tag("partr-header.png", alt: 'silhouettes of workers carrying larger than life supplies', style: 'padding: .75rem; opacity: .2;', class: 'filter-to-snow silhouettes hidden sm:block') %>
+        </div>
+        <div class="flex space-x-2 w-full justify-end items-center">
+          <%= link_to "Changelog", "/pages/changelog", data: { turbo_frame: "modal" } %>
+
+          <% if current_user && (current_user.team_members.count > 1 || current_user.is_admin) %>
+            <%= render partial: "pages/search_form" %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <section class="flex">
+      <% if current_user %>
+        <nav>
+
+
+
+          <a id="logo_container" aria-label="Home" href=<%= current_user ? home_team_path(current_user.current_team) : "/" %>>
+            <%= image_tag("partr_white.svg", alt: 'logo', id: "logo") %>
+          </a>
+          <ul class="w-1/2 sm:w-full leading-6 md:leading-8 flex flex-col space-y-2 mb-0" style="margin-bottom:0 !Important">
+
+
+                     <% if current_user&.current_team %>
+                                   <li class="team-change-option">
+                                       <% if current_user.teams.length > 1 || (current_user.is_admin && current_tenant.teams.length > 1) %>
+                                         <h2 class="font-normal text-[#e4eaee]"><%= link_to current_user.current_team.name, change_team_team_path, data: { turbo_frame: "modal" } %></h2>
+                                       <% else %>
+                                         <h2 class="font-normal text-[#e4eaee] text-center"><%= current_user.current_team.name %></h2>
+                                       <% end %>
+                                   </li>
+                                       <hr class="mx-3 my-3 hidden sm:block">
+                                   <% end %>
+
+
+
+            <% if current_tenant.teams.length > 0 %>
+              <li class="<%= active_class(home_team_path(current_user.current_team)) %>">
+                <%= link_to "Home", home_team_path(current_user.current_team), class: "home" %>
+              </li>
+              <li class="<%= active_class(team_jobs_path(current_user.current_team)) %>">
+                <%= link_to "Jobs", team_jobs_path(current_user.current_team), class: "jobs" %>
+              </li>
+              <li class="<%= active_class(team_orders_path(current_user.current_team)) %>">
+                <%= link_to "Orders", team_orders_path(current_user.current_team), class: "orders" %>
+              </li>
+              <li class="<%= active_class(team_shipments_path(current_user.current_team)) %>">
+                <%= link_to "Shipments", team_shipments_path(current_user.current_team), class: "shipments" %>
+              </li>
+              <li class="<%= active_class(assemblies_path) %>">
+                <%= link_to plural_capital_assembly, assemblies_path, class: "assemblies" %>
+              </li>
+              <li class="<%= active_class(parts_path) %>">
+                <%= link_to "Parts", parts_path, class: "parts" %>
+              </li>
+              <li class="<%= active_class(manufacturers_path) %>">
+                <%= link_to "Manufacturers", manufacturers_path, class: "manufacturers" %>
+              </li>
+              <li class="<%= active_class(vendors_path) %>">
+                <%= link_to "Vendors", vendors_path, class: "vendors" %>
+              </li>
+              <li class="<%= active_class(customers_path) %>">
+                <%= link_to "Customers", customers_path, class: "customers" %>
+              </li>
+            <% end %>
+          </ul>
+          <ul class="w-1/2 sm:w-full leading-6 md:leading-8 space-y-2">
+
+
+            <% if current_user == current_tenant.owner %>
+              <li class="<%= active_class(organization_path(current_tenant)) %>">
+                <%= link_to current_tenant.abbr_name, organization_path(current_tenant), class: "organization" %>
+              </li>
+            <% end %>
+            <% if current_user.is_admin %>
+              <li class="<%= active_class(teams_path) %>">
+                <%= link_to "Teams", teams_path, class: "teams" %>
+              </li>
+
+              <li class="<%= active_class(team_roles_path) %>">
+                <%= link_to "Team Roles", team_roles_path, class: "team_roles" %>
+              </li>
+              <li class="<%= active_class('/users') %>">
+                <%= link_to "Users", users_path, class: "users" %>
+              </li>
+            <% end %>
+            <li class="<%= active_class(edit_user_registration_path(current_user)) %> mt-8">
+             <%= link_to edit_user_registration_path(current_user), class: "flex gap-3 items-center before:content-none" do %>
+               <%= image_tag "user-default-pic.svg", alt: "Account Icon", class: "w-8 h-8" %>
+               <span>Account</span>
+             <% end %>
+            </li>
+           <div class="mx-2">
+             <%= button_to destroy_user_session_path, method: :delete, class: "bg-transparent w-full px-3 py-3 flex items-center justify-start gap-3 hover:bg-transparent m-0" do %>
+                 <%= image_tag "logout-icon.svg", alt: "Logout", class: "w-6 h-6" %>
+                 <span class="-mt-1">Log Out</span>
+             <% end %>
+           </div>
+            <%#= image_tag("screwdriver.png", alt: 'muscle man with giant screwdriver and screw', style: 'padding: .75rem;', class: 'filter-to-white') %>
+          </ul>
+          <div class="gradient"></div>
+        </nav>
+      <% end %>
+      <main class="w-full bg-white px-5 pt-5 flex">
+        <%= yield %>
+      </main>
+    </section>
+  </body>
+</html>

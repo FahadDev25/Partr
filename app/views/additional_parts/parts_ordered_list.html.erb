@@ -1,0 +1,46 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <h1 class="font-bold text-4xl"><%= @additional_part.part.label %> Parts Ordered</h1>
+  <% end %>
+  <div class="w-full">
+    <div class="flex space-x-5">
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Job:</strong>
+        <%= link_to @additional_part.job.name, job_path(@additional_part.job), data: { turbo_frame: :_top } %>
+      </p>
+      
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Part:</strong>
+        <%= link_to @additional_part.part.label, part_path(@additional_part.part) %>
+      </p>
+
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Quantity:</strong>
+        <%= @additional_part.parts_ordered_required.gsub(" \u2714","") %>
+      </p>
+    </div>
+
+    <div class="flex space-x-5">
+      <div>
+        <table class= "table-auto">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Quantity</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @additional_part.parts_ordered.each do |line_item| %>
+              <tr>
+                <td><%= link_to line_item.order.name, order_path(line_item.order), data: { turbo_frame: :_top } %></td>
+                <td><%= number_with_precision(line_item.quantity, strip_insignificant_zeros: true) %></td>
+                <td><%= link_to "Edit", edit_line_item_path(line_item), class: "button edit-button", data: { turbo_frame: :_top } %></td>
+              </tr> 
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+artificers:
+  name: Artificers LLC
+  abbr_name: ART
+  owner: johnsmith
+  phone_number: (555) 555-5555
+  fax_number: (555) 555-5555
+  hq_address: artificers_address
+  billing_address: billing_address
+
+forced_2fa:
+  name: Forced 2FA
+  abbr_name: F2FA
+  owner: no_2fa
+  force_2fa: true
+
+empty_org:
+  name: Empty
+  abbr_name: MT
+  owner: empty_owner

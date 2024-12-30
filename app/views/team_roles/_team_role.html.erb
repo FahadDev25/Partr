@@ -1,0 +1,32 @@
+<tr id="<%= dom_id team_role %>">
+  <td>
+    <span class="th" aria-hidden="true">Name:</span>
+    <span><%= action_name != "show" ? (link_to team_role.role_name, team_role, data: { turbo_frame: :_top }) : team_role.role_name %></span>
+  </td>
+
+  <td>
+    <span class="th" aria-hidden="true">Create and destroy Jobs:</span>
+    <span><%= team_role.create_destroy_job %></span>
+  </td>
+
+  <td>
+    <span class="th" aria-hidden="true">Access all Jobs:</span>
+    <span><%= team_role.all_job %></span>
+  </td>
+
+  <td>
+    <span class="th" aria-hidden="true">Access all Orders:</span>
+    <span><%= team_role.all_order %></span>
+  </td>
+
+  <td>
+    <span class="th" aria-hidden="true">Access all Shipments:</span>
+    <span><%= team_role.all_shipment %></span>
+  </td>
+
+  <% if action_name != "show" %>
+    <td>
+      <%= link_to "Edit", edit_team_role_path(team_role), class: "button primary", data: { turbo_frame: :_top } %>
+    </td>
+  <% end %>
+</tr>

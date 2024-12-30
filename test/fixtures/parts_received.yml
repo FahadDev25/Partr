@@ -1,0 +1,57 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  job: trap
+  shipment: button_shipment
+  assembly: self_destruct_console
+  part: big_red_button
+  quantity: 1
+  organization: artificers
+  line_item: one_button
+
+two:
+  job: heist
+  shipment: claws_shipment
+  assembly: aok
+  part: big_meaty_claw
+  quantity: 1
+  organization: artificers
+  line_item: two_claws
+
+jobless:
+  shipment: jobless
+  part: big_meaty_claw
+  quantity: 1
+  organization: artificers
+
+inventory_claws:
+  job: heist
+  part: big_meaty_claw
+  quantity: 1
+  organization: artificers
+  line_item: two_claws
+
+extra_claw:
+  job: heist
+  shipment: claws_shipment
+  part: big_meaty_claw
+  quantity: 1
+  organization: artificers
+  line_item: two_claws
+
+too_many_buttons:
+  job: trap
+  assembly: self_destruct_console
+  part: big_red_button
+  quantity: 1
+  organization: artificers
+  line_item: one_button
+
+console_pane:
+  job: trap
+  shipment: button_shipment
+  assembly: self_destruct_console
+  part: glass_pane
+  quantity: 2
+  organization: artificers
+  line_item: more_pane

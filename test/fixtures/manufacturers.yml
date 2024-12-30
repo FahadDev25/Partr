@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+acme: 
+  name: ACME
+  vendor: warner_bros
+  organization: artificers
+  team: trapsmiths
+
+lumco: 
+  name: lum the mad company
+  vendor: acq_inc
+  organization: artificers
+  team: submersibles
+
+makes_nothing:
+  name: useless manufacturer
+  organization: artificers
+  team: trapsmiths
+

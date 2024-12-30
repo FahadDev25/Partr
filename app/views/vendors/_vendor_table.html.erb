@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "vendor_table" do %>
+  <div class="defaultTable breakpoint-976">
+    <table class="table-auto" data-controller='table-order' data-turbo-type='vendor_table'>
+      <thead>
+        <% column_array = [['name', "Name"], ['address_1', 'Address'], ["city", "City"], ["state", "State"], ["zip_code", "Zip Code"],
+          ["phone_number", "Phone Number"], ["representative", "Representative"], ["website", "Website"]] %>
+        <tr>
+          <%= render partial: "pages/order_by_table_headers", locals: { column_array: }%>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @vendors.each do |vendor| %>
+          <%= render partial: "vendor_row", locals: { vendor: } %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= render partial: 'pagy/nav', locals: {pagy: @pagy} if @pagy.pages > 1 %>
+<% end %>

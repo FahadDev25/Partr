@@ -1,0 +1,5 @@
+<div class="grid grid-cols-5">
+  <% @part.shared_teams.order(:name).each_with_index do |team, i| %>
+    <div><%= team.name %></div>
+  <% end %>
+</div>

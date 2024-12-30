@@ -1,0 +1,554 @@
+header {
+    border-bottom: 4px solid var(--electric-blue);
+    justify-content: start;
+
+    h1 {
+        color: var(--white-100);
+        padding-left: 2.25rem;
+        padding-top: 2rem;
+    }
+
+    h2 {
+        color: var(--white-100);
+        font-family: var(--body);
+        font-size: 18px;
+        font-weight: normal;
+    }
+
+    &.sign-in {
+        border-bottom: none;
+        position: relative;
+    }
+
+    @media screen and (max-width: 480px) {
+        justify-content: space-between;
+
+        &.sign-in {
+            z-index: 49;
+        }
+    }
+}
+
+#logo {
+    width: auto;
+    height: 100px;
+    padding: 20px;
+    filter: brightness(0) saturate(100%) invert(78%) sepia(41%) saturate(407%) hue-rotate(151deg) brightness(102%) contrast(105%);
+
+    &:hover {
+        filter: unset; // pure white
+    }
+
+    @media screen and (max-width: 480px) {
+        height: 50px;
+        padding: 6px;
+    }
+}
+
+#org-team {
+    min-width: 200px;
+}
+
+#company-logo {
+    display: flex;
+    align-items: center;
+    padding: 0;
+
+    .img-ctn {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        padding: 6px;
+        background-color: var(--celeste);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            object-fit: contain;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        font-size: 12px;
+
+        .img-ctn {
+            width: 40px;
+            height: 40px;
+        }
+
+        & + h2 {
+            font-size: 12px;
+        }
+    }
+}
+
+/*************** Hamburger Menu Icon ******************/
+.ham {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 400ms;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 49;
+
+    .ham-line {
+        fill: none;
+        transition: stroke-dasharray 400ms, stroke-dashoffset 400ms, stroke 400ms;
+        stroke: var(--white-100);
+        stroke-width: 4.5;
+        stroke-linecap: round;
+    }
+}
+
+.hamRotate.active {
+    transform: rotate(45deg);
+}
+
+.hamRotate180.active {
+    transform: rotate(180deg);
+}
+
+.ham1 {
+    .top {
+        stroke-dasharray: 40 139;
+    }
+
+    .bottom {
+        stroke-dasharray: 40 180;
+    }
+
+    &.active {
+        .ham-line {
+            stroke: var(--electric-blue);
+        }
+
+        .top {
+            stroke-dashoffset: -98px;
+        }
+
+        .bottom {
+            stroke-dashoffset: -138px;
+        }
+    }
+}
+/**************** end hamburger menu icon ************************/
+
+nav {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--persian-green);
+    font-size: 16px;
+    max-width: 165px;
+    width: 100%;
+    transition: max-width 0.25s ease-in-out;
+    padding-bottom: 1.5rem;
+    margin-bottom: -1.5rem;
+
+    hr {
+        border-top: 1px solid var(--jet);
+    }
+
+    ul {
+        width: 100%;
+        flex-shrink: 0;
+        overflow: hidden;
+
+        li {
+            padding: 0;
+            opacity: 1;
+            width: 100%;
+            transition: all 0.25s ease-in-out;
+
+            &::before {
+                display: none;
+            }
+
+            a {
+                color: var(--white-200);
+                border-bottom: 4px solid var(--persian-green);
+                padding: 0.25rem 1.25rem;
+                display: inline-flex;
+                text-decoration: none;
+                width: 100%;
+                align-items: center;
+                justify-content: flex-start;
+                vertical-align: text-top;
+
+                &::before {
+                    content: '';
+                    display: block;
+                    margin-right: 12px;
+                    background-repeat: no-repeat;
+                    flex-shrink: 0;
+                    height: 16px;
+                    width: 13px;
+                }
+
+                &.home {
+                    &::before {
+                        background-image: image-url('nav-home-icon.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 3px;
+                    }
+                }
+
+                &.jobs {
+                    &::before {
+                        background-image: image-url('nav-job-icon.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 3px;
+                    }
+                }
+
+                &.orders {
+                    &::before {
+                        background-image: image-url('nav-order-icon.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 2px;
+                    }
+                }
+
+                &.shipments {
+                    &::before {
+                        background-image: image-url('nav-shipment-icon.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 2px;
+                    }
+                }
+
+                &.assemblies {
+                    &::before {
+                        background-image: image-url('people-carry-box-solid.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 3px;
+                    }
+                }
+
+                &.parts {
+                    &::before {
+                        background-image: image-url('nav-parts-icon.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 3px;
+                    }
+                }
+
+                &.manufacturers {
+                    &::before {
+                        background-image: image-url('nav-manufacture-icon.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 3px;
+                    }
+                }
+
+                &.vendors {
+                    &::before {
+                        background-image: image-url('nav-vendor-icon.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 3px;
+                    }
+                }
+
+                &.customers {
+                    &::before {
+                        background-image: image-url('nav-customer-icon.svg');
+                        width: 25px;
+                        height: 25px;
+                        margin-left: 3px;
+                    }
+                }
+
+                &.organization {
+                    &::before {
+                        background-image: image-url('building-solid.svg');
+                        height: 18px;
+                        width: 17px;
+                        margin-left: 4px;
+                    }
+                }
+
+                &.teams {
+                    &::before {
+                        background-image: image-url('people-group-solid.svg');
+                        height: 18px;
+                        width: 21px;
+                    }
+                }
+
+                &.team_roles {
+                    &::before {
+                        background-image: image-url('tags-solid.svg');
+                        height: 21px;
+                        width: 21px;
+                    }
+                }
+
+                &.users {
+                    &::before {
+                        background-image: image-url('user-solid.svg');
+                        height: 18px;
+                        width: 18px;
+                        margin-left: 3px;
+                    }
+                }
+
+                &.account {
+                    &::before {
+                        background-image: image-url('circle-user-solid.svg');
+                        height: 21px;
+                        width: 21px;
+                    }
+                }
+
+                &:hover {
+                    color: var(--jet) !important;
+                    background-color: var(--snow);
+                    border-bottom: 4px solid var(--electric-blue);
+                    text-decoration: none;
+
+                    &.home {
+                        &::before {
+                            background-image: image-url('nav-home-icon.svg');
+                        }
+                    }
+
+                    &.jobs {
+                        &::before {
+                            background-image: image-url('nav-job-icon.svg');
+                        }
+                    }
+
+                    &.orders {
+                        &::before {
+                            background-image: image-url('nav-order-icon.svg');
+                        }
+                    }
+
+                    &.shipments {
+                        &::before {
+                            background-image: image-url('nav-shipment-icon.svg');
+                        }
+                    }
+
+                    &.assemblies {
+                        &::before {
+                            background-image: image-url('people-carry-box-solid.svg');
+                        }
+                    }
+
+                    &.parts {
+                        &::before {
+                            background-image: image-url('nav-parts-icon.svg');
+                        }
+                    }
+
+                    &.manufacturers {
+                        &::before {
+                            background-image: image-url('nav-manufacture-icon.svg');
+                        }
+                    }
+
+                    &.vendors {
+                        &::before {
+                            background-image: image-url('nav-vendor-icon.svg');
+                        }
+                    }
+
+                    &.customers {
+                        &::before {
+                            background-image: image-url('nav-customer-icon.svg');
+                        }
+                    }
+
+                    &.organization {
+                        &::before {
+                            background-image: image-url('building-solid.svg');
+                        }
+                    }
+
+                    &.teams {
+                        &::before {
+                            background-image: image-url('people-group-solid.svg');
+                        }
+                    }
+
+                    &.team_roles {
+                        &::before {
+                            background-image: image-url('tags-solid.svg');
+                        }
+                    }
+
+                    &.users {
+                        &::before {
+                            background-image: image-url('user-solid.svg');
+                        }
+                    }
+
+                    &.account {
+                        &::before {
+                            background-image: image-url('circle-user-dark.svg');
+                        }
+                    }
+                }
+            }
+
+            &.active {
+                a {
+                    background-color: var(--jet);
+
+                    &:hover {
+                        color: var(--jet) !important;
+                        background-color: var(--snow);
+                        border-bottom: 4px solid var(--electric-blue);
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .gradient {
+        background: var(--electric-blue);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    nav {
+        flex-direction: row;
+        font-size: 12px;
+        position: absolute;
+        max-width: 100%;
+        right: 100%;
+        z-index: 48;
+        height: auto;
+        overflow: hidden;
+        padding: 0;
+        transition: right 400ms ease-out;
+
+        ul {
+            padding-top: 20px;
+
+            li {
+                a {
+                    padding: 0 0.75rem;
+
+                    &::before {
+                        margin-right: 6px;
+                    }
+
+                    &.home {
+                        &::before {
+                            width: 14px;
+                            height: 12px;
+                        }
+                    }
+
+                    &.jobs {
+                        &::before {
+                            height: 15px;
+                            width: 15px;
+                            margin-left: 4px;
+                        }
+                    }
+
+                    &.orders {
+                        &::before {
+                            height: 12px;
+                            width: 15px;
+                        }
+                    }
+
+                    &.shipments {
+                        &::before {
+                            height: 11px;
+                            width: 14px;
+                            margin-left: 4px;
+                        }
+                    }
+
+                    &.assemblies {
+                        &::before {
+                            width: 15px;
+                            height: 12px;
+                            margin-left: 2px;
+                        }
+                    }
+
+                    &.parts {
+                        &::before {
+                            height: 14px;
+                            width: 15px;
+                        }
+                    }
+
+                    &.manufacturers {
+                        &::before {
+                            height: 14px;
+                            width: 14px;
+                        }
+                    }
+
+                    &.vendors {
+                        &::before {
+                            height: 14px;
+                            width: 14px;
+                        }
+                    }
+
+                    &.customers {
+                        &::before {
+                            height: 14px;
+                            width: 15px;
+                        }
+                    }
+
+                    &.organization {
+                        &::before {
+                            height: 14px;
+                            width: 13px;
+                        }
+                    }
+
+                    &.teams {
+                        &::before {
+                            height: 13px;
+                            width: 15px;
+                            margin-left: 2px;
+                        }
+                    }
+
+                    &.users {
+                        &::before {
+                            height: 12px;
+                            width: 13px;
+                            margin-left: 4px;
+                        }
+                    }
+
+                    &.account {
+                        &::before {
+                            height: 14px;
+                            width: 14px;
+                            margin-left: 2px;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.mobile-open {
+            right: 0;
+        }
+    }
+}

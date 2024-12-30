@@ -1,0 +1,69 @@
+<%= turbo_frame_tag "search_and_filters" do %>
+  <div data-controller='search-filter' data-turbo-type=<%= target %> data-url="pages/toggle_filters?show_filters=false">
+    <div class="flex justify-between">
+      <div class="search flex items-center space-x-2 mb-2">
+        <strong>Search: </strong>
+        <%= text_field_tag "search", parent_params[:query],
+                            data:{ search_filter_target: 'search' } %>
+        <div><%= submit_tag "\u2716", type: 'button', class: "button delete mb-1 normal-top-margin", data: { search_filter_target: 'clearSearch' } %></div>
+      </div>
+      <% filters_length = parent_params.except(:query).compact.reject { |k,v| v == "any" }.length %>
+      <% toggle_label = "Filters#{show_filters ? "" : "#{filters_length > 0 ? "(#{filters_length})" : ""}"}" %>
+      <%= link_to toggle_label, pages_toggle_filters_path({show_filters:, target:, filters:}.merge!(parent_params)) + "&format=turbo_stream",
+            class: "button secondary mb-3 normal-top-margin filter-#{show_filters ? "open" : "closed"}",
+            data: {
+              turbo_prefetch: false,
+              search_filter_target: "toggle"} %>
+    </div>
+
+    <div class="filter-fields flex <%= show_filters ? '' : 'hidden' %>">
+      <% filters.each_with_index do |filter, i| %>
+        <% case filter[0] %>
+        <% when "text" %>
+          <div class="col-start-<%= i % 5 + 1 %> row-start-<%= i.div(5) + 1 %> flex items-center space-x-2 mb-2">
+            <strong><%= filter[1] %>: </strong>
+            <%= text_field_tag filter[2], parent_params[filter[2].to_sym], data: { search_filter_target: 'filter' } %>
+          </div>
+        <% when "select" %>
+          <div class="col-start-<%= i % 5 + 1 %> row-start-<%= i.div(5) + 1 %> flex items-center space-x-2 mb-2">
+            <strong><%= filter[1] %>: </strong>
+            <%= select_tag filter[2], options_for_select(filter_select_list(filter[2]), parent_params[filter[2].to_sym]), data: { search_filter_target: 'filter' } %>
+          </div>
+        <% when "number" %>
+          <div class="col-start-<%= i % 5 + 1 %> row-start-<%= i.div(5) + 1 %> flex items-center space-x-2 mb-2" data-search-filter-target='range' data-column=<%= filter[2] %> data-round>
+            <strong><%= filter[1] %>: </strong>
+            <% range = parent_params[filter[2].to_sym].class == Array ? parent_params[filter[2].to_sym].join : parent_params[filter[2].to_sym] %>
+            <%= number_field_tag filter[2] + "_min", range && range.split("to")[0], placeholder: "min" %>
+            <%= number_field_tag filter[2] + "_max", range && range.split("to")[1], placeholder: "max" %>
+          </div>
+        <% when "decimal" %>
+          <div class="col-start-<%= i % 5 + 1 %> row-start-<%= i.div(5) + 1 %> flex items-center space-x-2 mb-2" data-search-filter-target='range' data-column=<%= filter[2] %>>
+            <strong><%= filter[1] %>: </strong>
+            <% range = parent_params[filter[2].to_sym].class == Array ? parent_params[filter[2].to_sym].join : parent_params[filter[2].to_sym] %>
+            <%= number_field_tag filter[2] + "_min", range && range.split("to")[0], placeholder: "min", step: 0.01 %>
+            <%= number_field_tag filter[2] + "_max", range && range.split("to")[1], placeholder: "max", step: 0.01 %>
+          </div>
+        <% when "date" %>
+          <div class="col-start-<%= i % 5 + 1 %> row-start-<%= i.div(5) + 1 %> flex items-center space-x-2 mb-2" data-search-filter-target='date' data-column=<%= filter[2] %>>
+            <strong><%= filter[1] %>: </strong>
+            <% range = parent_params[filter[2].to_sym].class == Array ? parent_params[filter[2].to_sym].join : parent_params[filter[2].to_sym] %>
+            <%= date_field_tag filter[2] + "_start", range && range.split("to")[0], placeholder: "start date" %>
+            <%= date_field_tag filter[2] + "_end", range && range.split("to")[1], placeholder: "end date" %>
+          </div>
+        <% when "boolean" %>
+          <div class="col-start-<%= i % 5 + 1 %> row-start-<%= i.div(5) + 1 %> flex items-center space-x-2 mb-2">
+            <strong><%= filter[1] %>: </strong>
+            <%= select_tag filter[2], options_for_select({ either: nil, true: true, false: false }), data: { search_filter_target: 'filter' } %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <div class="col-start-5 row-start-<%= filters.length.div(5) + 2 %> flex items-center space-x-2 mb-2">
+        <%= submit_tag 'Apply', type: 'button', class: "button secondary mb-2 normal-top-margin", data: { search_filter_target: 'apply' } %>
+        <%= submit_tag 'Reset', type: 'button', class: "button delete mb-2 normal-top-margin", data: { search_filter_target: 'reset' } %>
+      </div>
+    </div>
+  </div>
+  <!-- <hr> -->
+
+<% end %>

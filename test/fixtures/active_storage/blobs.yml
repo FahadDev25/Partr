@@ -1,0 +1,5 @@
+# active_storage/blobs.yml
+
+slip1_blob: <%= ActiveStorage::FixtureSet.blob filename: "slip1.png", service_name: "test_fixtures" %>
+
+slip2_blob: <%= ActiveStorage::FixtureSet.blob filename: "slip2.jpg", service_name: "test_fixtures" %>

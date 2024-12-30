@@ -1,0 +1,11 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <%# turbo_frame_tag 'po_number' do %>
+    <%#   <h1>Add Order Details</h1> %>
+    <%# end %>
+    <h1>Add Order Details</h1>
+  <% end %>
+  <div class="mx-auto w-full order-form-height scrollbar-hidden">
+    <%= render "form", team: @team, order: @order %>
+  </div>
+<% end %>

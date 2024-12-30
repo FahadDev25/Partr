@@ -1,0 +1,12 @@
+<div class="w-full">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="flex justify-between items-center">
+    <h1>Additional Parts</h1>
+    <%= link_to "New Additional Part", new_additional_part_path, class: "button add-button primary mb-3 normal-top-margin" %>
+  </div>
+
+  <div id="additional_parts" class="min-w-full">
+    <%= render @additional_parts %>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<%= form_with(model: line_item, class: "contents") do |form| %>
+  <div class="form">
+    <%= render partial: "pages/modal_form_errors", locals: { object: line_item, name: "line item" }%>
+
+    <div class="form-field" style=<%= "display:none;" unless current_user.current_team.enable_manual_line_items %>>
+      <% order_id = params[:order_id] || line_item.order_id %>
+      <%= form.check_box :manual, checked: line_item.created_at.nil? ? current_user.current_team.enable_manual_line_items : line_item.manual,
+            data: {
+              controller: "content-toggle",
+              "turbo-type": "part_or_description_fields",
+              url1: part_fields_line_item_path({ id: line_item.id, order_id:, mode: action_name }),
+              url2: description_fields_line_item_path({ id: line_item.id, order_id: })
+              } %>
+      <%= label_tag :manual %>
+    </div>
+
+    <%= turbo_frame_tag "part_or_description_fields" %>
+
+    <%= render partial: "pages/decimal_field", locals: { model: "line_item", attribute: "quantity", label: "Quantity", preset: line_item.quantity } %>
+
+    <div class="form-field">
+      <%= form.label :discount %>
+      <%= form.number_field :discount, value: line_item.discount || 0.00, step: 0.01 %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :expected_delivery %>
+      <%= form.date_field :expected_delivery %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :status_location, "Status / Location" %>
+      <%= form.text_area :status_location %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :om_warranty, "O&M Warranty" %>
+      <%= form.text_area :om_warranty %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :notes %>
+      <%= form.text_area :notes %>
+    </div>
+
+    <% if action_name == "edit" && !line_item.manual %>
+      <div class="form-field">
+        <%= form.check_box :update_cost %>
+        <%= form.label :update_cost %>
+      </div>
+    <% end %>
+
+    <div class="inline">
+      <%= form.submit class: "button primary" %>
+    </div>
+  </div>
+<% end %>

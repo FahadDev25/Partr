@@ -1,0 +1,21 @@
+{
+    "name": "Dev",
+    "dockerComposeFile": "../docker-compose.dev.yml",
+    "service": "dev-web",//Specify the service name and Rails service to be started as described in docker-compse.yml
+    "workspaceFolder": "/partr",//　The directory to connect to at startup
+
+    // Extensions to use in containers
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "Shopify.ruby-lsp", // Ruby lsp. Replaces deprecated VSCode Ruby and Ruby extensions
+                "ms-azuretools.vscode-docker", // Docker
+                "github.vscode-github-actions" // Github Actions
+            ]
+        }
+    },
+    "postStartCommand": "git config --global --add safe.directory /partr",
+    "mounts": [
+        "type=bind,source=${localEnv:HOME}/.ssh,target=/root/.ssh,readonly"
+    ]
+}

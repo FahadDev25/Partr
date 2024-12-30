@@ -1,0 +1,37 @@
+<div class="flex space-x-5">
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Order:</strong>
+      <%= @order.po_number %>
+    </p>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Job:</strong>
+      <%= @order.job.name || "none" %>
+    </p>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Vendor:</strong>
+      <%= @order.vendor.name || "none" %>
+    </p>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Order date:</strong>
+      <%= @order.order_date %>
+    </p>
+</div>
+
+<% if @not_received_parts.any? %>
+  <table class="table-auto" style="border: 2px solid black; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th style="border: 2px solid black; border-collapse: collapse; padding: 5px;">Part</th>
+        <th style="border: 2px solid black; border-collapse: collapse; padding: 5px;">Quantity Received</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @not_received_parts.each do |part, received| %>
+        <tr>
+          <td style="border: 1px solid black; padding: 5px;"><%= part %></td>
+          <td style="text-align: center; border: 1px solid black; padding: 5px;"><%= received %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

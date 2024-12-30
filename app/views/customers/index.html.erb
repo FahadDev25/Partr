@@ -1,0 +1,29 @@
+<div class="w-full dog-bg">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="lg:flex justify-between items-center">
+    <h1 class="block sm:inline">Customers</h1>
+    <div class="button-row">
+      <%= link_to 'CSV Import', csv_import_form_customer_path, class: "button export-csv-button primary normal-top-margin", data: { turbo_frame: "modal" } %>
+      <%= link_to 'CSV Export', csv_export_customer_path, class: "button export-csv-button normal-top-margin" %>
+      <%= link_to "New Customer", new_customer_path, class: "button add-button primary normal-top-margin", data: { turbo_frame: "modal" } %>
+    </div>
+  </div>
+
+  <%= render partial: "pages/search_filter", 
+              locals: { 
+                show_filters: false, 
+                parent_params: params.except(:controller, :action, :page, :order_by, :order).to_unsafe_h,
+                target: "customer_table",
+                filters: [["text", "Name", "name"],
+                          ["text", "Address", "address"],
+                          ["text", "City", "city"],
+                          ["select", "State", "state"],
+                          ["text", "Zip Code", "zip_code"],
+                          ["text", "Phone Number", "phone_number"]]
+              } %>
+
+  <div id="customers" class="min-w-full">
+    <%= render partial: "customer_table" %>
+  </div>
+</div>

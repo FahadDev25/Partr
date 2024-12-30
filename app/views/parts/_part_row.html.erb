@@ -1,0 +1,49 @@
+<tr id="<%= dom_id part %>_row" class="<%= cycle('bg-snow','bg-electric-blue') %>">
+  <td>
+    <span class="th" aria-hidden="true"><%= current_tenant.abbr_name + " Part Number" %></span>
+    <span><%= link_to part.org_part_number, part, data: { turbo_frame: "modal" } %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Manufacturer</span>
+    <span><%= if part.manufacturer then part.manufacturer.name else "-" end %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Mfg Part Number</span>
+    <span>
+      <%= link_to_if part.url.present?, (part.mfg_part_number || "-"), part.url, target: "_blank" %>
+    </span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Description</span>
+    <span><%= truncate(part.description, 30) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Cost per Unit</span>
+    <span class="staleness-<%= part.staleness %>"><%= number_to_cost(part.cost_per_unit) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">In Stock</span>
+    <span>
+    <%= render partial: "part_in_stock", locals: { part: }%>
+    </span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Notes</span>
+    <span><%= truncate(part.notes, 30) %></span>
+  </td>
+  <% if current_user.current_team.show_optional_part_field_1 %>
+    <td>
+      <span class="th" aria-hidden="true"><%= current_user.current_team.optional_part_field_1_name %></span>
+      <span><%= part.optional_field_1 %></span>
+    </td>
+  <% end %>
+  <% if current_user.current_team.show_optional_part_field_2 %>
+    <td>
+      <span class="th" aria-hidden="true"><%= current_user.current_team.optional_part_field_2_name %></span>
+      <span><%= part.optional_field_2 %></span>
+    </td>
+  <% end %>
+  <td class="no-th">
+    <%= link_to "Edit", edit_part_path(part), class: "button edit-button primary", data: { turbo_frame: "modal" } %>
+  </td>
+</tr>

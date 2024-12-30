@@ -1,0 +1,12 @@
+<div class="w-full">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="flex justify-between items-center">
+    <h1>Sub<%= plural_assembly %></h1>
+    <%= link_to 'New subassembly', new_subassembly_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  </div>
+
+  <div id="subassemblies" class="min-w-full">
+    <%= render @subassemblies %>
+  </div>
+</div>

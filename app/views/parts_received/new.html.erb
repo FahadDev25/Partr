@@ -1,0 +1,8 @@
+<div class="mx-auto md:w-2/3 w-full laptop-girl-bg">
+  <%= link_to "Back to Shipment", shipment_path(params[:shipment_id] || @part_received.shipment_id), class: "button back-button mb-3 normal-top-margin" if params[:shipment_id]%>
+
+  <h1>New Part Received</h1>
+
+  <%= render "form", part_received: @part_received %>
+
+</div>

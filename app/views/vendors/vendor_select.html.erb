@@ -1,0 +1,10 @@
+<%= turbo_frame_tag 'vendor_select' do%>
+    <div id="vendor_ids", class="">
+      <%= label_tag object + '[vendor_id]', 'Vendor', class: 'label_class' %>
+      <%= select_tag object + '[vendor_id]', options_for_select(vendor_list,params[:preset]),
+            data: {
+              controller: "tom-select",
+              plugins: "dropdown_input"
+            } %>
+    </div>
+<% end %>

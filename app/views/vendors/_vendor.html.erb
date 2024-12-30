@@ -1,0 +1,73 @@
+<div class="scrollableTable breakpoint-976">
+  <table id="<%= dom_id vendor %>" class= "table-auto mt-4">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address 1</th>
+        <th>Address 2</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip Code</th>
+        <th>Phone Number</th>
+        <th>Representative</th>
+        <th>Website</th>
+        <% if action_name != "show" %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr>
+        <td>
+          <span class="th" aria-hidden="true">Name</span>
+          <span>
+          <% if action_name != "show" %>
+            <%= link_to vendor.name, vendor %>
+          <% else %>
+            <%= vendor.name %>
+          <% end %>
+          </span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Address 1</span>
+          <span><%= vendor.vendor_address&.address_1 %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Address 2</span>
+          <span><%= vendor.vendor_address&.address_2 %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">City</span>
+          <span><%= vendor.vendor_address&.city %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">State</span>
+          <span><%= vendor.vendor_address&.state %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Zip Code</span>
+          <span><%= vendor.vendor_address&.zip_code %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Phone Number</span>
+          <span><%= number_to_phone(vendor.phone_number, area_code: true) %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Representative</span>
+          <span><%= vendor.representative %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Website</span>
+          <span>
+            <%= link_to_if vendor.website.present?, vendor.website, vendor.website, target: "_blank" %>
+          </span>
+        </td>
+        <% if action_name != "show" %>
+          <td class="no-th">
+            <%= link_to "Edit This Vendor", edit_vendor_path(vendor), class: "button edit-button primary" %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>           
+</div>             

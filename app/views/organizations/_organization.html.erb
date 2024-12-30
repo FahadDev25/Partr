@@ -1,0 +1,105 @@
+<div class="defaultTable">
+  <table class="table-auto mb-4" id="<%= dom_id organization %>">
+    <thead>
+      <tr>
+        <% if organization.logo.attached? %>
+          <th>Logo</th>
+        <% end %>
+        <th>Name</th>
+        <th>Abbr Name</th>
+        <th>Address 1</th>
+        <th>Address 2</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip Code</th>
+        <th>Phone Number</th>
+        <th>Fax Number</th>
+        <th>Owner</th>
+        <% if action_name != "show" %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <% if organization.logo.attached? %>
+          <td>
+            <span class="th" aria-hidden="true">Logo</span>
+            <span><%= image_tag organization.logo.variant(:thumb) %></span>
+          </td>
+        <% end %>
+        <td>
+          <span class="th" aria-hidden="true">Name</span>
+          <span>
+          <% if action_name != "show" %>
+            <%= link_to organization.name, organization %>
+          <% else %>
+            <%= organization.name %>
+          <% end %>
+          </span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Abbr Name</span>
+          <span><%= organization.abbr_name %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Address 1</span>
+          <span><%= organization.hq_address.address_1 %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Address 2</span>
+          <span><%= organization.hq_address.address_2 %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">City</span>
+          <span><%= organization.hq_address.city %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">State</span>
+          <span><%= organization.hq_address.state %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Zip Code</span>
+          <span><%= organization.hq_address.zip_code %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Phone Number</span>
+          <span><%= number_to_phone(organization.phone_number, area_code: true) %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Fax Number</span>
+          <span><%= number_to_phone(organization.fax_number, area_code: true) %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Owner</span>
+          <span><%= organization.owner.username %></span>
+        </td>
+        <% if action_name != "show" %>
+          <td class="no-th">
+            <%= link_to "Edit This Organization", edit_organization_path(organization), class: "button edit-button primary" %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Billing Address:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= organization.billing_address&.address_1 &.+ (organization.billing_address&.address_2.present? ? (", " + organization.billing_address&.address_2) : "") %></td>
+        <td><%= organization.billing_address&.city %></td>
+        <td><%= organization.billing_address&.state %></td>
+        <td><%= organization.billing_address&.zip_code %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

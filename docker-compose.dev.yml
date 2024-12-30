@@ -1,0 +1,54 @@
+services:
+  dev-web:
+    build: 
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - .:/partr
+      - partr-bashhistory:/commandhistory
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - dev-db
+      - dev-redis
+    env_file: .dev.env
+    stdin_open: true
+    tty: true
+    
+  dev-db:
+    image: postgres:14
+    volumes:
+      - pg-dev-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: password
+
+  dev-redis:
+    image: redis:6.2
+    command: redis-server --bind dev-redis
+
+  dev-sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    depends_on:
+      - dev-web      
+      - dev-db
+      - dev-redis
+    volumes:
+      - .:/partr
+    env_file: .dev.env
+    entrypoint: ./entrypoints/sidekiq-entrypoint.sh
+    
+  test-db:
+    image: postgres:14
+    volumes:
+      - pg-test-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      POSTGRES_PASSWORD: password
+      
+volumes:
+  partr-bashhistory:
+  pg-dev-data:
+  pg-test-data:

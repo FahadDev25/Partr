@@ -1,0 +1,27 @@
+<div class="w-full">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="flex justify-between items-center">
+    <h1>Teams</h1>
+    <%= link_to "New Team", new_team_path, class: "button add-button primary mb-3 normal-top-margin", data: { turbo_frame: "modal" } %>
+  </div>
+
+  <%= render partial: "pages/search_filter", 
+              locals: { 
+                show_filters: false, 
+                parent_params: params.except(:controller, :action, :page, :order_by, :order).to_unsafe_h,
+                target: "team_table",
+                filters: [["text", "Name", "name"],
+                          ["text", "Address", "address"],
+                          ["text", "City", "city"],
+                          ["select", "State", "state"],
+                          ["text", "Zip Code", "zip_code"],
+                          ["text", "Phone Number", "phone_number"],
+                          ["text", "Default Unit", "default_unit"],
+                          ["text", "Assembly Label", "assembly_label"]]
+              } %>
+
+  <div id="teams" class="min-w-full">
+    <%= render partial: "team_table" %>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<div class="scrollableTable breakpoint-768 resizable">
+    <table class="table-auto">  
+        <thead>
+            <tr>
+              <% if shipment.order&.line_items&.where(manual: true)&.any? %>
+                <th>SKU</th>
+                <th>Part/Description</th>
+              <% else %>
+                <th><%= capital_assembly %></th>
+                <th>Part</th>
+              <% end %>
+                <th>Quantity</th>
+                <th>Received By</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="shipment-parts-list-table">
+            <% shipment.parts_received.each do |pr| %>
+                <tr>
+                  <% if shipment.order&.line_items&.where(manual: true)&.any? %>
+                    <td>
+                      <span class="th" aria-hidden="true">SKU</span>
+                      <% if pr.line_item&.manual %>
+                        <span class="add-table-link-part"><%= pr.line_item.sku %></span>
+                      <% else %>
+                        <span class="add-table-link-part"><%= link_to pr.part&.label, pr.part, data: { turbo_frame: "modal" } %><%= " (" if pr.assembly %><%= link_to pr.assembly.name, pr.assembly if pr.assembly %><%= ")" if pr.assembly %></span>
+                      <% end %>
+                    </td>
+                    <td>
+                      <span class="th" aria-hidden="true">Part/Description</span>
+                      <% if pr.line_item&.manual %>
+                        <span class="add-table-link-part"><%= pr.description %></span>
+                      <% else %>
+                        <span class="add-table-link-part"><%= pr.part&.description %></span>
+                      <% end %>
+                    </td>
+                  <% else %>
+                    <td>
+                        <span class="th" aria-hidden="true"><%= capital_assembly %></span>
+                        <span class="add-table-link-part"><%= pr.assembly_id ? (link_to pr.assembly_name, assembly_path(pr.assembly_id)) : "-" %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Part</span>
+                        <span class="add-table-link-part"><%= link_to pr.part.label, part_path(pr.part), data: { turbo_frame: "modal" } %></span>
+                    </td>
+                  <% end %>
+                    <td>
+                        <span class="th" aria-hidden="true">Quantity</span>
+                        <span class="add-table-link-part flex items-center justify-between">
+                            <button type="button" class="bg-transparent p-0 minus-btn">
+                                <%= image_tag "minus-icon.svg", alt: "minus Icon" %>
+                            </button>
+                            <span class="shipment-detail-quantity"><%= number_with_precision(pr.quantity, strip_insignificant_zeros: true) %></span>
+                            <button type="button" class="bg-transparent p-0 plus-btn">
+                                <%= image_tag "plus-icon.svg", alt: "plus Icon" %>
+                            </button>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Received By</span>
+                        <span class="add-table-link-part"><%= pr.user&.username %></span>
+                    </td>
+                    <td class="dd-shipment-part-edit-delete-btn td-button-row-parent no-th">
+                        <span class="td-button-row">
+                            <%= button_to edit_part_received_path(pr), method: :get, class: "button edit-button me-3" do %>
+                              <%= image_tag "edit-icon.svg", alt: "Edit Icon" %>
+                            <% end %>
+
+                            <%= button_to pr, method: :delete, class: "button delete" do %>
+                              <%= image_tag "trash-icon.svg", alt: "Delete Icon" %>
+                            <% end %>
+                        </span>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+function ddQuantity() {
+    const quantityContainers = document.querySelectorAll('.add-table-link-part');
+
+    quantityContainers.forEach(container => {
+        const quantitySpan = container.querySelector('.shipment-detail-quantity');
+        const plusBtn = container.querySelector('.plus-btn');
+        const minusBtn = container.querySelector('.minus-btn');
+
+        if (quantitySpan && plusBtn && minusBtn) {
+            let quantity = parseFloat(quantitySpan.textContent);
+            quantitySpan.textContent = quantity;
+
+            plusBtn.addEventListener('click', () => {
+                quantity += 1;
+                quantitySpan.textContent = quantity;
+            });
+
+            minusBtn.addEventListener('click', () => {
+                if (quantity > 1) {
+                    quantity -= 1;
+                    quantitySpan.textContent = quantity;
+                }
+            });
+        }
+    });
+}
+
+ddQuantity();
+
+
+
+</script>

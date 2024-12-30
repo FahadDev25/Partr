@@ -1,0 +1,48 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+trapsmiths:
+  name: Trap Smiths
+  organization: artificers
+  team_address: artificers_address
+  billing_address: billing_address
+  phone_number: (555) 555-5555
+  default_unit: unit
+  assembly_label: assembly
+  show_optional_part_field_1: true
+  show_optional_part_field_2: true
+  optional_part_field_1_name: UL File Number
+  optional_part_field_2_name: UL CCN
+  use_org_addr: true
+  use_org_billing: true
+  use_org_phone: true
+  warn: 3
+  stale: 7
+  default_tax_rate: 0.05
+  role: default
+
+submersibles:
+  name: Underwater Vehicles
+  team_address: submersibles_address
+  phone_number: (123) 456-7890
+  default_unit: square foot
+  organization: artificers
+  warn: 3
+  stale: 7
+  enable_manual_line_items: true
+  default_tax_rate: 0.07
+  role: default
+
+empty:
+  name: empty
+  organization: artificers
+  role: no_create
+
+forced_2fa:
+  name: Forced 2FA
+  organization: forced_2fa
+  role: forced_default
+
+artificer_accounting:
+  name: Accounting
+  organization: artificers
+  role: admin

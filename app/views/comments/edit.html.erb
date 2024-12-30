@@ -1,0 +1,5 @@
+<%= turbo_frame_tag dom_id @comment do %>
+  <%= render "form", comment: @comment %>
+  <%= button_to "Cancel", cancel_edit_comment_path(@comment), method: :get, class: "button" %>
+  <hr>
+<% end %>

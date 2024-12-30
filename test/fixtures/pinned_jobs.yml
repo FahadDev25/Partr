@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organization: artificers
+  team: trapsmiths
+  user: jim
+  job: trap
+
+two:
+  organization: artificers
+  team: submersibles
+  user: bob
+  job: heist

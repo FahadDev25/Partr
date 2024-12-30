@@ -1,0 +1,9 @@
+<div data-controller="inc-dec-quantity">
+  <% model_attribute = model.present? ? "#{model}[#{attribute}]" : attribute %>
+  <%= label_tag model_attribute, label %>
+  <div class="flex space-x-2 items-center">
+    <div class="button normal-top-margin" data-inc-dec-quantity-target="decrement" data-amount=0.25>-0.25</div>
+    <%= number_field_tag model_attribute, preset, step: :any, class: "form-field", data: { inc_dec_quantity_target: "quantity"} %>
+    <div class="button normal-top-margin" data-inc-dec-quantity-target="increment" data-amount=0.25>+0.25</div>
+  </div>
+</div>

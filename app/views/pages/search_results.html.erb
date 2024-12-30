@@ -1,0 +1,31 @@
+<div class="flex flex-col">
+  <% if @jobs.any? || @orders.any? || @shipments.any? %>
+    <h1>Results for '<%= params[:query] %>'</h1>
+  <% else %>
+    <h1>No results found</h1>
+  <% end %>
+  
+  <% if @jobs.any? %>
+    <strong>Jobs:</strong>
+    <% @jobs.each do |job| %>
+      <%= link_to job.name, job_path(job, from_search: true) %>
+    <% end %>
+    <br/>
+  <% end %>
+
+  <% if @orders.any? %>
+    <strong>Orders:</strong>
+    <% @orders.each do |order| %>
+      <%= link_to order.po_number, order_path(order, from_search: true) %>
+    <% end %>
+    <br/>
+  <% end %>
+
+  <% if @shipments.any? %>
+    <strong>Shipments:</strong>
+    <% @shipments.each do |shipment| %>
+      <%= link_to shipment.shipping_number, shipment_path(shipment, from_search: true) %>
+    <% end %>
+    <br/>
+  <% end %>
+</div>

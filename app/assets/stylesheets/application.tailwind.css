@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* force tomselect dropdown to expand up https://stackoverflow.com/questions/78288984/direction-of-the-dropdown-in-tom-select */
+.ts-dropdown.dropup {
+  bottom: 100%;
+  top: auto;
+}
+
+
+/*
+
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-200;
+  }
+}
+
+*/

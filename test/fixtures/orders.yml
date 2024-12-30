@@ -1,0 +1,129 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+button_order:
+  parts_cost: 3.50
+  order_date: 2023-08-25
+  vendor: warner_bros
+  job: trap
+  po_number: KRJO-23001
+  parts_cost: 3.50
+  tax_rate: .05
+  tax_total: 0.18
+  freight_cost: 10.00
+  total_cost: 13.68
+  date_paid: 2024-6-12
+  amount_paid: 13.68
+  payment_method: VISA 123
+  user: admin
+  organization: artificers
+  team: trapsmiths
+  ship_to: button_address
+  billing_address: billing_address
+  include_in_bom: true
+  quote_number: XYZ789
+  fob: Destination
+  needs_reimbursement: false
+  total_quantity: 2
+  quantity_received: 3
+  received: true
+
+claws_order:
+  parts_cost: 5
+  order_date: 2023-08-26
+  vendor: acq_inc
+  job: heist
+  po_number: KRJO-23002
+  tax_rate: .06
+  freight_cost: 3.50
+  total_cost: 8.80
+  user: johnsmith
+  organization: artificers
+  team: submersibles
+  total_quantity: 6
+  quantity_received: 2
+  received: false
+
+empty_order:
+  parts_cost: 0
+  order_date: 2023-08-25
+  vendor: warner_bros
+  job: heist
+  po_number: KRJO-23003
+  tax_rate: .05
+  freight_cost: 0.0
+  total_cost: 0.0
+  user: bob
+  organization: artificers
+  team: trapsmiths
+  total_quantity: 0
+  quantity_received: 0
+  received: false
+
+one_part:
+  parts_cost: 0
+  order_date: 2023-08-24
+  vendor: warner_bros
+  job: just_one_part
+  po_number: KRJO-23004
+  parts_cost: 0.0
+  tax_rate: .04
+  tax_total: 0.0
+  freight_cost: 3.50
+  total_cost: 3.50
+  date_paid: 2024-6-13
+  amount_paid: 3.50
+  payment_method: VISA 456
+  user: bob
+  organization: artificers
+  team: trapsmiths
+  total_quantity: 0
+  quantity_received: 0
+  received: false
+
+jobless_order:
+  parts_cost: 0
+  order_date: 2023-08-25
+  vendor: acq_inc
+  po_number: KRJO-23005
+  tax_rate: .05
+  freight_cost: 0.0
+  total_cost: 0.0
+  user: bob
+  organization: artificers
+  team: trapsmiths
+  total_quantity: 0
+  quantity_received: 0
+  received: false
+
+in_store_order:
+  parts_cost: 0
+  order_date: 2023-07-18
+  vendor: warner_bros
+  po_number: KRJO-23006
+  tax_rate: .05
+  freight_cost: 0.0
+  total_cost: 0.0
+  user: bob
+  organization: artificers
+  team: trapsmiths
+  mark_line_items_received: true
+  total_quantity: 0
+  quantity_received: 0
+  received: false
+
+no_received_order:
+  job: second_trap
+  parts_cost: 8.50
+  order_date: 2023-07-18
+  vendor: warner_bros
+  po_number: KRJO-00000
+  tax_rate: .05
+  freight_cost: 0.0
+  total_cost: 0.0
+  user: bob
+  organization: artificers
+  team: trapsmiths
+  mark_line_items_received: false
+  total_quantity: 2
+  quantity_received: 0
+  received: false

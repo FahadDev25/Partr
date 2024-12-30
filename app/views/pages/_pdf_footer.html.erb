@@ -1,0 +1,10 @@
+<div style="width: 100%;">
+  <p style="text-align: center; font-size: 12px; font-family: Arial, sans-serif;">
+    <i>
+      <%= "#{object.organization.abbr_name}" %>
+      <br><%= "#{object.organization.hq_address&.city}, #{object.organization.hq_address&.state} #{object.organization.hq_address&.zip_code}" %>
+      <br><%= "Phone: #{number_to_phone(object.organization.phone_number, area_code: true)}" %>
+      <br><%= "Fax: #{number_to_phone(object.organization.fax_number, area_code: true)}" %>
+    </i>
+  </p>
+</div>

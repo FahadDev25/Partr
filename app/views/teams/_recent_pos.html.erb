@@ -1,0 +1,51 @@
+<hr>
+<h1>Recent Orders</h1>
+<div class="defaultTable breakpoint-768">
+    <table class="table-auto">  
+        <thead>
+            <tr>
+                <th>PO Number</th>
+                <th>Job</th>
+                <th>Vendor</th>
+                <th>Creation Date</th>
+                <th>Tax Rate</th>
+                <th>Part Cost</th>
+                <th>Freight Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% recent_orders.each do |order| %>
+                <tr class="<%= cycle("bg-snow","bg-electric-blue") %>">
+                    <td>
+                        <span class="th" aria-hidden="true">PO Number</span>
+                        <span><%= link_to order.po_number, order_path(order) %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Job</span>
+                        <span><%= order&.job&.name || "-" %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Vendor</span>
+                        <span><%= order&.vendor&.name || "-" %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Creation Date</span>
+                        <span><%= local_time(order.created_at, '%Y-%m-%d') %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Tax Rate</span>
+                        <span><%= number_to_percent(order.tax_rate.to_f * 100) %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Part Cost</span>
+                        <span><%= number_to_currency(order.parts_cost) %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Freight</span>
+                        <span><%= number_to_currency(order.freight_cost) %></span>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>    
+    </table>
+</div>

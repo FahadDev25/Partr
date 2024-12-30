@@ -1,0 +1,10 @@
+<div>
+  <p>
+    <strong>Order: </strong>
+    <%= link_to @order.po_number, @order %>
+  </p>
+  <p>
+    <strong>User: </strong>
+    <%= @order.user.full_name %>
+  </p>
+</div>

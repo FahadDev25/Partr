@@ -1,0 +1,9 @@
+one:
+  record: one (Comment)
+  name: content
+  body: <p>Test 1</p>
+
+two:
+  record: two (Comment)
+  name: content
+  body: <p>Test 2</p>

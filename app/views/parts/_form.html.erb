@@ -1,0 +1,87 @@
+<%= form_with(model: part, class: "contents") do |form| %>
+  <div class="form">
+    <%= render partial: "pages/modal_form_errors", locals: { object: part, name: "part" }%>
+
+    <div class="form-field">
+      <%= form.label :org_part_number, "#{part.organization.abbr_name} part number", class: "#{current_user.is_admin ? "required" : "disabled"}" %>
+      <%= form.text_field :org_part_number, value: part.org_part_number || Part.next_org_part_number, readonly: !current_user.is_admin,
+        class: current_user.is_admin ? "" : "disabled" %>
+    </div>
+
+    <div class = "flex space-x-2 w-full">
+      <div class="form-field">
+        <%= form.label :manufacturer_id, class: "required" %>
+        <%= form.select :manufacturer_id, options_for_select(manufacturer_select_list(part, "none")), {}, value: part.manufacturer,
+          data: { 
+            controller: "tom-select",
+            plugins: "dropdown_input"
+          } %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :mfg_part_number, class: "required" %>
+        <%= form.text_field :mfg_part_number, rows: 1 %>
+      </div>
+    </div>
+
+    <div class="flex space-x-2">
+      <%= render partial: "pages/decimal_field", locals: { model: "part", attribute: "in_stock", label: "In stock", preset: part.in_stock } %>
+      
+      <div class="form-field">
+        <%= form.label :unit %>
+        <%= form.text_field :unit, value: part.unit || current_user.current_team.default_unit, rows: 1 %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :cost_per_unit, class: "required" %>
+        <%= form.number_field :cost_per_unit, value: part.cost_per_unit, step: :any %>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :description %>
+      <%= form.text_area :description, rows: 4 %>
+    </div>
+
+    <div class="flex space-x-2">
+      <div class="form-field">
+        <%= form.label :optional_field_1 %>
+        <%= form.text_field :optional_field_1, rows: 1 %>
+      </div>
+
+      <div class="form-field">
+        <%= form.label :optional_field_2 %>
+        <%= form.text_field :optional_field_2, rows: 1 %>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :url %>
+      <%= form.text_field :url, rows: 1 %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :notes %>
+      <%= form.text_area :notes, rows: 4 %>
+    </div>
+
+    <% if part.team == current_user.current_team || part.team.nil? %>
+      <div class="form-field">
+        <%= form.label :share_with %>
+        <%= form.select :share_with, options_from_collection_for_select(
+          current_user.shareable_to_teams, "id", "name", part.id.present? ? part&.shared_teams&.pluck(:id) : current_user.current_team.share_parts_with&.split(",")),
+          {}, multiple: true,
+          class: "dropup",
+          data: { 
+            controller: "tom-select",
+            plugins: "dropdown_input,remove_button",
+            placeholder: "select..."
+          } %>
+      </div>
+    <% end %>
+
+    <div class="inline">
+      <%= form.submit class: "button primary" %>
+    </div>
+  </div>
+<% end %>

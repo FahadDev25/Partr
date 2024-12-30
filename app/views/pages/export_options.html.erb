@@ -1,0 +1,26 @@
+<%= turbo_frame_tag "export_options" do %>  
+  <% if format_options.present? %>
+    <div id="format_options", class="dd-form-field">
+      <%= label_tag :export_format, "Export Format", class: 'label_class m-0' %>
+      <%= select_tag :export_format, options_for_select(format_options) %>
+    </div>
+  <% else %>
+    <div id="format_options", class="hidden dd-form-field">
+      <%= label_tag :export_format, "Export Format", class: 'label_class' %>
+      <%= select_tag :export_format, options_for_select([]) %>
+    </div>
+  <% end %>
+  <% if boolean_options.present? %>
+    <% boolean_options.each do |key, value| %>
+      <div id="<%= key %>">
+        <%= check_box_tag key, 1, value["default"], class: 'accent-pok' %>
+        <%= label_tag key, value["label"], class: 'label_class' %>
+      </div>
+    <% end %>
+  <% else %>
+  <% end %>
+<% end %>
+
+<style>
+
+</style>

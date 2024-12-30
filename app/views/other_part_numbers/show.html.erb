@@ -1,0 +1,14 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+
+    <%= link_to "Back to other_part_numbers", part_other_part_numbers_path(@other_part_number.part), class: "button back-button" %>
+
+    <%= render @other_part_number %>
+
+    <%= link_to "Edit This Other Part Number", edit_other_part_number_path(@other_part_number), class: "button edit-button" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This Other Part Number", other_part_number_path(@other_part_number), method: :delete, class: "button delete" %>
+    </div>
+  </div>
+</div>

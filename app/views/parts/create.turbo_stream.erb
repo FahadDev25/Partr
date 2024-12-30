@@ -1,0 +1,5 @@
+<%= turbo_stream_action_tag "refresh", target: "part_table" %>
+
+<%= turbo_stream.replace 'modal' do %>
+  <%= render template: "parts/show",  locals: { action_name: "show" } %>
+<% end %>

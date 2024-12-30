@@ -1,0 +1,38 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+button_shipment:
+  from: ACME
+  shipping_number: 123456
+  date_received: 2023-08-25
+  notes: MyText
+  job: trap
+  order: button_order
+  organization: artificers
+  team: trapsmiths
+
+claws_shipment:
+  from: Aqc Inc
+  shipping_number: 321654
+  date_received: 2023-08-25
+  notes: test
+  job: heist
+  order: claws_order
+  organization: artificers
+  team: submersibles
+
+jobless:
+  from: Meco
+  shipping_number: 654321
+  date_received: 2023-08-24
+  notes: fragile
+  organization: artificers
+  team: trapsmiths
+
+no_received_shipment:
+  from: none
+  order: no_received_order
+  shipping_number: 000000
+  date_received: 2023-08-24
+  notes: none
+  organization: artificers
+  team: trapsmiths

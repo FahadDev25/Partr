@@ -1,0 +1,103 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+big_red_button:
+  org_part_number: 1000001
+  mfg_part_number: brb101
+  description: big and red
+  cost_per_unit: 3.50
+  in_stock: 2
+  notes: do not press
+  manufacturer: acme
+  optional_field_1: 123abc
+  optional_field_2: 123abc
+  organization: artificers
+  team: trapsmiths
+  last_price_update: <%= 2.days.ago %>
+
+glass_pane:
+  org_part_number: 1000002
+  mfg_part_number: gbc101
+  description: just asking to be smashed
+  cost_per_unit: 10.00
+  in_stock: 4
+  notes: break in case of emegency
+  manufacturer: acme
+  optional_field_1: 456xyz
+  optional_field_2: 456xyz
+  organization: artificers
+  team: trapsmiths
+  last_price_update: <%= 4.days.ago %>
+
+big_meaty_claw:
+  org_part_number: 1000003
+  mfg_part_number: bmc123
+  description: actually made of metal or something
+  cost_per_unit: 5
+  in_stock: 3
+  notes: for pinching
+  manufacturer: lumco
+  optional_field_1: 789abc
+  optional_field_2: 789abc
+  organization: artificers
+  team: submersibles
+  last_price_update: <%= 8.days.ago %>
+
+no_received_part:
+  org_part_number: 1000004
+  mfg_part_number: nrp000
+  description: none received
+  cost_per_unit: 5
+  in_stock: 1
+  notes: really none
+  manufacturer: acme
+  organization: artificers
+  team: trapsmiths
+
+empty:
+  org_part_number: 1000005
+  mfg_part_number: 000-000
+  description: n/a
+  cost_per_unit: 0
+  in_stock: 0
+  notes: n/a
+  organization: artificers
+  team: trapsmiths
+
+lever:
+  org_part_number: 1000006
+  mfg_part_number: lev123
+  description: Big lever
+  cost_per_unit: 1
+  in_stock: 3
+  notes: Pull the lever, Kronk
+  manufacturer: lumco
+  optional_field_1: ver456
+  optional_field_2: ver456
+  organization: artificers
+  team: submersibles
+
+dial:
+  org_part_number: 1000007
+  mfg_part_number: dia123
+  description: Big dial
+  cost_per_unit: 11
+  in_stock: 2
+  notes: goes to 11
+  manufacturer: lumco
+  optional_field_1: ial456
+  optional_field_2: ial456
+  organization: artificers
+  team: submersibles
+
+switch:
+  org_part_number: 1000008
+  mfg_part_number: swi123
+  description: Flippy switch
+  cost_per_unit: 0.50
+  in_stock: 12
+  notes: what does it do?
+  manufacturer: lumco
+  optional_field_1: tch456
+  optional_field_2: tch456
+  organization: artificers
+  team: submersibles

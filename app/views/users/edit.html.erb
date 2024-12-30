@@ -1,0 +1,12 @@
+<div class="mx-auto md:w-2/3 w-full clipboard-man-bg">
+  <%= link_to "Show This User", @user, class: "button show-button secondary mb-3 normal-top-margin" %>
+  <%= link_to "Back to Users", users_path, class: "button back-button primary mb-3 normal-top-margin" %>
+  <% if current_user.is_admin %>
+    <h1>Editing User</h1>
+  <% else %>
+    <h1>Account Options</h1>
+  <% end %>
+
+  <%= render "form", user: @user %>
+
+</div>

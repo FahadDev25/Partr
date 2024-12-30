@@ -1,0 +1,140 @@
+<%= turbo_frame_tag "shipment_table" do %>
+
+  <div class="shipments-table-inner bg-[#4F807B0D] border border-[#4F807B] rounded-md relative mb-5">
+
+       <%= render "shipments/filter_all_shipments_table" %>
+
+        <div class="sm:flex justify-between items-center mb-5">
+            <h3 class="text-md text-dd-black font-bold text-lg sm:text-[18px] mb-3 sm:mb-0">All Shipments</h3>
+            <div class="flex items-stretch shipments-table-header-btns justify-between sm:justify-start">
+                <button class="text-persian-green bg-white-100 hover:bg-white-100 border border-persian-green mt-0 px-3 py-2 rounded-md text-base sm:text-base w-full sm:w-auto">
+                    Unclaimed Shipments
+                </button>
+                <button class="shipment-table-filter-btn bg-white-100 border border-persian-green mt-0 px-3 py-2 rounded-md">
+                    <%= image_tag "filter-persian-green.svg", alt: "arrow up" %>
+                </button>
+            </div>
+        </div>
+      <div class="shipments-table-wrapper">
+        <table class="shipments-table table-auto" data-controller="table-order" data-turbo-type="shipment_table">
+          <thead>
+            <tr>
+              <% column_array = [["shipping_number", "Shipping Number"], ["job", "Job"], ["order", "Order"], ["from", "From"], ["user", "Received By"],
+                                 ["date_received", "Date Received"], ["notes", "Notes"], ["status", "Status"]] %>
+              <%= render partial: "pages/order_by_table_headers", locals: { column_array: } %>
+
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @shipments.each do |shipment| %>
+              <tr id="<%= dom_id shipment %>_row" class="shipments-table-row <%= cycle("bg-snow","bg-electric-blue") %>">
+                <td>
+                  <span><%= link_to placeholder(shipment.shipping_number, "none"), shipment, data: { turbo_frame: :_top } %></span>
+                </td>
+                <td>
+                  <span><%= shipment.job ? link_to(shipment.job.name, shipment.job, data: { turbo_frame: :_top }) : "-" %></span>
+                </td>
+                <td>
+                  <span>
+                    <%= shipment.order ? link_to(shipment.order.po_number, shipment.order, data: { turbo_frame: :_top }) : "-" %>
+                  </span>
+                </td>
+                <td>
+                  <span><%= shipment.from %></span>
+                </td>
+                <td>
+                  <span><%= shipment.user&.username %></span>
+                </td>
+                <td>
+                  <span><%= shipment.date_received %></span>
+                </td>
+                <td>
+                  <span><%= shipment.notes && shipment.notes.length > 15 ? shipment.notes[0..14] + "..." : shipment.notes %></span>
+                </td>
+                <td>
+                  <div class="text-persian-green flex items-center gap-3 rounded-2xl px-4 py-[5px]">
+                    <%= image_tag "double-tick-persian-green.svg", alt: "arrow up" %>
+                        Received</div>
+                </td>
+                <td class="no-th">
+                    <button class="table-row-collapsable-btn">
+                        <%= image_tag "chevron-down-persian-green.svg", alt: "arrow up" %>
+                    </button>
+                </td>
+
+                <tr  class="shipments-table-row-collapsable">
+                    <td colspan="9" class="p-3 hidden">
+                        <table class="shipment-nested-table">
+                            <thead>
+                                <tr>
+                                    <th>Parts</th>
+                                    <th>Quantity Received</th>
+                                    <th>Receiving Date</th>
+                                    <th>Received By</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                          <tbody>
+                            <tr>
+                            <td>Electrical Copper Wires Rolls</td>
+                             <td>5</td>
+                             <td>2018-04-23</td>
+                             <td>Michael Smith</td>
+                             <td> <div class="text-persian-green flex items-center bg-[#18A99933] rounded-2xl px-4 py-[5px]"><%= image_tag "double-tick-persian-green.svg", alt: "arrow up" %> Received</div></td>
+                            </tr>
+                            <tr>
+                                <td>Electrical Copper Wires Rolls</td>
+                                 <td>5</td>
+                                 <td>2018-04-23</td>
+                                 <td>Michael Smith</td>
+                                 <td>
+                                   <div class="text-persian-green flex items-center bg-[#18A99933] rounded-2xl px-4 py-[5px]">
+                                     <%= image_tag "double-tick-persian-green.svg", alt: "arrow up" %>
+                                     Received
+                                   </div>
+                                 </td>
+                            </tr>
+
+                            <tr>
+                                <td>Electrical Copper Wires Rolls</td>
+                                 <td>5</td>
+                                 <td>2018-04-23</td>
+                                 <td>Michael Smith</td>
+                                 <td>
+                                    <div class="text-persian-green flex items-center bg-[#18A99933] rounded-2xl px-4 py-[5px]">
+                                        <%= image_tag "double-tick-persian-green.svg", alt: "arrow up" %>
+                                        Received
+                                    </div>
+                                 </td>
+                            </tr>
+
+                            <tr>
+                                 <td>Electrical Copper Wires Rolls</td>
+                                 <td>5</td>
+                                 <td>2018-04-23</td>
+                                 <td>Michael Smith</td>
+                                 <td>
+                                   <div class="text-persian-green flex items-center bg-[#18A99933] rounded-2xl px-4 py-[5px]">
+                                        <%= image_tag "double-tick-persian-green.svg", alt: "arrow up" %>
+                                        Received
+                                   </div>
+                                 </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                    </td>
+                </tr>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+  </div>
+  <%= render partial: "pagy/nav", locals: {pagy: @pagy} if @pagy.pages > 1 %>
+<% end %>
+
+<script>
+
+
+</script>

@@ -1,0 +1,50 @@
+<h1>Recent Orders</h1>
+<div class="defaultTable">
+    <table class="table-auto">  
+        <thead>
+            <tr>
+                <th>PO Number</th>
+                <th>Job</th>
+                <th>Vendor</th>
+                <th>Order Date</th>
+                <th>Tax Rate</th>
+                <th>Part Cost</th>
+                <th>Freight Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% recent_orders.each do |o| %>
+                <tr class="<%= cycle("bg-snow","bg-electric-blue") %>">
+                    <td>
+                        <span class="th" aria-hidden="true">PO Number</span>
+                        <span><%= link_to o.po_number, order_path(o) %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Job</span>
+                        <span><%= o&.job&.name || "-" %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Vendor</span>
+                        <span><%= o&.vendor&.name || "-" %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Order Date</span>
+                        <span><%= o.order_date %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Tax Rate</span>
+                        <span><%= "#{((o&.tax_rate || 0) * 100).to_i}%" %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Part Cost</span>
+                        <span><%= number_to_cost(o.parts_cost) %></span>
+                    </td>
+                    <td>
+                        <span class="th" aria-hidden="true">Freight Cost</span>
+                        <span><%= number_to_cost(o.freight_cost) %></span>
+                    </td>
+                </tr>
+            <% end %>
+        </tbody>    
+    </table>
+</div>

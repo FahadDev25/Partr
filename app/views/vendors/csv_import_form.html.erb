@@ -1,0 +1,13 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <div>
+      <h1>CSV Import</h1>
+    </div>
+  <% end %>
+  <%= form_with url: csv_import_vendor_path, method: :post do |form| %>
+    <div id="vendor-import">
+      <%= form.file_field :csv_import, accept: 'text/csv', class: "mb-2" %>
+      <%= form.submit 'Import', class: "button" %>
+    </div>
+  <% end %>
+<% end %>

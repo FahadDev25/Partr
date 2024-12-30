@@ -1,0 +1,11 @@
+<%= "Job: #{@unit.job.name}" %>
+<%= "Assembly: #{@unit.assembly.name}" %>
+<%= "Quantity: #{@unit.quantity}" %>
+
+<%= hash_table("Part", "Quantity Received", @mismatched_parts) %>
+
+<% @subassembly_mismatched_parts.each do |subassembly, mismatched_parts| %>
+<%= "Subassembly: #{subassembly}" %>
+
+<%= array_table("Part", "Quantity Received", mismatched_parts) %>
+<% end %>

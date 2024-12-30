@@ -1,0 +1,153 @@
+<!-- Sample form fields for testing the CSS styles for checkboxes and radio buttons 
+  
+  <div class="form-field">
+    <input checked type="checkbox" name="test" />
+    <label for="test">Test</label>
+  </div>
+
+  <div class="form-field">
+    <fieldset>
+      <legend>Select a shipment option:</legend>
+
+      <label for="free" class="form-control">
+        <input type="radio" id="free" name="shipment" value="free" checked />
+        Free
+      </label>
+
+      <label for="flat" class="form-control">
+        <input type="radio" id="flat" name="shipment" value="flat" />
+        Flat rate
+      </label>
+
+      <label for="weight" class="form-control disabled">
+        <input type="radio" id="weight" name="shipment" value="weight" disabled />
+        By weight
+      </label>
+    </fieldset>
+  </div>
+  -->
+        
+<%= form_with(model: [team, job], class: "contents") do |form| %>
+  <div class="form">
+    <%= render partial: "pages/modal_form_errors", locals: { object: job, name: "job" }%>
+
+    <!-- Sample error notification, to use for testing
+
+    <div id="error_explanation" class="popup shadow rounded-md p-4 mx-auto">
+      <div class="flex space-x-4">
+        <div class="rounded-full bg-amber h-10 w-10"></div>
+          <div class="flex-1">
+            <div class="flex justify-between">
+              <h2>SOMETHING prohibited this job from being saved:</h2>
+              <a id="open-errors" class="error-toggle" name="open-errors" href="#"><i class="fa-solid fa-chevron-down"></i></a>
+              <a id="close-errors" class="error-toggle hidden" name="close-errors" href="#"><i class="fa-solid fa-chevron-up"></i></a>
+            </div>
+            <ul id="errors">
+              <li>Mama made me mash my m&ms.</li>
+              <li>The brown fox jumped over the lazy dog.</li>
+              <li>Geologically, Mars is fairly active, with dust devils sweeping across the landscape and marsquakes (Martian analog to earthquakes) trembling underneath the ground. The surface of Mars hosts a large shield volcano (Olympus Mons) and one of the largest canyons in the Solar System (Valles Marineris).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div data-controller="dynamic-select">
+      <% if current_user.current_team.role.all_job %>
+        <div class="form-field">
+          <%= form.label :team_id, class: "required" %>
+          <%= form.select :team_id, team_select_list("none"), {},
+            data: {
+              dynamic_select_target: "select",
+              "turbo-type": "project_manager_select",
+              url: project_manager_select_team_path,
+              object: "user",
+              preset: job.project_manager_id
+            } %>
+        </div>
+      <% end %>
+      
+      <%= turbo_frame_tag "project_manager_select" do %>
+        <div class="form-field">
+          <%= form.label :project_manager_id, class: "required" %>
+          <%= form.collection_select :project_manager_id, User.where(id: current_user.current_team.team_members.pluck(:user_id)), :id, :username, prompt: "Select",
+            include_blank: "none" %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if action_name != "edit" && action_name != "update" %>
+      <%= form.label :job_number_prefix %>
+      <%= form.text_field :job_number_prefix, value: current_tenant.job_number_prefix, 
+        data:{ controller: 'text-complete', 'turbo-type': 'job_number', url: next_job_number_job_path } %>
+    <% end %>
+
+    <div class="form-field">
+      <%= form.label :job_number %>
+      <%= turbo_frame_tag "job_number" do %>
+        <%= form.text_field :job_number %>
+      <% end %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :name, class: "required" %>
+      <%= form.text_field :name, autocomplete: "disabled" %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :status, class: "required" %>
+      <%= form.select :status, ["Pending", "Open", "Closed"] %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :start_date, class: "required" %>
+      <%= form.date_field :start_date, value: job.start_date || Date.today %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :deadline, class: "required" %>
+      <%= form.date_field :deadline %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :customer_id, class: "required" %>
+      <%= form.select :customer_id, options_for_select(customer_select_list(job, "none")), {} %>
+    </div>
+
+    <div class="form-field">
+      <%= form.check_box :use_cust_addr,
+        data: {
+          controller: "content-toggle",
+          "turbo-type": "address_fields",
+          url1: address_fields_job_path({ show: "true", id: job.id }),
+          url2: address_fields_job_path({ show: "false", id: job.id }) 
+          } %>
+      <%= form.label :use_cust_addr, "Use Customer Address" %>
+    </div>
+
+    <%= turbo_frame_tag "address_fields" %>
+
+    <div class="form-field">
+      <%= form.label :default_tax_rate, "Default Tax Rate for Orders" %>
+      <%= form.number_field :default_tax_rate, step: :any %>
+    </div>
+
+    <% if job.team == current_user.current_team || job.team.nil? %>
+      <div class="form-field">
+        <%= form.label :share_with %>
+        <%= form.select :share_with, options_from_collection_for_select(
+          current_user.shareable_to_teams, "id", "name", (job.id.present? ? job&.shared_teams&.pluck(:id) : current_user.current_team.share_jobs_with&.split(","))),
+          {}, multiple: true, class: "dropup",
+          data: { 
+            controller: "tom-select",
+            plugins: "dropdown_input,remove_button",
+            placeholder: "select..."
+          } %>
+      </div>
+    <% end %>
+
+    <div class="inline">
+      <%= form.submit class: "button" %>
+    </div>
+  </div>
+<% end %>

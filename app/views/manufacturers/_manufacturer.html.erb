@@ -1,0 +1,38 @@
+<div class="scrollableTable breakpoint-768">
+  <table class="table-auto mb-4" id="<%= dom_id manufacturer %>">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Vendor</th>
+        <% if action_name != "show" %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="th" aria-hidden="true">Name</span>
+          <span>
+          <% if action_name != "show" %>
+            <%= link_to manufacturer.name, manufacturer %>
+          <% else %>
+            <%= manufacturer.name %>
+          <% end %>
+          </span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Vendor</span>
+          <span>
+            <%= if manufacturer.vendor then manufacturer.vendor.name else "Vendor Missing" end %>
+          </span>
+        </td>
+        <% if action_name != "show" %>
+          <td class="no-th">
+            <%= link_to "Edit This Manufacturer", edit_manufacturer_path(manufacturer), class: "button edit-button primary normal-top-margin" %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>

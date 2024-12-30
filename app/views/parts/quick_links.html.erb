@@ -1,0 +1,9 @@
+<div class="w-2/3">
+  <h1><%= @part.label %></h1>
+  <div class="grid-cols-1">
+    <div><%= link_to "Show Part", @part, class: "button add-button primary w-full aspect-[4/1]", data: { turbo_frame: "modal" } %></div>
+    <div><%= link_to "Add to Job", new_additional_part_path(part_id: @part.id), class: "button add-button primary w-full aspect-[4/1]", data: { turbo_frame: "modal" } %></div>
+    <div><%= link_to "Add to #{capital_assembly}", new_component_path(part_id: @part.id), class: "button add-button primary w-full aspect-[4/1]", data: { turbo_frame: "modal" } %></div>
+  </div>
+</div>
+

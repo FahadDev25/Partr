@@ -1,0 +1,38 @@
+<div class="flex flex-col">
+  <h2><%= t "devise.invitations.new.header" %></h2>
+
+  <%= form_for(:user, as: "user", url: "/users/invitation", html: { method: :post }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <% resource.class.invite_key_fields.each do |field| -%>
+      <div class="field">
+        <%= f.label field %><br />
+        <%= f.text_field field %>
+      </div>
+    <% end -%>
+
+    <div class="field">
+      <%= f.label :username %><br />
+      <%= f.text_field :username %>
+    </div>   
+
+    <div class="field">
+      <%= f.label :team_id, "Team" %><br />
+      <%= f.select :team_id, options_for_select(Team.all.map { |t| [t.name, t.id] }) %>
+    </div>
+
+    <div class="my-5">
+      <%= check_box_tag :is_admin, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", id: "admin_checkbox" %>
+      <%= label_tag :is_admin %>
+    </div>
+
+    <div class="my-5">
+      <%= f.check_box :force_2fa, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", id: "2fa_checkbox" %>
+      <%= f.label :force_2fa, "Force two factor authentication" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit t("devise.invitations.new.submit_button"), class: "button primary" %>
+    </div>
+  <% end %>
+</div>

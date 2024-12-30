@@ -1,0 +1,23 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+
+    <%= link_to "Back to Teams", teams_path, class: "button back-button secondary mb-3 normal-top-margin" %>
+
+    <%= render @team %>
+
+    <div class="flex justify-between items-center mb-2">
+      <strong class="block font-medium mb-1">Team Members</strong>
+      <%= link_to "New Team Member", new_team_team_member_path(@team), class: "button add-button primary" %>
+    </div>
+
+    <div id="team_members" class="min-w-full">
+      <%= render partial: "team_members", locals: { team_members: @team.team_members } %>
+    </div>
+
+    <%= link_to "Edit This Team", edit_team_path(@team), class: "button edit-button secondary", data: { turbo_frame: "modal" } %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This Team", team_path(@team), method: :delete, class: "button delete" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+bin/bundler-audit --update
+bin/brakeman -q -w2
+bin/rubocop --parallel -A

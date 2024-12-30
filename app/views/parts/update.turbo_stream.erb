@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "part_#{@part.id}_row" do %>
+  <%= render partial: "part_row", locals: { part: @part } %>
+<% end %>
+
+<%= turbo_stream.replace 'modal' do %>
+  <%= render template: "parts/show", locals: {part: @part, action_name: "show" } %>
+<% end %>

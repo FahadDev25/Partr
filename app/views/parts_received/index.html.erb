@@ -1,0 +1,12 @@
+<div class="w-full">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="flex justify-between items-center">
+    <h1>Parts Received</h1>
+    <%= link_to "New Part Received", new_part_received_path, class: "button add-button primary mb-3 normal-top-margin" %>
+  </div>
+
+  <div id="parts_received" class="min-w-full">
+    <%= render @parts_received %>
+  </div>
+</div>

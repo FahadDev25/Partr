@@ -1,0 +1,21 @@
+<div class="scrollableTable breakpoint-976">
+  <table class= "table-auto">
+    <thead>
+      <tr>
+        <th><%= capital_assembly %></th>
+        <th>Cost per Unit</th>
+        <th>Quantity</th>
+        <th>Total Cost</th>
+        <th>Parts Ordered</th>
+        <th>Parts Received</th>
+        <th></th>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr id="new_unit_row"></tr>
+      <% unit_list.each do |u| %>
+        <%= render partial: 'units/unit_listing', locals: { unit: u, show: true } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

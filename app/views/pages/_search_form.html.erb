@@ -1,0 +1,7 @@
+<%= form_with url: pages_search_results_path, method: :get do |form| %>
+  <div class="flex items-center justify-between space-x-2 header-mobile">
+    <%= form.label :query, "Search: ", class: "text-white-100" %>
+    <%= form.text_field :query %>
+    <%= form.submit "Go", class: "button mini normal-top-margin" %>
+  </div>
+<% end %>

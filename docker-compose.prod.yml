@@ -1,0 +1,56 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    volumes:
+      - ./log:/home/app/partr/log
+    secrets:
+      - source: master_key
+        target: /home/app/partr/config/master.key
+      - postgres_password
+    ports: 
+      - "8101:80"
+    depends_on:
+      - db
+    env_file: .prod.env
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      
+  db:
+    image: postgres:14
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - postgres_password
+      
+  redis:
+    image: redis:6.2
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
+    depends_on:
+      - web      
+      - db
+      - redis
+    env_file: .prod.env
+    entrypoint: ./entrypoints/sidekiq-entrypoint.sh
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+    secrets:
+      - source: master_key
+        target: /home/app/partr/config/master.key
+      - postgres_password
+        
+secrets:
+  master_key:
+    file: ./config/master.key
+  postgres_password:
+    file: ./db/postgres_password.txt
+
+volumes:
+  pg-data:

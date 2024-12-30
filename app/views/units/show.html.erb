@@ -1,0 +1,33 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+    
+    <%= link_to "Back to Job", job_path(@unit.job), class: "button back-button mb-3 normal-top-margin" %>
+
+    <%= render @unit %>
+
+    <%= render partial: 'part_list', locals: { unit: @unit } %>
+    
+    <% if @unit.subassemblies_list.any? %>
+      <p class="mt-5">Sub<%= plural_assembly %>:</p>
+    <% end %>
+    <% @unit.subassemblies_list.each do |key, value| %>
+      <div class="flex space-x-5">
+        <p class="my-5">
+          <strong class="block font-medium mb-1"><%= capital_assembly %>:</strong>
+          <%= link_to key, assembly_path(value[:id]) %>
+        </p>
+        <p class="my-5">
+          <strong class="block font-medium mb-1">Quantity:</strong>
+          <%= value[:quantity].to_s.sub(/\.0+$/, '') %>
+        </p>
+      </div>
+      <%= render partial: 'subassembly_part_list', locals: { unit: @unit, unit_subassembly: value} %>
+    <% end %>
+
+    <%= link_to "Edit This #{capital_assembly}", edit_unit_path(@unit), class: "button edit-button" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Remove This #{capital_assembly}", unit_path(@unit), method: :delete, class: "button delete" %>
+    </div>
+  </div>
+</div>

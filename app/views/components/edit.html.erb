@@ -1,0 +1,10 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <div>
+      <h1>Editing Component</h1>
+    </div>
+  <% end %>
+  <div class="mx-auto md:w-2/3 w-full">
+    <%= render "form", component: @component, assembly: @component.assembly %>
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+<div class="flex">
+  <span>A shipment was received for your order: <%= @order.name %></span>
+  <div>From: <%= @shipment.from %></div>
+  <div>Shipping number: <%= @shipment.shipping_number %></div>
+  <div><%= link_to "Link to order", @order %></div>
+  <div><%= link_to "Link to shipment", @shipment %></div>
+</div>

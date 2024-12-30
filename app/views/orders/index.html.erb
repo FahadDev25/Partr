@@ -1,0 +1,178 @@
+<div class="w-full screwdriver-man-bg order-page">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class=" crane-lift-bg mb-3">
+    <h1 class="text-2xl sm:text-4xl mb-1">Orders</h1>
+    <p class="class="text-dd-gray text-sm sm:text-base"">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </div>
+
+  <div class='lg:flex justify-between gap-4 items-center my-6'>
+    <div class="flex justify-between items-center border border-dd-persian-green-mid w-full lg:max-w-lg mb-3 lg:mb-0 rounded-[7px] overflow-hidden">
+      <%= text_field_tag :input_name, nil, placeholder: "Type Here", class: "h-10 shipment-searchbar rounded-none text-sm" %>
+      <%= image_tag "search-icon.svg", alt: "search icon", class: "w-10 h-10 cursor-pointer" %>
+    </div>
+
+    <div class="flex justify-between gap-4 items-center">
+        <%= link_to "Add New Order", new_team_order_path(@team), class: "button add-button dd-new-shipment-btn grow", data: { turbo_frame: "modal" }, onclick: "setTimeout(() => StepFormOrder(), 1000)" %>
+        <button id="dd-open-modal-order-filter" class="shipment-table-filter-btn bg-white-100 border border-persian-green mt-0 px-3 py-2.5 rounded-md">
+          <%= image_tag "filter-persian-green.svg", alt: "filter inner icon" %>
+        </button>
+    </div>
+  </div>
+
+  <%= render "orders/filter_order_main_page" %>
+
+  <%#= render partial: "pages/search_filter",
+              locals: { 
+                show_filters: false, 
+                parent_params: params.except(:controller, :action, :page, :order_by, :order, :team_id).to_unsafe_h,
+                target: "order_table",
+                filters: [["text", "PO Number", "po_number"],
+                          ["select", "Job", "job"],
+                          ["select", "Vendor", "vendor"],
+                          ["date", "Order Date", "order_date"],
+                          ["number", "Part Cost", "parts_cost"],
+                          ["decimal", "Tax Rate", "tax_rate"],
+                          ["decimal", "Tax Cost", "tax_total"],
+                          ["number", "Freight Cost", "freight_cost"],
+                          ["number", "Total Cost", "total_cost"],
+                          ["select", "Created By", "created_by"]]
+              }
+  %>
+
+  <div id="orders" class="min-w-full">
+    <%= render partial: "order_table" %>
+  </div>
+</div>
+
+<style>
+#modal-header {
+  border-bottom: 1px solid #0000000D;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+}
+#modal-main {
+  padding-top: 195px;
+}
+#modal-main .order-form-height{
+  height: 500px;
+  overflow-y: auto;
+}
+
+</style>
+
+<script>
+
+function tableRowExpanding() {
+  document.addEventListener("click", (event) => {
+    const clickedRowBtn = event.target.closest(".order-table-row-collapsable-btn");
+
+    if (clickedRowBtn) {
+      clickedRowBtn.classList.toggle("active");
+
+      const clickedRow = clickedRowBtn.closest(".order-table-row");
+      const expandableRow = clickedRow?.nextElementSibling;
+
+      if (expandableRow) {
+          const expandableCell = expandableRow.querySelector(".expand-table");
+
+          if (expandableCell) {
+            expandableCell.classList.toggle("hidden");
+          }
+      }
+    }
+  });
+}
+
+function StepFormOrder() {
+  const stepButtons = document.querySelectorAll(".step-button");
+  const formSections = document.querySelectorAll(".steps-form-order-section");
+  const nextPageBtn = document.getElementById("nextPageBtn");
+  const backPageBtn = document.getElementById("backPageBtn");
+  const createFormBtn = document.querySelector(".create-order-form-btn");
+  let activeIndex = 0;
+
+  // Hide back button initially
+  if (activeIndex === 0) {
+    backPageBtn.classList.add("hidden");
+    nextPageBtn.classList.add("w-full");
+  }
+
+  // Function to update form sections visibility
+  function sectionsClasses() {
+    formSections.forEach((section, index) => {
+      if (index === activeIndex) {
+        section.classList.remove("hidden");
+      } else {
+        section.classList.add("hidden");
+      }
+    });
+  }
+
+  // Function to update the active button and icon visibility
+  function updateActiveButton(index) {
+    stepButtons.forEach((button, i) => {
+      const activeIcon = button.querySelector(".active-icon");
+      const nonActiveIcon = button.querySelector(".non-active-icon");
+
+      if (i === index) {
+        button.classList.add("active");
+        activeIcon.classList.remove("hidden");
+        nonActiveIcon.classList.add("hidden");
+      } else {
+        button.classList.remove("active");
+        activeIcon.classList.add("hidden");
+        nonActiveIcon.classList.remove("hidden");
+      }
+    });
+  }
+
+  // Click event for the next button
+  nextPageBtn.addEventListener("click", () => {
+    if (activeIndex < stepButtons.length - 1) {
+      activeIndex++;
+
+      if (activeIndex === stepButtons.length - 1) {
+        createFormBtn.classList.remove("hidden");
+        nextPageBtn.classList.add("hidden");
+      }
+
+      if (activeIndex > 0) {
+        backPageBtn.classList.remove("hidden");
+        nextPageBtn.classList.remove("w-full");
+      }
+
+      updateActiveButton(activeIndex);
+      sectionsClasses();
+    }
+  });
+
+  // Click event for the back button
+  backPageBtn.addEventListener("click", () => {
+    if (activeIndex > 0) {
+      activeIndex--;
+
+      if (activeIndex < stepButtons.length - 1) {
+        createFormBtn.classList.add("hidden");
+        nextPageBtn.classList.remove("hidden");
+      }
+
+      if (activeIndex === 0) {
+        backPageBtn.classList.add("hidden");
+        nextPageBtn.classList.add("w-full");
+      }
+
+      updateActiveButton(activeIndex);
+      sectionsClasses();
+    }
+  });
+}
+
+
+    tableRowExpanding();
+  document.addEventListener("DOMContentLoaded", function () {
+    StepFormOrder();
+  });
+
+</script>

@@ -1,0 +1,34 @@
+<div class="w-full">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="lg:flex justify-between items-center">
+    <h1 class="block lg:inline">Parts</h1>
+    <div class="button-row">
+      <%= link_to 'QR Codes PDF', qr_codes_pdf_part_path, class: "button export-pdf-button mb-3 normal-top-margin" %>
+      <%= link_to 'CSV Import', csv_import_form_part_path, class: "button export-csv-button primary mb-3 normal-top-margin", data: { turbo_frame: "modal" } %>
+      <%= link_to 'CSV Export', csv_export_part_path, class: "button export-csv-button mb-3 normal-top-margin" %>
+      <%= link_to "New Part", new_part_path, class: "button add-button primary mb-3 normal-top-margin", data: { turbo_frame: "modal" } %>
+    </div>
+  </div>
+  <% filters = [["text", "#{current_tenant.abbr_name} Part Number", "org_part_number"],
+                          ["select", "Manufacturer", "manufacturer"],
+                          ["text", "Mfg Part Number", "mfg_part_number"],
+                          ["text", "Description", "description"],
+                          ["number", "Cost per Unit", "cost_per_unit"],
+                          ["number", "In Stock", "in_stock"],
+                          ["text", "Notes", "notes"]] %>
+  <% filters.push ["text", "#{current_user.current_team.optional_part_field_1_name}", "optional_field_1"] if current_user.current_team.show_optional_part_field_1 %>
+  <% filters.push ["text", "#{current_user.current_team.optional_part_field_2_name}", "optional_field_2"] if current_user.current_team.show_optional_part_field_2 %>
+
+  <%= render partial: "pages/search_filter", 
+              locals: { 
+                show_filters: false, 
+                parent_params: params.except(:controller, :action, :page, :order_by, :order).to_unsafe_h,
+                target: "part_table",
+                filters:
+              } %>
+  
+  <div id="parts" class="min-w-full">
+    <%= render partial: "part_table", locals: { parts: @parts } %>
+  </div>
+</div>

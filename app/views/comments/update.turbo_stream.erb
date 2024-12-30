@@ -1,0 +1,6 @@
+<%= @comment.broadcast_replace_to(
+      "#{dom_id(@comment.commentable)}_comments",
+      partial: "comments/comment",
+      target: dom_id(@comment),
+      locals: { comment: @comment, user: current_user }
+    ) %>

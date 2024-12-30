@@ -1,0 +1,189 @@
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000002,Bussman,Test2,"Part, Test 2",1.0,20,test,2,2
+1000000003,Hoffman,Test3,"Part, Test 3",1.5,30,test,3,3
+1000000004,Bussman,Test4,"Part, Test 4",2.0,40,test,4,4
+1000000005,Hoffman,Test5,"Part, Test 5",2.5,50,test,5,5
+1000000006,Bussman,Test6,"Part, Test 6",3.0,60,test,6,6
+1000000007,Hoffman,Test7,"Part, Test 7",3.5,70,test,7,7
+1000000008,Bussman,Test8,"Part, Test 8",4.0,80,test,8,8
+1000000009,Hoffman,Test9,"Part, Test 9",4.5,90,test,9,9
+1000000014,ENTRELEC,,"CAPSCREW,HEX,00.313""-18UNC-2A X 01.125""LG,316SST, ASTM F593,GROUP 2 (OR ASTM A193,GRADE B8M,CLASS 2)",1.5,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,3500396000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000016,CORTEC Corp,,"SCREW,MACH,RND HD,#10-24UNC-2A X 00.375""LG,
+SLOTTED,304SST,ANSI B18.6.3",2.5,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,3503146000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000025,P-TECH,PL-ES-CN-A10,"LED FLEXIBLE TAPE LIGHT CONNECTOR, 1 METER LENGTH
+USED FOR LED FLEXIBLE TAPE LIGHT, 10 METER ROLL
+P-TEC #PL-ES-CN-A10",2.67,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2700439000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000046,SANDISK,,"WIRE,#1/0 AWG,BLACK                                         
+TYPE THHN (# 1/0AWG BLACK)",3.0,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2803384000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000093,Allen-Bradley,,"WIRE,#4AWG,BROWN
+TYPE THHN",1.4,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2850536000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000105,Panduit,,"WIRE,#4AWG,ORANGE
+TYPE THHN",1.4,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2850537000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000106,MURR ELEKTRONIK,,"WIRE,#4AWG,YELLOW
+TYPE THHN",1.4,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2850538000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000113,Belden,8465,"CABLE,5 CONDUCTOR,#18AWG,PVC OUTER JACKET,CMG,300V,PVC INSULATION,
+BELDEN #8465",3.16,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2854091000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000114,Belden,9318,"CABLE,#18AWG,1 PAIR SHIELDED,PVC/PVC,
+300V,COLOR CODED BLACK & RED,0.233OD
+BELDEN #9318",2.4,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2850740000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000136,Festo,192809,"CONNECTOR,STRAIGHT,R1/4 METRIC THREAD, 00.250""OD TUBE,PUSH-PULL FITTING FESTO #192809,TYPE QS-1/4-1/4-I-U-M",2.74,0,,E239998,NRAQ2
+""
+Type,Company,Part Number
+Customer,MECO,2557814000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000139,Festo,564768,"CONNECTOR,TEE,00.250""OD TUBE X 00.250""OD TUBE X 00.250""OD TUBE,PUSH-PULL FITTING,BLACK POLYMER FESTO #564768 TYPE QBT-1/4T-U",4.83,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2554117000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000145,McMaster-Carr,4452K542,"PLUG,PIPE,SKT HEAD,00.250""MPT,316SST,ASTM A403 MCMASTER-CARR # 4452K542 OR EQUAL",1.7,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2509433000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000151,Phoenix Contact,"NUMBERING STRIP,6MM,WHITE,1-10, FOR PHOENIX RELAY TYPE 2966171 PHOENIX ORDER","NUMBERING STRIP,6MM,WHITE,1-10, FOR PHOENIX RELAY TYPE 2966171 PHOENIX ORDER #1051016:0001",1.91,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2851441000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000152,Phoenix Contact,1051016:0011,"NUMBERING STRIP,6MM,WHITE,11-20,
+FOR PHOENIX RELAY TYPE 2966171
+PHOENIX ORDER #1051016:0011",1.91,0,,,
+""
+Type,Company,Part Number
+Customer,MECO,2851443000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000180,Bussman,BK/GMA-1R,"FUSE,1AMPS,250VOLTS
+BUSSMANN #BK/GMA-1R
+
+(OLD# GMA-1R)",1.27,0,,E19180,JDYX
+""
+Type,Company,Part Number
+Customer,MECO,2806880000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000183,Bussman,GMA-2-R,"FUSE,2 AMPS,250VOLTS
+BUSSMANN #GMA-2-R",1.28,0,,E19180,JDYX
+""
+Type,Company,Part Number
+Customer,MECO,2804139000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000186,Bussman,GMA (1),"FUSE,4 AMPS,125VOLTS
+BUSSMANN #GMA 4",1.28,0,,E19180,JDYX
+""
+Type,Company,Part Number
+Customer,MECO,2851654000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000191,Bussman,GMA-8-R,"FUSE,8 AMPS,125VOLTS
+BUSSMANN #GMA-8-R",1.35,0,,E19180,JDYX
+""
+Type,Company,Part Number
+Customer,MECO,2851032000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000193,Bussman,GMA (2),"FUSE,.25AMP,250VOLTS
+BUSSMANN #GMA 250R",1.45,0,,E19180,JDYX
+""
+Type,Company,Part Number
+Customer,MECO,2806883000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000194,Bussman,GMA-500R,"FUSE,0.5AMPS,250VOLTS
+BUSSMANN #GMA-500R",1.27,0,,E19180,JDYX
+""
+Type,Company,Part Number
+Customer,MECO,2806881000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000195,Bussman,GMA-3-R,"FUSE,3 AMPS,250VOLTS BUSSMANN #GMA-3-R",1.27,0,,E19180,JDYX
+""
+Type,Company,Part Number
+Customer,MECO,2853067000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000226,Allen-Bradley,22-10AWG,"BLOCK,TERMINAL,600V,#22-10AWG, COMPRESSION CLAMP,GRAY BODY ALLEN-BRADLEY #1492-J6",2.12,0,,E40735,XCFR2
+""
+Type,Company,Part Number
+Customer,MECO,2807797000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000227,Allen-Bradley,1492-EAJ35,"STOP,END,(ANCHOR)TERMINAL BLOCK ALLEN-BRADLEY #1492-EAJ35",2.64,0,,E40735,XCFR2
+""
+Type,Company,Part Number
+Customer,MECO,2807508000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000242,Allen-Bradley,22-10AWG (1),"BLOCK,TERMINAL,600V,#22-10AWG,COMPRESSION CLAMP, BLUE BODY, ALLEN-BRADLEY #1492-J6-B",2.28,0,,E40735,XCFR2
+""
+Type,Company,Part Number
+Customer,MECO,2807779000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000263,Panduit,C1.5LG6,"COVER,DUCT,FOR 1.500""PANDUIT,LIGHT GRAY,PVC                 
+                                                            
+NOTE: EACH PACKAGE CONTAINS FOUR 6FT LENGTHS                
+      UNIT OF MEASURE----FEET                               
+                                                            
+PANDUIT #C1.5LG6",1.5,0,,E147128,ZODZ2
+""
+Type,Company,Part Number
+Customer,MECO,2802759000
+""
+Org Part Number,Manufacturer,Mfg Part Number,Description,Cost per Unit,In Stock,Notes,UL File Number,UL CCN
+1000000266,,,"COVER,DUCT,FOR 01.000""PANDUIT,LIGHT GRAY,PVC,6FT LENGTH     
+PANDUIT #C1LG6",1.19,0,,E147128,ZODZ2
+""
+Type,Company,Part Number
+Customer,MECO,2802758000

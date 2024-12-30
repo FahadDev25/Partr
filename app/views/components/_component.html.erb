@@ -1,0 +1,22 @@
+<div id="<%= dom_id component %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1"><%= capital_assembly %>:</strong>
+    <%= component.assembly.name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Part:</strong>
+    <%= component.part.label %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Quantity:</strong>
+    <%= number_with_precision(component.quantity, strip_insignificant_zeros: true) %>
+  </p>
+
+  <% if action_name != "create" && action_name != "show" %>
+    <%= link_to "Show This Component", component_path(component.assembly, component), class: "button show-button" %>
+    <%= link_to "Edit This Component", edit_component_path(component.assembly, component), class: "button edit-button primary" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

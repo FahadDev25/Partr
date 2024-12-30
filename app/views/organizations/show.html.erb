@@ -1,0 +1,9 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="w-full">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+
+    <%= render @organization %>
+
+    <%= link_to "Edit This Organization", edit_organization_path(@organization), class: "button edit-button primary" %>
+  </div>
+</div>

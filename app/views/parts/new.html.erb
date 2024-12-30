@@ -1,0 +1,11 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <div>
+      <h1>New Part</h1>
+    </div>
+  <% end %>
+
+  <div class="w-full">
+    <%= render "form", part: @part %>
+  </div>
+<% end %>

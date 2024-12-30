@@ -1,0 +1,104 @@
+<%= form_with(model: [team, shipment], class: "contents") do |form| %>
+  <div class="dd-form form overflow-y-auto scrollbar-hidden max-h-screen space-y-4">
+    <%= render partial: "pages/modal_form_errors", locals: { object: shipment, name: "shipment" }%>
+
+    <div data-controller='dynamic-select'>
+      <% if current_user.current_team.role.all_order %>
+        <div class="dd-form-field">
+          <%= form.label :team_id, class: "required mb-5" %>
+          <%= form.select :team_id, team_select_list("None"), {},
+              data: {
+                dynamic_select_target: 'select',
+                'turbo-type': 'job_select',
+                url: job_select_team_path,
+                object: 'shipment',
+                preset: shipment.job_id } %>
+        </div>
+      <% end %>
+
+      <%= turbo_frame_tag "job_select" do %>
+        <div class="dd-form-field">
+          <%= form.label :job_id, class: "required"%>
+          <%= form.select :job_id, options_for_select(job_select_list(current_user.current_team, "None"), params[:job_id] || shipment.job_id), {},
+            data: {
+              dynamic_select_target: 'select',
+              'turbo-type': 'order_select',
+              url: get_orders_for_job_path,
+              object: 'shipment',
+              preset: params[:order_id] || shipment.order_id
+            } %>
+        </div>
+      <% end %>
+
+      <%= turbo_frame_tag 'order_select' do %>
+        <div class="dd-form-field">
+          <%= form.label :order_id, class: "required" %>
+          <%= form.select :order_id, options_for_select(order_select_list(shipment, "None")), {} %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="dd-form-field mt-3">
+      <%= form.label :from, class: "required" %>
+      <%= form.text_field :from, rows: 1, placeholder: "Type Here" %>
+    </div>
+
+    <div class="dd-form-field ">
+      <%= form.label :shipping_number, class: "required" %>
+      <%= form.text_field :shipping_number, rows: 1, placeholder: "Type Here" %>
+    </div>
+
+    <div class="dd-form-field relative shipment-data-field">
+      <%= form.label :date_received, class: "required" %>
+      <%= form.date_field :date_received, value: Date.today %>
+    </div>
+
+    <div class="dd-form-field-file file-select-field relative">
+      <%= form.label :attach_packing_slips, "Choose Slip(s)", class: "required" %>
+      <label for="attach_packing_slips" class="custom-file-label">
+        <%= image_tag "file-choose-whole-icon.svg", alt: "choose file icon", class: "cursor-pointer shipment-choose-icon" %>
+      </label>
+      <%= form.file_field :attach_packing_slips, id: "attach_packing_slips", class: "custom-file-input", multiple: true, accept: 'image/png,image/jpeg,image/jpg, application/pdf' %>
+    </div>
+
+    <% if action_name == "edit" %>
+      <div id="packing_slips" class="hidden grid grid-cols-5 grid-rows-<%= (@shipment.packing_slips.length/10).ceil * 2 %> gap-1">
+        <% @shipment.packing_slips.each_with_index do |ps,i| %>
+          <div class="col-start-<%= i %> row-start-1">
+            <% if ps.content_type == "application/pdf" %>
+              <%= link_to (image_tag ps.preview(resize_to_limit: [100, 100])), ps, target: "_blank" %>
+            <% else %>
+              <%= link_to (image_tag ps.variant(:thumb)), ps, target: "_blank" %>
+            <% end %>
+          </div>
+          <div class="col-start-<%= i %> row-start-2">
+            <%= link_to "Remove", delete_packing_slip_path(image_id: ps.id, shipment_id: @shipment.id), method: :delete, class: "button delete", data: { turbo_confirm: 'Are you sure?' } %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="dd-form-field dd-text-area">
+      <%= form.label :notes , class: "required"%>
+      <%= form.text_area :notes, rows: 5, placeholder: "Type Here" %>
+    </div>
+
+    <% if shipment.team == current_user.current_team || shipment.team.nil? %>
+      <div class="dd-form-field ">
+        <%= form.label :share_with , class: "required m-0"%>
+        <%= form.select :share_with, options_from_collection_for_select(
+          current_user.shareable_to_teams, "id", "name", shipment.id.present? ? shipment&.shared_teams&.pluck(:id) : current_user.current_team.share_shipments_with&.split(",")),
+          {}, multiple: true,
+          class: "dropup text-xl dd-form-share-field ",
+          data: { 
+            controller: "tom-select",
+            plugins: "dropdown_input,remove_button",
+            placeholder: "Select..."
+          } %>
+      </div>
+    <% end %>
+  </div>
+  <div class="dd-shipment-submit w-full fixed bottom-0 left-0 z-10 px-4 py-3 border-t border-dd-gray-white">
+        <%= form.submit class: "bg-persian-green" %>
+      </div>
+<% end %>

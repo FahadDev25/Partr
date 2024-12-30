@@ -1,0 +1,17 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <div>
+      <h1>CSV Import</h1>
+    </div>
+  <% end %>
+  <%= form_with url: part_csv_import_path, method: :post do |form| %>
+    <div id="part-import">
+      <%= form.file_field :csv_import, accept: 'text/csv', class: "mb-2" %>
+      <div class="form-field">
+        <%= form.label :csv_format, "CSV Format", class: "required" %>
+        <%= form.select :csv_format, options_for_select(["Appsheet", "Partr"]), {} %>
+      </div>
+      <%= form.submit 'Import', class: "button" %>
+    </div>
+  <% end %>
+<% end %>

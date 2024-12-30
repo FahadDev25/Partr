@@ -1,0 +1,52 @@
+<div class="scrollableTable breakpoint-768">
+  <table class="table-auto mt-4" id="opn">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Company</th>
+        <th>Part Number</th>
+        <th>Cost per Unit</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @part.other_part_numbers.where(primary: false).each do |opn| %>
+        <tr>
+          <td>
+            <span class="th" aria-hidden="true">Type</span>
+            <span><%= opn.company_type %></span>
+          </td>
+          <% if opn.company_type == "Other" %>
+            <td>
+              <span class="th" aria-hidden="true">Company</span>
+              <span><%= opn.company_name %></span>
+            </td>
+          <% else %>
+            <td>
+              <span class="th" aria-hidden="true">Company</span>
+              <span><%= link_to opn.company_name || "", opn.company, data: { turbo_frame: :_top } %></span>
+            </td>
+          <% end %>
+          <td>
+            <span class="th" aria-hidden="true">Part Number</span>
+            <span>
+              <%= link_to_if opn.url.present?, (opn.part_number || "-"), opn.url, target: "_blank" %>
+            </span>
+          </td>
+          <td>
+            <span class="th" aria-hidden="true">Cost per Unit</span>
+            <span class="staleness-<%= opn.staleness %>">
+              <%= number_to_cost opn.cost_per_unit %>
+            </span>
+          </td>
+          <td class="no-th">
+            <span class="flex space-x-2">
+              <%= link_to "Edit", edit_other_part_number_path(opn, part: opn.part), part: opn.part,  class: "button edit-button" %>
+              <%= button_to "Delete", other_part_number_path(opn), method: :delete, class: "button delete", data: { turbo_confirm: 'Remove part number?' } %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,41 @@
+<table class= "table-auto">
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Vendor</th>
+      <th>Cost per Unit</th>
+      <th>Quantity</th>
+      <th>Ordered</th>
+      <th>Received</th>
+      <th>Total Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% assembly = Assembly.find(unit_subassembly[:id])%>
+    <% assembly.components.each do |c| %>
+      <tr>
+        <td><%= link_to c.part.label, part_path(c.part) %></td>
+        <td><%= c.part.manufacturer && c.part.manufacturer.vendor ? (link_to c.part.manufacturer.vendor.name, vendor_path(c.part.manufacturer.vendor)) : "-" %></td>
+        <td><%= number_to_cost(c.part.cost_per_unit) %></td>
+        <td><%= number_with_precision(c.quantity * unit_subassembly[:quantity], strip_insignificant_zeros: true) %></td>
+        <td><%= link_to unit.subassembly_parts_ordered(unit_subassembly).where(part_id: c.part.id).sum(&:quantity).to_s.sub(/\.0+$/, ''),
+                        subassembly_parts_ordered_list_unit_path(unit, part_id: c.part_id, unit_subassembly:), data: { turbo_frame: "modal" } %></td>
+        <td>
+          <%= link_to unit.subassembly_parts_received(unit_subassembly).where(part_id: c.part.id).sum(&:quantity).to_s.sub(/\.0+$/, ''),
+                      subassembly_parts_received_list_unit_path(unit, part_id: c.part_id, unit_subassembly:), data: { turbo_frame: "modal" } %>
+        </td>
+        <td><%= number_to_cost(c.part.cost_per_unit * c.quantity * unit_subassembly[:quantity]) %></td>
+        <% required = c.quantity * unit_subassembly[:quantity] %>
+        <% received = PartReceived.where(job_id: unit.job_id, assembly_id: c.assembly_id, part_id: c.part_id).sum(:quantity) %>
+        <% if received < required && c.part.in_stock && c.part.in_stock > 0 %>
+          <td>
+            <div class="flex space-x-2">
+              <%= button_to "Fill from stock (#{c.part.in_stock.to_s.sub(/\.0+$/, '') || 0})", subassembly_fill_from_stock_unit_path(unit, component: c, unit_subassembly:),
+                    method: :patch, class: "button" %>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

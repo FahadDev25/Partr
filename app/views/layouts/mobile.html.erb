@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Partr</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="stylesheet" href="https://use.typekit.net/xam4aep.css">    
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= favicon_link_tag asset_path('partr_white.svg') %>
+  </head>
+
+  <body>
+    <%= turbo_frame_tag "modal" %>
+    <header class="bg-jet flex flex-row justify-start items-center">
+      <div class="flex flex-row items-center">
+        <a id="logo_container" aria-label="Home" href=<%= current_user ? "/teams/#{current_user.current_team.id}/home" : "/" %>>
+          <%= image_tag("partr_white.svg", alt: 'logo', id: "logo") %>
+        </a>
+      </div>
+      <% if current_tenant %>
+        <div class="flex space-x-2 items-center justify-center px-4">
+          <% if current_tenant.logo.attached? %>
+            <h1><%= image_tag current_tenant.logo.variant(:thumb) %></h1>
+          <% else %>
+            <h1><%= current_tenant.name %></h1>
+          <% end %>
+          <% if current_user&.current_team %>
+            <% if current_user.teams.length > 1 || (current_user.is_admin && current_tenant.teams.length > 1) %>
+              <h1><%= link_to current_user.current_team.name, change_team_team_path, style: "color:grey", data: { turbo_frame: "modal" } %></h1>
+            <% else %>
+              <h1><%= current_user.current_team.name %></h1>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <%= image_tag("partr-header.png", alt: 'silhouettes of workers carrying larger than life supplies', style: 'padding: .75rem; opacity: .2;', class: 'filter-to-snow silhouettes') %>
+    </header>
+
+    <section class="flex">
+      <main class="container mx-auto justify-center px-5 pt-5">
+        <%= yield %>
+      </main>
+    </section>
+  </body>
+</html>

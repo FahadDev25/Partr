@@ -1,0 +1,298 @@
+<div id="orderSteps" class="order-steps-button flex justify-between items-center gap-4 px-4 py-2 border-b border-[#0000000D]">
+  <button id="orderDetailsBtn" class="step-button flex flex-col items-center justify-center gap-1 bg-transparent text-dd-black hover:bg-transparent m-0 active">
+    <%= image_tag "orderDetails.svg", alt: "Order Details Icon", class: "step-icon non-active-icon hidden" %>
+    <%= image_tag "orderDetails-active.svg", alt: "Order Details Icon", class: "step-icon active-icon " %>
+    Order Details
+  </button>
+
+  <button id="billingDetailsBtn" class="step-button flex flex-col items-center justify-center gap-1 bg-transparent text-dd-black hover:bg-transparent m-0">
+    <%= image_tag "billingDetails.svg", alt: "Billing Details Icon", class: "step-icon non-active-icon" %>
+    <%= image_tag "billingDetails-active.svg", alt: "Billing Details Icon", class: "step-icon active-icon hidden" %>
+    Billing Details
+  </button>
+
+  <button id="shippingAddressBtn" class="step-button flex flex-col items-center justify-center gap-1 bg-transparent text-dd-black hover:bg-transparent m-0">
+    <%= image_tag "shippingAddress.svg", alt: "Shipping Address Icon", class: "step-icon non-active-icon" %>
+    <%= image_tag "shippingAddress-active.svg", alt: "Shipping Address Icon", class: "step-icon active-icon hidden" %>
+    Shipping Address
+  </button>
+
+  <button id="billingAddressBtn" class="step-button flex flex-col items-center justify-center gap-1 bg-transparent text-dd-black hover:bg-transparent m-0">
+    <%= image_tag "billingAddress.svg", alt: "Billing Address Icon", class: "step-icon non-active-icon" %>
+    <%= image_tag "billingAddress-active.svg", alt: "Billing Address Icon", class: "step-icon active-icon hidden" %>
+    Billing Address
+  </button>
+</div>
+
+
+<%= form_with(model: [team, order], class: "contents") do |form| %>
+  <div class="form">
+    <%= render partial: "pages/modal_form_errors", locals: { object: order, name: "order" }%>
+
+    <div class="steps-form-order-section ">
+        <div class="form-field dd-form-field">
+          <% if action_name != "edit" && action_name != "update" %>
+            <%= form.label :po_prefix, "PO prefix", class: "required" %>
+            <%= form.text_field :po_prefix, value: current_user.po_prefix || "#{(current_user.first_name[0,2] + current_user.last_name[0,2]).upcase}",
+              data:{ controller: 'text-complete', 'turbo-type': 'po_number', url: next_po_order_path }, placeholder: "Type Here" %>
+          <% else %>
+            <%= form.label :po_number, class: "required" %>
+            <%= form.text_field :po_number, value: order.po_number, placeholder: "Type Here" %>
+          <% end %>
+        </div>
+
+        <div class="form-field dd-form-field relative shipment-data-field">
+          <%= form.label :order_date %>
+          <%= form.date_field :order_date, value: order.order_date || Date.today %>
+        </div>
+
+        <div data-controller='dynamic-select' class="dd-form order-form-select-item-text">
+          <% order.job_id = (params[:job_id] ? params[:job_id] : Order&.last&.job_id) if action_name == "new" %>
+
+          <% if current_user.current_team.role.all_order %>
+            <% order.team_id = params[:team_id] if params[:team_id].present? %>
+            <div class="form-field dd-form-field">
+              <%= form.label :team_id, class: "required" %>
+              <%= form.select :team_id, team_select_list("none"), {},
+                  data: {
+                    dynamic_select_target: 'select',
+                    'turbo-type': 'job_select',
+                    url: job_select_team_path,
+                    object: 'order',
+                    preset: order.job_id } %>
+            </div>
+          <% else %>
+            <% order.team_id = team.id if team.present? %>
+          <% end %>
+
+          <%= turbo_frame_tag "job_select" do %>
+            <div class="form-field ">
+              <%= form.label :job_id %>
+              <%= form.select :job_id, options_for_select(job_select_list(order, "none"), order.job_id), {},
+                data: {
+                  dynamic_select_target: 'select',
+                  'turbo-type': 'vendor_select',
+                  url: get_vendors_for_job_path,
+                  object: 'order',
+                  preset: order.vendor_id } %>
+            </div>
+          <% end %>
+
+          <%= turbo_frame_tag 'vendor_select' do %>
+            <div class="form-field dd-form-field">
+              <%= form.label :vendor_id %>
+              <%= form.select :vendor_id, options_for_select(vendor_select_list(order, "none")), {},
+                    data: {
+                      controller: "tom-select",
+                      plugins: "dropdown_input"
+                    } %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="form-field dd-form-field">
+          <%= form.label :freight_cost %>
+          <%= form.number_field :freight_cost, value: order.freight_cost || "0.00", step: 0.01, min: 0 %>
+        </div>
+
+        <% if action_name != "edit" %>
+          <label class="inline-flex items-center cursor-pointer mb-2">
+            <input id="fields_toggle" type="checkbox" class="sr-only peer"
+                    data-controller="content-toggle"
+                    data-turbo-type="toggle_fields"
+                    data-url1=<%= itemized_fields_order_path(team_id: team&.id || order.team_id || params[:order]&.fetch(:team_id), job_id: params[:job_id]) %>
+                    data-url2=<%= totals_fields_order_path %>>
+            <span class="mr-2 text-base font-bold text-gray-900">Itemized Order</span>
+            <div class="relative w-11 h-6 bg-silver border border-[#4F807B]
+                        peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-celeste rounded-full
+                        peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full
+                        peer-checked:after:border-white-100 after:content-[''] after:absolute after:top-[1px]
+                        after:start-[2px] after:bg-[#18A999] after:border-silver after:border after:rounded-full
+                        after:h-5 after:w-5 after:transition-all peer-checked:bg-persian-green peer-checked:after:bg-white-100">
+            </div>
+            <span class="ms-2 text-base font-bold text-gray-900">Total Only</span>
+          </label>
+
+            <div class="dd-form-field">
+          <%= turbo_frame_tag "toggle_fields" %>
+           </div>
+        <% else %>
+          <div class="form-field dd-form-field">
+            <%= form.label :parts_cost, "Total Part Cost" %>
+            <%= form.number_field :parts_cost, value: order&.parts_cost || 0.0, step: 0.01, min: 0 %>
+          </div>
+
+          <div class="form-field dd-form-field">
+            <%= form.label :tax_total, "Total tax" %>
+            <%= form.number_field :tax_total, value: order&.tax_total || 0.0, step: 0.01, min: 0 %>
+          </div>
+
+          <div class="form-field dd-form-field">
+            <%= form.label :tax_rate %>
+            <%= form.number_field :tax_rate, value: order&.tax_rate || order.job&.default_tax_rate || order.team.default_tax_rate || 0.0, step: 0.0001, min: 0 %>
+          </div>
+
+        <% end %>
+
+        <div class="form-field dd-form-field dd-form-check">
+          <%= form.check_box :mark_line_items_received%>
+          <%= form.label :mark_line_items_received %>
+        </div>
+        <% if current_user.current_team.enable_manual_line_items %>
+          <div class="form-field dd-form-field dd-form-check">
+            <%= form.check_box :include_in_bom %>
+            <%= form.label :include_in_bom, "Include in BOM" %>
+          </div>
+        <% end %>
+        <div class="form-field dd-form-field dd-text-area">
+          <%= form.label :notes %>
+          <%= form.text_area :notes, placeholder: "Type Here" %>
+        </div>
+    </div>
+
+    <div class="steps-form-order-section hidden">
+        <div class="form-field dd-form-field relative shipment-data-field">
+          <%= form.label :date_paid %>
+          <%= form.date_field :date_paid %>
+        </div>
+
+        <div class="form-field dd-form-field">
+          <%= form.label :amount_paid %>
+          <%= form.number_field :amount_paid, step: 0.01, min: 0, placeholder: "Type Here" %>
+        </div>
+
+        <div class="form-field dd-form-field dd-form">
+          <%= form.label :payment_method %>
+          <%= form.select :payment_method,
+            current_user.current_team.orders.where.not(payment_method: nil).where.not(payment_method: "").order(:payment_method).pluck(:payment_method).uniq,
+            { prompt: "select or add..." },
+            data: {
+              controller: "tom-select",
+              plugins: "dropdown_input",
+              create: true,
+              placeholder: "Select or Add"
+            } %>
+        </div>
+
+        <div class="form-field dd-form-field">
+          <%= form.label :payment_confirmation %>
+          <%= form.text_field :payment_confirmation, placeholder: "Type Here" %>
+        </div>
+
+        <div class="form-field dd-form-field">
+          <%= form.label :quote_number %>
+          <%= form.text_field :quote_number, placeholder: "Type Here" %>
+        </div>
+
+        <div class="form-field dd-form-field">
+          <%= form.label :fob, "FOB" %>
+          <%= form.text_field :fob, placeholder: "Type Here" %>
+        </div>
+    </div>
+
+    <div class="steps-form-order-section hidden">
+        <div class="form-field dd-form-field">
+          <%= form.label "Ship to:", placeholder: "Type Here" %>
+        </div>
+
+        <div id="ship_to_fields">
+          <%= form.fields_for :ship_to do |address_form| %>
+            <div class="mb-3 dd-form-field">
+              <%= address_form.label :address_1, "Address 1" %>
+              <%= address_form.text_field :address_1, class: "form-field", value: order.ship_to&.address_1 || team&.team_address&.address_1, placeholder: "Type Here" %>
+            </div>
+
+            <div class="mb-3 dd-form-field">
+              <%= address_form.label :address_2, "Address 2" %>
+              <%= address_form.text_field :address_2, class: "form-field", value: order.ship_to&.address_2 || team&.team_address&.address_2 , placeholder: "Type Here"%>
+            </div>
+
+            <div class="mb-3 dd-form-field">
+              <%= address_form.label :city %>
+              <%= address_form.text_field :city, class: "form-field", value: order.ship_to&.city || team&.team_address&.city, placeholder: "Type Here" %>
+            </div>
+
+            <div class="mb-3 dd-form-field">
+              <%= address_form.label :state %>
+              <%= address_form.select :state,
+                    options_for_select([["SK", ""]] + us_states, order.ship_to&.state || team&.team_address&.state),
+                    class: "form-select-placeholder" %>
+            </div>
+
+            <div class="mb-3 dd-form-field">
+              <%= address_form.label :zip_code %>
+              <%= address_form.text_field :zip_code, class: "form-field", value: order.ship_to&.zip_code || team&.team_address&.zip_code, placeholder: "Type Here" %>
+            </div>
+          <% end %>
+        </div>
+    </div>
+
+    <div class="steps-form-order-section hidden">
+        <div id="billing_address_fields">
+          <div class="form-field dd-form-field">
+            <%= form.label "Billing Address:", placeholder: "Type Here" %>
+          </div>
+
+          <div class="form-field dd-form-field dd-form dd-form-check">
+            <%= form.check_box :use_ship_for_bill,
+                          class: "accent-pink-500",
+                          data: {
+                            controller: "content-toggle",
+                            "turbo-type": "billing_fields",
+                            url1: billing_fields_order_path({ show: "true", id: order.id }),
+                            url2: billing_fields_order_path({ show: "false", id: order.id })
+                            } %>
+            <%= label_tag :use_ship_for_bill, "Use shipping address" %>
+          </div>
+
+          <div class="dd-form-field">
+            <%= turbo_frame_tag "billing_fields" %>
+          </div>
+        </div>
+
+        <div class="form-field dd-form-field dd-form-check">
+          <%= form.check_box :needs_reimbursement %>
+          <%= form.label :needs_reimbursement %>
+        </div>
+
+        <% if order.team == current_user.current_team || order.team.nil? %>
+          <div class="form-field dd-form-field dd-form dd-form-share-field">
+            <%= form.label :share_with %>
+            <%= form.select :share_with, options_from_collection_for_select(
+              current_user.shareable_to_teams, "id", "name", (order.id.present? ? order&.shared_teams&.pluck(:id) : current_user.current_team.share_orders_with&.split(","))),
+              {}, multiple: true,
+              class: "dropup",
+              data: {
+                controller: "tom-select",
+                plugins: "dropdown_input,remove_button",
+                placeholder: "Select"
+              } %>
+          </div>
+        <% end %>
+    </div>
+
+    <div class="border-t border-[#0000000D]">
+      <div class="flex justify-between items-center gap-4 pt-2 w-full">
+        <button type="button" id="backPageBtn" class="flex items-center justify-center gap-1 w-1/2 bg-white text-dd-black hover:bg-[#ffffff] border border-persian-green text-persian-green rounded-lg m-0">
+          <%= image_tag "prime-back-icon.svg", alt: "Back Icon", class: "-mb-[3px]" %>
+          Back Page
+        </button>
+
+        <button type="button" id="nextPageBtn" class="flex items-center justify-center text-white gap-1 w-1/2 bg-persian-green hover:bg-[#18A999] text-dd-black border border-persian-green text-persian-green rounded-lg m-0">
+          Next Page
+        </button>
+
+        <div class="inline create-order-form-btn w-1/2 hidden">
+            <%= form.submit class: "button primary dd-new-shipment-btn" %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<% end %>
+
+<style>
+.contents {
+    padding-bottom: 0 !important;
+}
+</style>

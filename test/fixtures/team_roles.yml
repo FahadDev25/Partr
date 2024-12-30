@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+default:
+  role_name: "Default"
+  organization: artificers
+  create_destroy_job: true
+  all_job: false
+  all_order: false
+  all_shipment: false
+
+admin:
+  role_name: "Admin"
+  organization: artificers
+  create_destroy_job: true
+  all_job: true
+  all_order: true
+  all_shipment: true
+  
+forced_default:
+  role_name: "Default"
+  organization: forced_2fa
+  create_destroy_job: true
+  all_job: false
+  all_order: false
+  all_shipment: false
+
+no_create:
+  role_name: no create
+  organization: artificers
+  create_destroy_job: false
+  all_job: true
+  all_order: false
+  all_shipment: false
+
+unused:
+  role_name: "No Perms"
+  organization: artificers
+  create_destroy_job: false
+  all_job: false
+  all_order: false
+  all_shipment: false

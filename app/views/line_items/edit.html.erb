@@ -1,0 +1,8 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <div class="mx-auto md:w-2/3 w-full">
+    <% m.title do %>
+      <h1>Editing Line Item</h1>
+    <% end %>
+    <%= render "form", line_item: @line_item %>
+  </div>
+<% end %>

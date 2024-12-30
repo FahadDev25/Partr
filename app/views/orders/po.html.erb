@@ -1,0 +1,268 @@
+<div class="mx-auto" style="font-family: arial, monospace;">
+  <div style="display: flex; justify-content: space-between;">
+    <div style="display: flex; flex-direction: column;">
+      <% if order.organization.logo.attached? %>
+        <%= image_tag "data:image/png;base64,#{order.organization.logo_base64}", size: "250x150" %>
+      <% end %>
+      <p style="font-size: 12px;">
+        <%= order.billing_address&.address_1 %>
+        <%= order.billing_address&.address_1.present? && order.billing_address&.address_2.present? ? ", " : "" %>
+        <%= order.billing_address&.address_2 %>
+      </p>
+      <p style="font-size: 12px;">
+        <%= order.billing_address&.city %><%= ", " if order.billing_address&.state.present? && order.billing_address&.city.present? %>
+        <%= order.billing_address&.state %><%= " "  if order.billing_address&.state.present? && order.billing_address&.zip_code.present? %>
+        <%= order.billing_address&.zip_code %>
+      </p>
+    </div>
+    <div style="display: block;">
+      <h1><%= format[:type] %></h1>
+      <table style="display: block; border: none;">
+        <thead style="background: lightgray; border: none;">
+          <tr style="border: none;">
+            <th 
+              style="border: 1px solid gray; color: #000000; width: 150px; text-align: center; font-size: 12px;"
+              ><b><%= format[:type_abbr]%> #: </b></th>
+            <th 
+              style="border: 1px solid gray; color: #000000; width: 250px; text-align: center; font-size: 12px;"
+              ><b>Date: </b></th>
+          </tr>
+        </thead>
+        <tbody style="border: none;">
+          <tr style="border: none;">
+            <td style="border: 1px solid gray; width: 150px; text-align: center; box-sizing: border-box; font-size: 12px;">
+              <%= order.po_number %>
+            </td>
+            <td style="border: 1px solid gray; width: 250px; text-align: center; box-sizing: border-box; font-size: 12px;">
+              <%= order.created_at.strftime("%B %e, %Y") %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="flex" style="display: flex; justify-content: space-between; margin-top: 25px;">
+    <div style="width: 190px; box-sizing: border-box;">
+      <p style="background: lightgray; color: #000000; padding: 2px 10px; border: 1px solid gray; font-size: 12px;">
+        <b>Vendor:</b>
+      </p>
+      <p style="font-size: 12px;">
+        <%= order&.vendor&.name || "No Vendor" %>
+      </p>
+      <p style="font-size: 12px;">
+        <%= order&.vendor.vendor_address&.address_1 || "" %>
+      </p>
+      <% if order&.vendor.vendor_address&.address_2 %>
+        <p style="font-size: 12px;">
+          <%= order&.vendor.vendor_address&.address_2 || "" %>
+        </p>
+      <% end %>
+      <p style="font-size: 12px;">
+        <%= order.vendor.vendor_address&.city.present? && order.vendor.vendor_address&.state.present? ? "#{order.vendor.vendor_address.city} #{order.vendor.vendor_address.state}" : "" %>
+        <%= order.vendor.vendor_address&.zip_code.present? ? ", #{order.vendor.vendor_address.zip_code}" : "" %>
+      </p>
+      <p style="font-size: 12px;">
+        <%= order.vendor ? number_to_phone(order.vendor.phone_number, area_code: true) : "" %>
+      </p>
+      <% if order.vendor&.representative&.present? %>
+        <p style="font-size: 12px;">
+          ATTN: <%= order&.vendor&.representative || "" %>
+        </p>
+      <% end %>
+      <% if order.quote_number.present? %>
+        <p style="font-size: 12px;">
+          Quote #: <%= order.quote_number || "" %>
+        </p>
+      <% end %>
+      
+    </div>
+    <div style="width: 220px; box-sizing: border-box;">
+      <p style="background: lightgray; color: #000000; padding: 2px 10px; border: 1px solid gray; font-size: 12px;">
+        <b>Job</b>
+      </p>
+      <p style="font-size: 12px;">
+        <span><%= order.job.name if order.job && options[:include_job_name] %><%= ", " if order.job && options[:include_job_name] == "1" && options[:include_job_number] == "1" %><%= order.job.job_number if order.job && options[:include_job_number] == "1" %></span>
+      </p>
+      <p style="font-size: 12px;">
+        <%= format[:type_abbr] %> #: <span><%= order.po_number %></span>
+      </p>
+    </div>
+    <div style="width: 190px; box-sizing: border-box;">
+      <p style="background: lightgray; color: #000000; padding: 2px 10px; border: 1px solid gray; font-size: 12px;">
+        <b>Ship To:</b>
+      </p>
+      <p style="font-size: 12px;">
+        <%= order.organization.name %>
+      </p>
+      <p style="font-size: 12px;">
+        <%= order.ship_to&.address_1 %>
+      </p>
+      <% if order.ship_to&.address_2 %>
+        <p style="font-size: 12px;">
+          <%= order.ship_to&.address_2 %>
+        </p>
+      <% end %>
+      <p style="font-size: 12px;">
+        <%= "#{order.ship_to&.city}, #{order.ship_to&.state} #{order.ship_to&.zip_code}"%>
+      </p>
+      <% if order.job&.project_manager&.present? %>
+        <p style="font-size: 12px;">
+          ATTN: <%= order.job.project_manager.first_name + " " + order.job.project_manager.last_name %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+  <% if order.fob.present? %>
+    <div style="display: block;">
+      <table style="display: block; border: none;">
+        <thead style="background: lightgray; border: none;">
+          <tr style="border: none;">
+            <th 
+              style="border: 1px solid gray; color: #000000; width: 150px; text-align: center; font-size: 12px;"
+              ><b>FOB:</b></th>
+          </tr>
+        </thead>
+        <tbody style="border: none;">
+          <tr style="border: none;">
+            <td style="border: 1px solid gray; width: 150px; text-align: center; box-sizing: border-box; font-size: 12px;">
+              <%= order.fob %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+  <% if order.notes.present? || order.job&.customer&.po_message.present? %>
+    <table class="table-auto" style="border: none; margin-top: 25px; border: 1px solid gray;">
+      <thead style="background: none; border: none;">
+        <tr>
+          <th style="background: lightgray; border: none; border-bottom: 1px solid gray; color: #000000; font-size: 12px;">
+            NOTE
+          </th>
+        </tr>
+        <tr style="background: none;">
+          <td style="background: none; border: none; color: #000000; text-align: left; font-size: 12px;">
+            <%= order.notes %>
+            <% if order.notes.present? && order.job&.customer&.po_message.present? %>
+              <br>
+            <% end %>
+            <%= order.job&.customer&.po_message %>
+          </td>
+        </tr>
+      </thead>
+    </table>
+  <% end %>
+  <% if order.line_items.any? %>
+    <table class="table-auto" style="border: none; margin-top: 25px; border: 1px solid gray;">  
+      <thead style="background: lightgray; border: none;">
+          <tr style="border: none; border-bottom: 1px solid gray;">
+            <th style="border: none; color: #000000; width: 6%; font-size: 12px;">
+              #
+            </th>
+            <th style="border: none; color: #000000; width: 12%; font-size: 12px;">
+              SKU
+            </th>
+            <th style="border: none; color: #000000; width: 52%; font-size: 12px;">
+              Items
+            </th>
+            <th style="border: none; color: #000000; width: 10%; text-align: right; font-size: 12px;">
+              Qty
+            </th>
+            <% if format[:show_prices] %>
+              <th style="border: none; color: #000000; width: 10%; text-align: right; font-size: 12px;">
+                Price/Unit
+              </th>
+              <th style="border: none; color: #000000; width: 10%; text-align: right; font-size: 12px;">
+                Total
+              </th>
+            <% end %>
+          </tr>
+      </thead>
+      <tbody style="border: none;">
+        <% order.line_items_condensed.each_with_index do |(label, details), i| %>
+          <tr style="border: none;">
+            <td style="border: none; width: 6%; text-align: left; font-size: 12px;">
+              <%= i + 1 %>
+            </td>
+            <td style="border: none; width: 12%; text-align: left; font-size: 12px;">
+              <%= details[:part].present? ? label : (details[:sku].present? ? details[:sku] : "-") %>
+            </td>
+            <td style="border: none; width: 52%; text-align: left; font-size: 12px;">
+              <%= details[:part]&.description || label %>
+            </td>
+            <td style="border: none; width: 10%; font-size: 12px;">
+              <%= details[:quantity] %>
+            </td>
+            <% if format[:show_prices] %>
+              <td style="border: none; width: 10%; font-size: 12px;">
+                <%= details[:cost_per_unit] > 0 ? number_to_cost(details[:cost_per_unit]) : "-" %>
+              </td>
+              <td style="border: none; width: 10%; font-size: 12px;">
+                <%= details[:cost_per_unit] > 0 ? 
+                      number_to_cost(details[:cost_per_unit] * details[:quantity] * (1 - (details[:discount] && details[:discount] > 0 ? details[:discount] : 0))) 
+                      : "-"
+                %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <% if format[:show_prices] %>
+    <table class="table-auto" style="border: none; margin-top: 25px;">
+      <tbody style="border: none;">
+          <tr style="border: none;">
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; border-bottom: 1px solid gray; font-size: 12px;">
+              Subtotal
+            </td>
+            <td style="border: none; border-bottom: 1px solid gray; font-size: 12px;">
+              <%= order.parts_cost && order.parts_cost > 0 ? number_to_currency(order.parts_cost) : "-" %>
+            </td>
+          </tr>
+          <tr style="border: none;">
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; border-bottom: 1px solid gray; font-size: 12px;">
+              Sales Tax
+            </td>
+            <td style="border: none; border-bottom: 1px solid gray; font-size: 12px;">
+              <%= order.tax_total && order.tax_total > 0 ? number_to_currency(order.tax_total || 0) : "-" %>
+            </td>
+          </tr>
+          <% if order.freight_cost && order.freight_cost > 0 %>
+            <tr style="border: none;">
+              <td style="border: none; font-size: 12px;"></td>
+              <td style="border: none; font-size: 12px;"></td>
+              <td style="border: none; font-size: 12px;"></td>
+              <td style="border: none; font-size: 12px;"></td>
+              <td style="border: none; border-bottom: 1px solid gray; font-size: 12px;">
+                Freight Cost
+              </td>
+              <td style="border: none; border-bottom: 1px solid gray; font-size: 12px;">
+                <%= order.freight_cost && order.freight_cost > 0 ? number_to_currency(order.freight_cost || 0) : "-" %>
+              </td>
+            </tr>
+          <% end %>
+          <tr style="border: none;">
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;"></td>
+            <td style="border: none; font-size: 12px;">
+              <b>Total</b>
+            </td>
+            <td style="border: none; font-size: 12px;">
+              <b><%= order.total_cost > 0 ? number_to_currency(order.total_cost) : "-" %></b>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+  <% end %>
+</div>

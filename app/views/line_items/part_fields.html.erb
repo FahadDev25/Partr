@@ -1,0 +1,45 @@
+<%= turbo_frame_tag "part_or_description_fields" do %>
+  <div data-controller='dynamic-select'>
+    <div class="form-field">
+      <% @order = @line_item&.order if @line_item&.order %>
+      <%= label_tag "line_item[order_id]", "Order", class: "required" %>
+      <%= select_tag "line_item[order_id]", options_for_select({ @order.name => @order.id } || order_select_list(@line_item), @order.id),
+        { data: { dynamic_select_target: 'select', 'turbo-type': 'part_select',
+                  url: part_select_list_order_path(@order),
+                  object: 'line_item',
+                  preset: @line_item&.part_id,
+                  mode: @mode
+                }
+        } %>
+    </div>
+
+    <%= turbo_frame_tag 'part_select' do %>
+      <div class="form-field">
+        <%= label_tag "line_item[part_id]", "Part", class: "required" %>
+        <%= select_tag "line_item[part_id]", { "none" => nil }, 
+          data: { 
+            dynamic_select_target: 'select',
+            turbo_type: 'assembly_select',
+            url: assembly_select_list_order_path(@order),
+            preset: @line_item&.id_and_sequence&.to_s,
+            filter: @order.id,
+            mode: @mode
+          } %> 
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag 'assembly_select' do%>
+      <div id="assembly_ids", class="form-field">
+        <%= label_tag "line_item[assembly_id]", capital_assembly %>
+        <%= select_tag "line_item[assembly_id]", options_for_select({"none" => nil}) %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @mode == "edit" %>
+    <div class="form-field">
+      <%= label_tag "line_item[cost_per_unit]", "Cost per Unit" %>
+      <%= number_field_tag "line_item[cost_per_unit]", @line_item.cost_per_unit, step: :any %>
+    </div>
+  <% end %>
+<% end %>

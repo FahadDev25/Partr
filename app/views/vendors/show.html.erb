@@ -1,0 +1,20 @@
+<div class="mx-auto md:w-2/3 w-full flex circuit-board-bg">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+
+    <%= link_to "Back to Vendors", vendors_path, class: "button back-button mb-3 normal-top-margin" %>
+
+    <%= render @vendor %>
+
+    <div class="flex flex-col">
+      <%= link_to "Related manufacturers", manufacturers_path(vendor: @vendor) if @vendor.manufacturers.any? %>
+      <%= link_to "Related orders", team_orders_path(team_id: current_user.team_id, vendor: @vendor) if @vendor.orders.any? %>
+    </div>
+    <br>
+
+    <%= link_to "Edit This Vendor", edit_vendor_path(@vendor), class: "button edit-button primary", data: { turbo_frame: "modal" } %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This Vendor", vendor_path(@vendor), method: :delete, class: "button delete", data: { turbo_confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+</div>

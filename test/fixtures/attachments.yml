@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  attachable: trap
+  attachable_type: Job
+  organization: artificers
+
+two:
+  attachable: heist
+  attachable_type: Job
+  organization: artificers

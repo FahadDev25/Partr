@@ -1,0 +1,24 @@
+<div class="w-full screwdriver-man-bg">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="flex justify-between items-center">
+    <h1>Users</h1>
+    <%= link_to 'Invite User', new_user_invitation_path, class: "button primary normal-top-margin" %>
+  </div>
+
+  <%= render partial: "pages/search_filter", 
+              locals: {
+                show_filters: false, 
+                parent_params: params.except(:controller, :action, :page, :order_by, :order, :team_id).to_unsafe_h,
+                target: "user_table",
+                filters: [["text", "Username", "username"],
+                          ["text", "First Name", "first_name"],
+                          ["text", "Last Name", "last_name"],
+                          ["text", "Email", "email"],
+                          ["boolean", "Is Admin", "is_admin"]]
+              } %>
+
+  <div id="users" class="min-w-full">
+    <%= render partial: "user_table" %>
+  </div>
+</div>

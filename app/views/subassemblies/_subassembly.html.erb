@@ -1,0 +1,17 @@
+<div id="<%= dom_id subassembly %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Parent <%= capital_assembly %>:</strong>
+    <%= subassembly.parent_assembly_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Child <%= capital_assembly%>:</strong>
+    <%= subassembly.child_assembly_id %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this sub#{assembly_label}", subassembly, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this sub#{assembly_label}", edit_subassembly_path(subassembly), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

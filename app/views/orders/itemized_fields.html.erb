@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "toggle_fields" do %>
+  <% if action_name != "edit" && action_name != "update" %>
+    <div class="form-field dd-form-field">
+      <%= label_tag "order[tax_rate]", "Tax rate" %>
+      <%= number_field_tag "order[tax_rate]", Job.find_by(id: params[:job_id])&.default_tax_rate || Team.find(params[:team_id]).default_tax_rate || 0.0, step: 0.0001, min: 0 %>
+    </div>
+
+    <div class="form-field dd-form-field dd-form-check">
+      <%= check_box_tag "order[for_all]" %>
+      <%= label_tag "order[for_all]", "Add all parts from this Job and Vendor to the order" %>
+    </div>
+  <% end %>
+<% end %>

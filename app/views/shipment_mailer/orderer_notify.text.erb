@@ -1,0 +1,5 @@
+A shipment was received for your order: <%= @order.name %>
+  From: <%= @shipment.from %>
+  Shipping number: <%= @shipment.shipping_number %>
+  Order: <%= order_url(@order) %>
+  Shipment: <%= shipment_url(@shipment) %>

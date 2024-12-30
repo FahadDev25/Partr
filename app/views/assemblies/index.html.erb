@@ -1,0 +1,30 @@
+<div class="w-full">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="flex justify-between items-center circuit-board-bg">
+    <h1><%= plural_capital_assembly %></h1>
+    <%= link_to "New #{capital_assembly}", new_assembly_path, class: "button add-button primary mb-3 normal-top-margin", data: { turbo_frame: "modal" } %>
+  </div>
+
+  <%= render partial: "pages/search_filter", 
+              locals: { 
+                show_filters: false, 
+                parent_params: params.except(:controller, :action, :page, :order_by, :order).to_unsafe_h,
+                target: "assembly_table",
+                filters: [["text", "Name", "name"],
+                          ["number", "Total Cost", "total_cost"],
+                          ["number", "Total Components", "total_components"],
+                          ["number", "Total Quantity", "total_quantity"],
+                          ["select", "Customer", "customer"]]
+              } %>
+
+  <div id="assemblies" class="min-w-full">
+    <%= render partial: "assembly_table" %>
+  </div>
+</div>
+
+<style>
+.circuit-board-bg::after {
+  display: none;
+}
+</style>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Partr</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="stylesheet" href="https://use.typekit.net/xam4aep.css">
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= favicon_link_tag asset_path('partr_white.svg') %>
+  </head>
+
+  <body class="overflow-hidden">
+    <header class="sign-in px-12 py-6 flex flex-col sm:flex-row justify-between items-center">
+      <a id="logo_container" class="circle-bg" aria-label="Home" href="<%= new_user_session_path %>">
+        <%= image_tag("partr_white.svg", alt: 'logo', id: "large-logo") %>
+      </a>
+      <%= render partial: "pages/notice", locals: { modal: false } %>
+      <a href="<%= new_user_session_path %>" class="button primary normal-top-margin large circle-bg right signin" >Sign In</a>
+    </header>
+    <main class="w-screen">
+      <div class="w-full">
+        <div class="container-2xl mx-auto flex flex-col justify-center items-center" style="min-height: 50vh;">
+          <h1 id="signin-h1" class="match-logo-font xlg uppercase">
+            R-R-R-Really simple <span id="word-box"><span id="word" aria-label="inventory, ordering, tracking."></span><span class="blink">|</span></span>
+          </h1>
+          <div class="slider">
+	          <div class="slide-track">
+		          <!-- First -->
+              <div class="slide">
+                <%= image_tag("wheelbarrow-screws.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("clipboard.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("crane-lift.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("dog.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("screwdriver.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("partr-laptop-girl.png", alt: "girl typing on a laptop while sitting on larger than life electrical part", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("box-bolts.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("wheelbarrow-pliers.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("circuit-board.png", alt: "Two workers saudering on a larger than life circuit board", class: "filter-to-jet") %>
+              </div>
+
+              <!-- Second -->
+              <div class="slide">
+                <%= image_tag("wheelbarrow-screws.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("clipboard.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("crane-lift.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("dog.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("screwdriver.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("partr-laptop-girl.png", alt: "girl typing on a laptop while sitting on larger than life electrical part", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("box-bolts.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("wheelbarrow-pliers.png", alt: "", class: "filter-to-jet") %>
+              </div>
+              <div class="slide">
+                <%= image_tag("circuit-board.png", alt: "Two workers saudering on a larger than life circuit board", class: "filter-to-jet") %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

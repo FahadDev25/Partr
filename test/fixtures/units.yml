@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+failsafe:
+  job: trap
+  assembly: self_destruct_console
+  quantity: 1
+  organization: artificers
+
+vault_breaker:
+  job: heist
+  assembly: aok
+  quantity: 1
+  organization: artificers
+
+no_received:
+  job: second_trap
+  assembly: no_received_assembly
+  quantity: 1
+  organization: artificers
+
+only_subassembly:
+  job: subassembly_job
+  assembly: just_subassembly
+  quantity: 1
+  organization: artificers

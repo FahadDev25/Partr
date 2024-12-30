@@ -1,0 +1,13 @@
+<div class="mx-auto md:w-2/3 w-full flex">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+    <%= link_to "Back to Team Members", team_team_members_path(@team_member.team), class: "button back-button mb-3 normal-top-margin" %>
+
+    <%= render @team_member %>
+
+    <%= link_to "Edit This Team Member", edit_team_member_path(@team_member), class: "button edit-button" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This Team Member", team_member_path(@team_member), method: :delete, class: "button delete" %>
+    </div>
+  </div>
+</div>

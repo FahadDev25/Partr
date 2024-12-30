@@ -1,0 +1,11 @@
+# active_storage/attachments.yml
+
+slip1_attachment:
+  name: file
+  record: one (Attachment)
+  blob: slip1_blob
+  
+slip2_attachment:
+  name: file
+  record: two (Attachment)
+  blob: slip2_blob

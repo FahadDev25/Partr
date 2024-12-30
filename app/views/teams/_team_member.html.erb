@@ -1,0 +1,14 @@
+<tr id="team_member_<%= team_member.id %>">
+  <td>
+    <span class="th" aria-hidden="true">User</span>
+    <span>
+      <%= link_to team_member.user.username, user_path(team_member.user) %>
+    </span>
+  </td>
+  <td class="no-th">
+    <div class="flex space-x-2">
+      <%= button_to "Edit", edit_team_member_path(team_member), method: :get, class: "button edit-button primary" %>
+      <%= button_to "Remove", team_member, method: :delete, class: "button delete" %>
+    </div>
+  </td>
+</tr>

@@ -1,0 +1,28 @@
+<%= turbo_frame_tag "address_fields" do %>
+  <% if params[:show] == "true" %>
+    <div class="my-5">
+      <%= label_tag "job[jobsite_attributes][address_1]", "Address 1" %>
+      <%= text_field_tag "job[jobsite_attributes][address_1]", @job&.jobsite&.address_1 %>
+    </div>
+    
+    <div class="my-5">
+      <%= label_tag "job[jobsite_attributes][address_2]", "Address 2" %>
+      <%= text_field_tag "job[jobsite_attributes][address_2]", @job&.jobsite&.address_2 %>
+    </div>
+
+    <div class="my-5">
+      <%= label_tag "job[jobsite_attributes][city]", "City" %>
+      <%= text_field_tag "job[jobsite_attributes][city]", @job&.jobsite&.city %>
+    </div>
+
+    <div class="my-5">
+      <%= label_tag "job[jobsite_attributes][state]", "State" %>
+      <%= select_tag "job[jobsite_attributes][state]", options_for_select(us_states, @job&.jobsite&.state)  %>
+    </div>
+
+    <div class="my-5">
+      <%= label_tag "job[jobsite_attributes][zip_code]",  "Zip code" %>
+      <%= text_field_tag "job[jobsite_attributes][zip_code]", @job&.jobsite&.zip_code %>
+    </div>
+  <% end %>
+<% end %>

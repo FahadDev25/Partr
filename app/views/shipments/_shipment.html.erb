@@ -1,0 +1,60 @@
+<div class="scrollableTable breakpoint-768">
+  <table id="<%= dom_id shipment %>" class= "table-auto mt-4">
+    <thead>
+      <tr>
+        <th>Job:</th>
+        <th>Order:</th>
+        <th>From:</th>
+        <th>Shipping Number:</th>
+        <th>Received By:</th>
+        <th>Date Received:</th>
+        <th>Notes:</th>
+        <% if action_name != "show" %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr>
+        <td>
+          <span class="th" aria-hidden="true">Job</span>
+          <span class="add-table-link"><%= shipment.job ? (link_to shipment.job.name, shipment.job) : "-" %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Order</span>
+          <span class="add-table-link"><%= shipment.order ? (link_to shipment.order.po_number, shipment.order) : "-" %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">From</span>
+          <span><%= shipment.from %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Shipping Number</span>
+          <% if action_name != "show" %>
+            <%= link_to shipment.shipping_number, shipment %>
+          <% else %>
+            <%= shipment.shipping_number %>
+          <% end %>
+          </span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Received By</span>
+          <span><%= shipment.user&.username %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Date Received</span>
+          <span><%= shipment.date_received %></span>
+        </td>
+        <td>
+          <span class="th" aria-hidden="true">Notes</span>
+          <span><%= shipment.notes %></span>
+        </td>
+        <% if action_name != "show" %>
+          <td class="no-th">
+            <%= link_to "Edit This Shipment", edit_shipment_path(shipment), class: "button edit-button primary", data: { turbo_frame: "modal" } %>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+</div>

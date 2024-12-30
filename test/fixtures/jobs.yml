@@ -1,0 +1,70 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+trap:
+  job_number: qwe123
+  name: Road Runner Trap
+  project_manager: admin
+  status: Open
+  start_date: 2023-07-23
+  deadline: 2023-09-23
+  total_cost: 9.99
+  customer: wile
+  organization: artificers
+  default_tax_rate: 0.075
+  team: trapsmiths
+  jobsite: trap_address
+
+heist:
+  job_number: ewq321
+  name: Vault Heist
+  status: Closed
+  start_date: 2023-08-20
+  deadline: 2023-09-30
+  total_cost: 29.99
+  customer: zhent
+  organization: artificers
+  team: submersibles
+
+just_one_part:
+  job_number: rty456
+  name: only one
+  status: Open
+  start_date: 2023-08-23
+  deadline: 2023-08-23
+  total_cost: 9.99
+  customer: wile
+  organization: artificers
+  team: trapsmiths
+
+second_trap:
+  job_number: ytr654
+  name: Road Trap
+  status: Closed
+  start_date: 2023-08-20
+  deadline: 2023-09-30
+  total_cost: 29.99
+  customer: zhent
+  organization: artificers
+  team: trapsmiths
+
+empty_job:
+  job_number: uio789
+  name: Blank
+  status: Pending
+  start_date: 2023-08-23
+  deadline: 2023-08-23
+  total_cost: 0 
+  customer: wile
+  organization: artificers
+  team: trapsmiths
+
+subassembly_job:
+  job_number: oiu987
+  name: Sub
+  status: Pending
+  start_date: 2023-08-23
+  deadline: 2023-08-23
+  total_cost: 0 
+  customer: wile
+  organization: artificers
+  team: trapsmiths

@@ -1,0 +1,59 @@
+<%= turbo_frame_tag "customer_table" do %>
+  <div class="defaultTable breakpoint-976">
+    <table class="table-auto" data-controller='table-order' data-turbo-type='customer_table'>
+      <thead>
+        <% column_array = [['name', "Name"], [nil, "Latest Job"], ['address_1', 'Address'], ["city", "City"], ["state", "State"], ["zip_code", "Zip Code"],
+                          ["phone_number", "Phone Number"]] %>
+        <tr>
+          <%= render partial: "pages/order_by_table_headers", locals: { column_array: }%>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @customers.each do |customer| %>
+          <tr id="<%= dom_id customer %>_row" class="<%= cycle('bg-snow','bg-electric-blue') %>">
+            <td>
+              <span class="th" aria-hidden="true">Name</span>
+              <span><%= link_to customer.name, customer, data: { turbo_frame: :_top } %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Latest Job</span>
+              <span>
+              <% last_job = customer.jobs.where(id: current_user.current_team.jobs.pluck(:id)).order(start_date: :desc).first %>
+              <% if last_job %>
+                <%= link_to last_job.name, job_path(last_job), data: { turbo_frame: :_top } %>
+              <% else %>
+                -
+              <% end %>
+              </span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Address</span>
+              <span><%= (customer.customer_address&.address_1 || "") + (customer.customer_address&.address_2 ? ", #{customer.customer_address&.address_2}" : "") %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">City</span>
+              <span><%= customer.customer_address&.city %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">State</span>
+              <span><%= customer.customer_address&.state %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Zip Code</span>
+              <span><%= customer.customer_address&.zip_code %></span>
+            </td>
+            <td>
+              <span class="th" aria-hidden="true">Phone Number</span>
+              <span><%= number_to_phone(customer.phone_number, area_code: true) %></span>
+            </td>
+            <td class="no-th">
+              <%= link_to "Edit", edit_customer_path(customer), class: "button edit-button primary normal-top-margin", data: { turbo_frame: "modal" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= render partial: 'pagy/nav', locals: {pagy: @pagy} if @pagy.pages > 1 %>
+<% end %>

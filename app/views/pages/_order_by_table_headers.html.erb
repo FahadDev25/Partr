@@ -1,0 +1,14 @@
+<% column_array.each do |column| %>
+  <% if column[0] != nil %>
+    <th  data-table-order-target='orderBy' data-order-by=<%= column[0] %> data-order=<%= column[0] == params[:order_by] ? "#{params[:order]}" : "DESC"%>>
+      <div>
+      <div>
+      <%= column[1] %>
+      </div>
+      <%= image_tag "sort-inverted-arrows.svg", alt: "Sort Ascending", class: "inline-block" %> <!-- Ascending icon -->
+        </div>
+    </th>
+  <% else %>
+    <th><%= column[1] %></th>
+  <% end %>
+<% end %>

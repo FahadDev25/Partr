@@ -1,0 +1,87 @@
+<% if assembly.notes && assembly.notes != "" %>
+  <table class="table-auto" style="border: none; margin-top: 50px; border: 1px solid gray;">
+    <thead style="background: none; border: none;">
+      <tr>
+        <th style="background: lightgray; border: none; border-bottom: 1px solid gray; color: #000000;">NOTE</th>
+      </tr>
+      <tr style="background: none;">
+        <td style="background: none; border: none; color: #000000; text-align: left;"><%= assembly.notes %></td>
+      </tr>
+    </thead>
+  </table>
+<% end %>
+
+<% if assembly.subassemblies.length > 0 %>
+  <table class="table-auto" style="border: none; margin-top: 50px; border: 1px solid gray;">  
+    <thead style="background: lightgray; border: none;">
+        <tr style="border: none; border-bottom: 1px solid gray;">
+          <th style="border: none; color: #000000; width: 52%;">Sub<%= assembly.team&.assembly_label&.downcase || "assembly" %></th>
+          <th style="border: none; color: #000000; width: 12%; text-align: right;">Qty</th>
+          <% if include_cost %>
+            <th style="border: none; color: #000000; width: 12%; text-align: right;">Price/Unit</th>
+            <th style="border: none; color: #000000; width: 12%; text-align: right;">Total</th>
+          <% end %>
+        </tr>
+    </thead>
+    <tbody style="border: none;">
+      <% assembly.subassemblies.each do |sa| %>
+        <tr style="border: none;">
+          <td style="border: none; width: 52%; text-align: left;"><%= sa.child_assembly.name %></td>
+          <td style="border: none; width: 12%;"><%= number_with_precision(sa.quantity, strip_insignificant_zeros: true) %></td>
+          <% if include_cost %>
+            <td style="border: none; width: 12%;"><%= number_to_cost(sa.child_assembly.total_cost) %></td>
+            <td style="border: none; width: 12%;"><%= number_to_cost(sa.child_assembly.total_cost * sa.quantity) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if assembly.components.length > 0 %>
+  <table class="table-auto" style="border: none; margin-top: 50px; border: 1px solid gray;">  
+    <thead style="background: lightgray; border: none;">
+        <tr style="border: none; border-bottom: 1px solid gray;">
+          <th style="border: none; color: #000000; width: 52%;">Part</th>
+          <th style="border: none; color: #000000; width: 12%; text-align: right;">Qty</th>
+          <% if include_cost %>
+            <th style="border: none; color: #000000; width: 12%; text-align: right;">Price/Unit</th>
+          <% end %>
+          <th style="border: none; color: #000000; width: 12%; text-align: right;">SKU</th>
+          <% if include_cost %>
+            <th style="border: none; color: #000000; width: 12%; text-align: right;">Total</th>
+          <% end %>
+        </tr>
+    </thead>
+    <tbody style="border: none;">
+      <% assembly.components.each do |c| %>
+        <tr style="border: none;">
+          <td style="border: none; width: 52%; text-align: left;"><%= c.part.description %></td>
+          <td style="border: none; width: 12%;"><%= number_with_precision(c.quantity, strip_insignificant_zeros: true) %></td>
+          <% if include_cost %>
+            <td style="border: none; width: 12%;"><%= number_to_cost(c.part.cost_per_unit) %></td>
+          <% end %>
+          <td style="border: none; width: 12%;"><%= c.part.label %></td>
+          <% if include_cost %>
+            <td style="border: none; width: 12%;"><%= number_to_cost(c.part.cost_per_unit * c.quantity) %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if include_cost %>
+  <table class="table-auto" style="border: none; margin-top: 50px;">
+    <tbody style="border: none;">
+      <tr style="border: none;">
+        <td style="border: none;"></td>
+        <td style="border: none;"></td>
+        <td style="border: none;"></td>
+        <td style="border: none;"></td>
+        <td style="border: none;"><b>Total</b></td>
+        <td style="border: none;"><b><%= number_to_cost(assembly.total_cost) %></b></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

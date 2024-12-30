@@ -1,0 +1,81 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+<% require 'bcrypt' %>
+
+admin:
+  username: admin
+  encrypted_password: <%= BCrypt::Password.create('12345') %>
+  first_name: admin
+  last_name: admin
+  email: admin@bio-next.net
+  organization: artificers
+  otp_required_for_login: true
+  otp_secret: <%= User.generate_otp_secret %>
+  consumed_timestep: null
+
+admin2:
+  username: admin2
+  encrypted_password: <%= BCrypt::Password.create('12345') %>
+  first_name: admin2
+  last_name: admin2
+  email: admin2@bio-next.net
+  organization: artificers
+
+johnsmith:
+  username: jsmith
+  encrypted_password: <%= BCrypt::Password.create('password') %>
+  first_name: John
+  last_name: Smith
+  email: jsmith@bio-next.net
+  organization: artificers
+
+bob:
+  username: bob
+  encrypted_password: <%= BCrypt::Password.create('password') %>
+  first_name: bob
+  last_name: bob
+  email: bob@bio-next.net
+  organization: artificers
+
+jim:
+  username: jim
+  encrypted_password: <%= BCrypt::Password.create('password') %>
+  first_name: jim
+  last_name: darkmagic
+  email: jim@acq-inc.net
+  organization: artificers
+
+forced_2fa:
+  username: f2fa
+  encrypted_password: <%= BCrypt::Password.create('password') %>
+  first_name: forced
+  last_name: twofactor
+  email: uf2fa@bio-next.net
+  organization: artificers
+  current_team: trapsmiths
+  force_2fa: true
+  
+no_2fa:
+  username: no_2fa
+  encrypted_password: <%= BCrypt::Password.create('password') %>
+  first_name: forced
+  last_name: twofactor
+  email: of2fa@bio-next.net
+  organization: forced_2fa
+  current_team: forced_2fa
+
+empty:
+  username: empty
+  encrypted_password: <%= BCrypt::Password.create('password') %>
+  first_name: empty
+  last_name: empty
+  email: empty@bio-next.net
+  organization: artificers
+
+empty_owner:
+  username: emptyowner
+  encrypted_password: <%= BCrypt::Password.create('password') %>
+  first_name: empty
+  last_name: empty
+  email: empty-owner@bio-next.net
+  organization: empty_org

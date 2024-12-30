@@ -1,0 +1,30 @@
+<%= turbo_frame_tag "billing_fields" do %>
+  <% if params[:show] == "true" %>
+    <div class="mb-3">
+      <%= label_tag "order[billing_address_attributes][address_1]", "Address 1" %>
+      <%= text_field_tag "order[billing_address_attributes][address_1]", @order&.billing_address&.address_1 || current_user.current_team.billing_address&.address_1, placeholder: "Type Here" %>
+    </div>
+    
+    <div class="mb-3">
+      <%= label_tag "order[billing_address_attributes][address_2]", "Address 2" %>
+      <%= text_field_tag "order[billing_address_attributes][address_2]", @order&.billing_address&.address_2 || current_user.current_team.billing_address&.address_2, placeholder: "Type Here" %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag "order[billing_address_attributes][city]", "City" %>
+      <%= text_field_tag "order[billing_address_attributes][city]", @order&.billing_address&.city || current_user.current_team.billing_address&.city , placeholder: "Type Here" %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag "order[billing_address_attributes][state]", "State" %>
+      <%= select_tag "order[billing_address_attributes][state]",
+            options_for_select([["SK", nil]] + us_states, @order&.billing_address&.state || current_user.current_team.billing_address&.state),
+            class: "form-select-placeholder" %>
+    </div>
+
+    <div class="mb-3">
+      <%= label_tag "order[billing_address_attributes][zip_code]",  "Zip code" %>
+      <%= text_field_tag "order[billing_address_attributes][zip_code]", @order&.billing_address&.zip_code || current_user.current_team.billing_address&.zip_code, placeholder: "Type Here" %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,26 @@
+<div class="w-full wheelbarrow-screws-bg">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class="flex justify-between items-center">
+    <h1>Jobs</h1>
+    <%= link_to "New Job", new_team_job_path(@team), class: "button add-button primary mb-3 normal-top-margin", data: { turbo_frame: "modal" } %>
+  </div>
+
+  <%= render partial: "pages/search_filter", 
+              locals: { 
+                show_filters: false, 
+                parent_params: params.except(:controller, :action, :page, :order_by, :order, :team_id).to_unsafe_h,
+                target: "job_table",
+                filters: [["text", "Name", "name"],
+                          ["select", "Project Manager", "project_manager"],
+                          ["select", "Status", "status"],
+                          ["date", "Start Date", "start_date"],
+                          ["date", "Deadline", "deadline"],
+                          ["number", "Total Cost", "total_cost"],
+                          ["select", "Customer", "customer"]]
+              } %>
+
+  <div id="jobs" class="min-w-full">
+    <%= render partial: "job_table" %>
+  </div>
+</div>

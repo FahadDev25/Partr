@@ -1,0 +1,67 @@
+<%= form_with(model: [part, other_part_number], class: "contents") do |form| %>
+  <% if other_part_number.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(other_part_number.errors.count, "error") %> prohibited this other_part_number from being saved:</h2>
+
+      <ul>
+        <% other_part_number.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :part_id, "Part" %>
+    <%= form.select :part_id, part ? { "#{part.label}" => part.id } : { "#{other_part_number.part.label}" => other_part_number.part.id }, {}, disabled: true, class: "form-field" %>
+    <%= form.hidden_field :part_id, value: part&.id || other_part_number.part_id %>
+  </div>
+
+  <div data-controller='dynamic-select'>
+    <div class="my-5">
+      <%= form.label :company_type, "Type" %>
+      <%= form.select :company_type, ["Customer", "Vendor", "Manufacturer", "Other"], {},
+          { data: { dynamic_select_target: "select",
+                    "turbo-type": "company",
+                    url: company_select_other_part_number_path,
+                    object: 'other_part_number',
+                    preset: other_part_number.company_id,
+                    mode: action_name 
+                  }
+          } %>
+    </div>
+
+    <%= turbo_frame_tag "company" do %>
+      <div class="form-field">
+        <%= form.label :company_id %>
+        <%= form.select :company_id, { "none" => nil }, {} %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :part_number %>
+    <%= form.text_field :part_number, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :cost_per_unit %>
+    <%= form.number_field :cost_per_unit, value: other_part_number.cost_per_unit, step: :any %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :url %>
+    <%= form.text_field :url %>
+  </div>
+
+  <% if other_part_number.company_type == "Manufacturer" && !other_part_number.primary %>
+    <div class="form-field">
+      <%= form.check_box :primary %>
+      <%= form.label :primary %>
+    </div>
+  <% end %>
+
+  <div class="inline">
+    <%= form.submit class: "button primary" %>
+  </div>
+<% end %>

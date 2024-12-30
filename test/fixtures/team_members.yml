@@ -1,0 +1,26 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+trap_admin:
+  user: admin
+  team: trapsmiths
+  organization: artificers
+  
+trap_admin2:
+  user: admin2
+  team: trapsmiths
+  organization: artificers
+
+trap_jim:
+  user: jim
+  team: trapsmiths
+  organization: artificers
+
+sub_admin:
+  user: admin
+  team: submersibles
+  organization: artificers
+
+sub_bob:
+  user: bob
+  team: submersibles
+  organization: artificers

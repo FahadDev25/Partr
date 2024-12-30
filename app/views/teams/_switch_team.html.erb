@@ -1,0 +1,10 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do%>
+    <h1 class="px-5">Select Team:</h1>
+  <% end %>
+  <div>
+    <% (current_user.is_admin ? current_tenant.teams : current_user.teams).each do |t| %>
+      <div><%= link_to t.name, home_team_path(t), data: { turbo_frame: :_top } %></div>
+    <% end %>
+  </div>
+<% end %>

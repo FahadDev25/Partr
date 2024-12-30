@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  commentable: trap
+  commentable_type: Job
+  user: admin
+  organization: artificers
+
+two:
+  commentable: trap
+  commentable_type: Job
+  user: johnsmith
+  organization: artificers

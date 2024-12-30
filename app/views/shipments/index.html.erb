@@ -1,0 +1,121 @@
+<div class="w-full">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+
+  <div class=" crane-lift-bg">
+    <h1 class="text-4xl mb-1">Shipments</h1>
+    <p class="text-dd-gray">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </div>
+
+  <div class='lg:flex justify-between gap-4 items-center my-6'>
+    <div class="flex justify-between items-center border border-dd-persian-green-mid w-full lg:max-w-lg mb-3 lg:mb-0 rounded-[7px] overflow-hidden">
+      <%= text_field_tag :input_name, nil, placeholder: "Type Here", class: "h-10 shipment-searchbar rounded-none text-sm" %>
+      <%= image_tag "search-icon.svg", alt: "search icon", class: "w-10 h-10 cursor-pointer" %>
+    </div>
+
+    <%= link_to "Add New Shipment", new_team_shipment_path(@team), class: "button add-button primary normal-top-margin dd-new-shipment-btn text-base font-normal", data: { turbo_frame: "modal" } %>
+  </div>
+
+
+  <%#= render partial: "pages/search_filter",
+              locals: {
+                show_filters: false,
+                parent_params: params.except(:controller, :action, :page, :order_by, :order, :team_id).to_unsafe_h,
+                target: "shipment_table",
+                filters: [["select", "Job", "job"],
+                          ["select", "Order", "order_id"],
+                          ["text", "From", "from"],
+                          ["text", "Shipping Number", "shipping_number"],
+                          ["date", "Date Received", "date_received"],
+                          ["text", "Notes", "notes"]]
+              } %>
+
+<%= render 'shipments/shipment_cards' %>
+
+  <div id="shipments" class="min-w-full">
+    <%= render partial: "shipment_table" %>
+  </div>
+</div>
+
+
+<script>
+
+function dropdownWorking() {
+      document.addEventListener("click", function(event) {
+          const dropdownButtons = document.querySelectorAll('.shipments-stat-card-dropdown-btn');
+          const dropdownMenus = document.querySelectorAll('.shipment-stat-card-dropdown');
+          const filterTitles = document.querySelectorAll(".filter-span-title");
+
+          let dropdownMenuBtn = event.target.closest(".shipments-stat-card-dropdown-btn");
+
+          if (dropdownMenuBtn) {
+              // Calculate the index of the clicked dropdown button
+              let i = [...dropdownButtons].indexOf(dropdownMenuBtn);
+
+              // Toggle the clicked dropdown
+              dropdownMenus[i].classList.toggle('hidden');
+
+              // Close all other dropdowns except the current one
+              dropdownMenus.forEach((menu, index) => {
+                  if (index !== i) {
+                      menu.classList.add('hidden');
+                  }
+              });
+
+          } else if (event.target.closest(".shipment-stat-card-dropdown button")) {
+              // Check if a dropdown menu button inside the dropdown was clicked
+              let menuBtn = event.target.closest("button");
+              let dropDownMenu = event.target.closest(".shipment-stat-card-dropdown");
+
+              // Get the index of the dropdown containing the clicked button
+              let i = [...dropdownMenus].indexOf(dropDownMenu);
+
+              // Close the dropdown and update the filter title
+              dropDownMenu.classList.add("hidden");
+              filterTitles[i].innerText = menuBtn.innerText;
+
+          } else {
+              // Close all dropdowns if clicked outside any dropdown or dropdown button
+              dropdownMenus.forEach(menu => {
+                  menu.classList.add('hidden');
+              });
+          }
+      });
+  }
+
+  dropdownWorking();
+
+
+  function filterWorking () {
+          document.addEventListener("click", (event) => {
+               const clickedRow = event.target.closest(".shipments-table-row");
+               const clickedRowBtn = event.target.closest(".table-row-collapsable-btn");
+
+                    if (clickedRowBtn) {
+                      clickedRowBtn.classList.toggle("active")
+                      clickedRow.nextElementSibling.querySelector("td").classList.toggle("hidden")
+                    }
+
+
+              if(event.target.closest(".shipment-table-filter-btn")) {
+                              document.querySelector(".shipments-table-filter-modal").classList.remove("inactive")
+                          } else if (!document.querySelector(".shipments-table-filter-modal").contains(event.target)) {
+
+                           document.querySelector(".shipments-table-filter-modal").classList.add("inactive")
+                          }
+
+              if (event.target.closest('.shipments-filter-modal-close-btn')) {
+                  document.querySelector(".shipments-table-filter-modal").classList.add("inactive")
+              }
+
+
+          })
+  }
+
+  filterWorking();
+
+  document.querySelector(".custom-date-icon").addEventListener("click", () => {
+    document.querySelector(".custom-date-field").focus();
+  });
+
+
+  </script>

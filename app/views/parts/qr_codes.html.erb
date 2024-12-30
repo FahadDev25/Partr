@@ -1,0 +1,15 @@
+<div>
+  <div class="grid-container">
+    <% parts.each_with_index do |p,i| %>
+      <div class="grid-item <%= (i % 14 == 0 && i != 0) ? "pagebreak" : "" %>">
+        <div class="qr-content">
+          <div class="qr-label">
+            <div>SKU: <%= p.org_part_number %></div>
+            <div class ="two-line-wrap"><%= p.description %></div>
+          </div>
+          <%= image_tag "data:image/png;base64,#{p.qr_code_base64}", size: "100x100", class: "centered-img" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

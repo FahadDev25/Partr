@@ -1,0 +1,17 @@
+<div class="w-full clipboard-man-bg">
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+  <div class="justify-between items-center">
+    <h1>Welcome, <%= current_user.first_name %></h1>
+    <div class="button-row">
+      <%= link_to 'Create PO', new_team_order_path(@team), class: "button cart-button primary w-1/4 aspect-[4/1] m-1 text-5xl text-center normal-top-margin" %>
+      <%= link_to 'Create Job', new_team_job_path(@team), class: "button clipboard-button primary w-1/4  aspect-[4/1] m-1 text-5xl text-center normal-top-margin" %>
+    </div>
+  </div>
+  <% if current_user.pinned_jobs.where(team_id: @team.id).any? %>
+    <%= render partial: "pinned_jobs" %>
+  <% end %>
+  
+  <% if current_user.current_team.orders.any? %>
+    <%= render partial: 'recent_pos' %>
+  <% end %>
+</div>

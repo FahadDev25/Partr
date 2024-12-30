@@ -1,0 +1,15 @@
+<div class="scrollableTable breakpoint-768 resizable">
+  <table class= "table-auto">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th></th>
+      </tr>
+    </thead>  
+    <tbody>
+      <% team_members.each do |tm| %>
+        <%= render partial: "team_member", locals: { team_member: tm } %>
+      <% end %>
+    </tbody>
+  </table>
+</div>

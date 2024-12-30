@@ -1,0 +1,4 @@
+<div id="<%= dom_id part %>_in_stock" class="in-stock flex space-x-4 items-center">
+  <div><%= pluralize(part&.in_stock&.to_s&.sub(/\.0+$/, '') || 0, part.unit || "" )  %></div>
+  <div><%= link_to "\u00b1", stock_form_part_path(part.id), class: "button mini", data: { turbo_frame: "modal" } %></div>
+</div>

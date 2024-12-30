@@ -1,0 +1,9 @@
+<%= turbo_frame_tag 'part_select' do%>
+    <div id="part_ids", class="my-5">
+      <%= label_tag object + '[part_id]', 'Part', class: 'label_class required' %>
+      <%= select_tag object + '[part_id]', options_for_select(part_list,params[:preset]),
+        data: { dynamic_select_target: params[:target], 'turbo-type': params[:turbo_type], url: params[:url], object: object, 
+                alt_url: params[:alt_url], alt_value: params[:alt_value], preset: params[:child_preset], filter: params[:filter],
+                mode: params[:mode] } %>
+    </div>
+<% end %>

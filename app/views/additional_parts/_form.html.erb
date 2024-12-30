@@ -1,0 +1,24 @@
+<%= form_with(model: additional_part, class: "contents") do |form| %>
+  <div class="form">
+    <%= render partial: "pages/modal_form_errors", locals: { object: additional_part, name: "additional_part" }%>
+
+    <div class="form-field">
+      <% additional_part.job_id = params[:job_id] if params[:job_id] %>
+      <%= form.label :job_id, class: "required" %>
+      <%= form.select :job_id, additional_part.job ? { additional_part&.job&.name => additional_part.job_id }
+                                                   : job_select_list(current_user.current_team, "none"), {} %>
+    </div>
+
+    <div class="form-field">
+      <% additional_part.part_id = params[:part_id] if params[:part_id] %>
+      <%= form.label :part_id, class: "required" %>
+      <%= form.select :part_id, options_for_select(part_select_list(additional_part)), {} %>
+    </div>
+
+    <%= render partial: "pages/decimal_field", locals: { model: "additional_part", attribute: "quantity", label: "Quantity", preset: additional_part.quantity } %>
+
+    <div class="inline">
+      <%= form.submit action_name == 'edit' ? 'Update' : 'Add Part', class: "button primary" %>
+    </div>
+  </div>
+<% end %>

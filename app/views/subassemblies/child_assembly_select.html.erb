@@ -1,0 +1,8 @@
+<%= turbo_frame_tag 'assembly_select' do%>
+    <div id="assembly_ids", class="my-5">
+      <%= label_tag object + '[child_assembly_id]', "Child #{capital_assembly}", class: 'label_class' %>
+      <%= select_tag object + '[child_assembly_id]', options_for_select(assembly_list, params[:preset]),
+        data: { dynamic_select_target: params[:target], 'turbo-type': params[:turbo_type], url: params[:url], object: object, filter: filter, 
+                alt_url: params[:alt_url], alt_value: params[:alt_value], preset: params[:child_preset]}%>
+    </div>
+<% end %>

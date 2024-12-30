@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+warner_bros:
+  name: Warner Brothers
+  vendor_address: warner_address
+  phone_number: 1234567890
+  representative: Elmer Fudd
+  organization: artificers
+  team: trapsmiths
+
+acq_inc:
+  name: Acquisitions Incorporated
+  organization: artificers
+  team: submersibles
+
+empty: 
+  name: empty vendor
+  vendor_address: empty_address
+  phone_number: 9876543210
+  representative: Nobody
+  organization: artificers
+  team: trapsmiths
+
+automation_direct:
+  name: Automation Direct
+  organization: artificers
+  team: trapsmiths

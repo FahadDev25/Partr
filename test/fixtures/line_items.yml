@@ -1,0 +1,86 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one_button:
+  order: button_order
+  part: big_red_button
+  cost_per_unit: 3.50
+  discount: 0.0
+  assembly: self_destruct_console
+  id_sequence: []
+  quantity: 1
+  expected_delivery: 2024-7-25
+  organization: artificers
+  status_location: in the warehouse
+  om_warranty: no warranty
+  notes: bigger than expected
+  quantity_received: 2
+  received: true
+
+more_pane:
+  order: button_order
+  part: glass_pane
+  cost_per_unit: 10.00
+  discount: 0.0
+  assembly: self_destruct_console
+  id_sequence: []
+  quantity: 1
+  organization: artificers
+  quantity_received: 2
+  received: true
+
+two_claws:
+  order: claws_order
+  part: big_meaty_claw
+  cost_per_unit: 5
+  discount: 0.0
+  quantity: 2
+  organization: artificers
+  quantity_received: 3
+  received: true
+
+claw_installation:
+  order: claws_order
+  manual: true
+  sku: none
+  description: claw installation
+  cost_per_unit: 25.00
+  quantity: 2
+  discount: 1.0
+  organization: artificers
+  quantity_received: 0
+  received: false
+
+sub_levers:
+  order: claws_order
+  part: lever
+  cost_per_unit: 1
+  discount: 0.0
+  quantity: 2
+  id_sequence: []
+  organization: artificers
+  quantity_received: 0
+  received: false
+
+no_received_unit:
+  order: no_received_order
+  part: no_received_part
+  assembly: no_received_assembly
+  cost_per_unit: 5
+  discount: 0.0
+  quantity: 1
+  id_sequence: []
+  organization: artificers
+  quantity_received: 0
+  received: false
+
+no_received_additional_part:
+  order: no_received_order
+  part: big_red_button
+  assembly: no_received_assembly
+  cost_per_unit: 3.50
+  discount: 0.0
+  quantity: 1
+  id_sequence: []
+  organization: artificers
+  quantity_received: 0
+  received: false

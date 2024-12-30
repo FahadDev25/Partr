@@ -1,0 +1,22 @@
+<%= turbo_frame_tag "part_or_description_fields" do %>
+  <div class="form-field">
+    <% @order = @line_item&.order if @line_item&.order %>
+    <%= label_tag "line_item[order_id]", "Order", class: "required" %>
+    <%= select_tag "line_item[order_id]", options_for_select({ @order.name => @order.id } || order_select_list(@line_item), @order.id) %>
+  </div>
+
+  <div class="form-field">
+    <%= label_tag "line_item[sku]", "SKU" %>
+    <%= text_field_tag "line_item[sku]", @line_item&.sku %>
+  </div>
+
+  <div class="form-field">
+    <%= label_tag "line_item[description]", "Description", class: "required" %>
+    <%= text_area_tag "line_item[description]", @line_item&.description %>
+  </div>
+
+  <div class="form-field">
+    <%= label_tag "line_item[cost_per_unit]", "Cost per Unit", class: "required" %>
+    <%= number_field_tag "line_item[cost_per_unit]", {}, value: @line_item&.cost_per_unit, step: :any %>
+  </div>
+<% end %>

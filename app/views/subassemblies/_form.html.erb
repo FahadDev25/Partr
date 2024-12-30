@@ -1,0 +1,31 @@
+<%= form_with(model: subassembly, class: "contents") do |form| %>
+  <%= render partial: "pages/modal_form_errors", locals: { object: subassembly, name: "sub#{assembly_label}" }%>
+
+  <div data-controller="dynamic-select">
+    <div class="my-5">
+      <%= form.label :parent_assembly_id, "Parent #{capital_assembly}" %>
+      <%= form.select :parent_assembly_id, options_for_select(subassembly_select_list(subassembly, "parent"), params[:parent_assembly_id]), {},
+          data: { dynamic_select_target: "select", 'turbo-type': 'assembly_select',
+                  url: child_assembly_select_list_subassembly_path,
+                  object: 'subassembly',
+                  preset: subassembly.child_assembly_id } %>
+    </div>
+    <%= turbo_frame_tag "assembly_select" do %>
+      <div class="my-5">
+        <%= form.label :child_assembly_id, "Child #{capital_assembly}"  %>
+        <%= form.select :child_assembly_id, subassembly_select_list(subassembly, "parent"), class: "form-field" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity, class: "form-field" %>
+  </div>
+
+  <%= form.hidden_field :team_id, value: current_user.team_id %>
+
+  <div class="inline">
+    <%= form.submit submit_label, class: "button primary" %>
+  </div>
+<% end %>

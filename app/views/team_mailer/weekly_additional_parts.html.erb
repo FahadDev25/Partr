@@ -1,0 +1,54 @@
+<% @jobs.each do |job| %>
+  <div>
+    <strong>Job:</strong>
+    <%= link_to "#{job.job_number} #{job.name}", job %>
+  </div>
+  <% if @new_additional_parts.where(job_id: job.id).any? %>
+    <div>
+      <strong>New Additional Parts</strong>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Part</th>
+          <th>Quantity</th>
+          <th>Total Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @new_additional_parts.where(job_id: job.id).each do |additional_part| %>
+          <tr>
+            <td><%= additional_part.part.label %></td>
+            <td><%= additional_part.quantity %></td>
+            <td><%= number_to_currency(additional_part.part.cost_per_unit * additional_part.quantity) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br/>
+  <% end %>
+  <% if @changed_additional_parts.where(job_id: job.id).any? %>
+    <div>
+      <strong>Changed Additional Parts</strong>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Part</th>
+          <th>Quantity</th>
+          <th>Total Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @changed_additional_parts.where(job_id: job.id).each do |additional_part| %>
+          <tr>
+            <td><%= additional_part.part.label %></td>
+            <td><%= additional_part.quantity %></td>
+            <td><%= number_to_currency(additional_part.part.cost_per_unit * additional_part.quantity) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+  <br/>
+<% end %>

@@ -1,0 +1,17 @@
+<style type="text/css" media="screen">
+  .user_<%= current_user.id %> {
+    display: flex !important;
+  }
+</style>
+
+<div class="my-5">
+  <%= turbo_stream_from "#{dom_id(commentable)}_comments" %>
+  <hr class='hidden'>
+  <div id="<%= "#{dom_id(commentable)}_comments" %>" class='dd-shipment-details-comment'>
+    <%= render commentable.comments.order(:created_at), user: current_user %>
+  </div>
+  <div id=<%= "#{dom_id(commentable)}_comment_form" %>>
+    <%= render partial: "comments/form",  locals: { comment: Comment.new, type: commentable.class.to_s, id: commentable.id } %>
+  </div>
+  <hr class='hidden'>
+</div>

@@ -1,0 +1,17 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <div class="flex space-x-2">
+      <h1><%= @component.assembly.name + " component" %></h1>
+      <div class="flex space-x-2">
+        <%= link_to "Edit", edit_component_path(@component.assembly, @component), class: "button edit-button" %>
+        <%= button_to "Delete", component_path(@component.assembly, @component), method: :delete, class: "button delete", data: { turbo_confirm: 'Delete component?' } %>
+      </div>
+    </div>
+  <% end %>
+  <div class="mx-auto md:w-2/3 w-full flex">
+    <div class="mx-auto">
+      <%= render partial: "pages/notice", locals: { modal: true } %>
+      <%= render @component %>
+    </div>
+  </div>
+<% end %>

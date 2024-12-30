@@ -1,0 +1,13 @@
+<% @jobs.each do |job| %>
+Job: <%= job.name %>
+<% if @new_additional_parts.where(job_id: job.id).any? %>
+  New Additional Parts
+<%= pluck_table(["Part", "Quantity", "Total Cost"], @new_additional_parts.where(job_id: job.id).map { |ap| [ap.part.label, ap.quantity.to_s, ap.quantity * ap.part.cost_per_unit]}) %>
+
+<% end %>
+<% if @changed_additional_parts.where(job_id: job.id).any? %>
+  Changed Additional Parts
+<%= pluck_table(["Part", "Quantity", "Total Cost"], @changed_additional_parts.where(job_id: job.id).map { |ap| [ap.part.label, ap.quantity.to_s, ap.quantity * ap.part.cost_per_unit]}) %>
+<% end %>
+
+<% end %>

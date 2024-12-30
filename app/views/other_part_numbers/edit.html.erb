@@ -1,0 +1,11 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <div class="flex space-x-2">
+      <%= link_to "Back", part_path(@other_part_number.part), class: "button back-button primary normal-top-margin" %>
+      <h1>Editing Other Part Number</h1>
+    </div>
+  <% end %>
+  <div class="mx-auto md:w-2/3 w-full">
+    <%= render "form", other_part_number: @other_part_number, part: nil %>
+  </div>
+<% end %>

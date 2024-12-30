@@ -1,0 +1,9 @@
+<%= turbo_stream.replace 'notice' do %>
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+<% end %>
+
+<%= turbo_stream.replace "manufacturers" do %>
+  <div id="manufacturers" class="min-w-full">
+    <%= render partial: "manufacturer_table" %>
+  </div>
+<% end %>

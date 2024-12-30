@@ -1,0 +1,55 @@
+FROM ruby:3.2.2-bookworm AS chrome
+
+WORKDIR /partr
+
+RUN apt-get update
+
+# Install chrome for use with ferrum
+RUN apt-get install nodejs npm -y \
+  && npm install -g corepack \
+  && apt-get install -y wget gnupg \
+  && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+  && apt-get update \
+  && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
+    --no-install-recommends \
+  && rm -rf /var/lib/apt/lists/*
+
+FROM ruby:3.2.2-bookworm AS bundler
+
+ENV BUNDLER_VERSION=2.4.18
+RUN gem install bundler -v 2.4.18
+
+WORKDIR /tmp
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle check || bundle install
+
+FROM chrome AS previews
+
+RUN apt-get update
+
+# Install vips for image manipulation
+RUN apt-get install -y libvips42
+
+# Install poppler for pdf previews
+RUN apt-get install -y poppler-utils
+
+FROM previews AS partr
+
+WORKDIR /partr
+
+# Install s3cmd for pulling files from s3 bucket
+RUN apt-get install -y s3cmd
+
+# Install cron for job scheduling
+RUN apt-get update && apt-get install -y cron
+
+COPY --from=bundler /usr/local/bundle /usr/local/bundle
+
+COPY . ./
+
+RUN SNIPPET="export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
+    && echo "$SNIPPET" >> "/root/.bashrc"
+
+ENTRYPOINT ["./entrypoints/docker-entrypoint.sh"]

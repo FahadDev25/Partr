@@ -1,0 +1,24 @@
+<table id="<%= dom_id unit %>" class= "table-auto mt-4">
+  <thead>
+    <tr>
+      <th>Job</th>
+      <th><%= capital_assembly %></th>
+      <th>Quantity</th>
+      <% if action_name != "show" && action_name != "part_quantity_mismatch" && action_name != "parts_received_list" %>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>  
+  <tbody>
+    <tr>
+      <td><%= link_to unit.job.name, unit.job %></td>
+      <td><%= link_to unit.assembly.name, assembly_path(unit.assembly) %></td>
+      <td><%= number_with_precision(unit.quantity, strip_insignificant_zeros: true) %></td>
+      <% if action_name != "show" && action_name != "part_quantity_mismatch" && action_name != "parts_received_list" %>
+        <td>
+          <%= link_to "Edit This #{capital_assembly}", edit_unit_path(unit), class: "button edit-button primary" %>
+        </td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>

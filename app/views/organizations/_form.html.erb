@@ -1,0 +1,133 @@
+<%= form_with(model: organization, class: "contents") do |form| %>
+  <% if organization.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
+
+      <ul>
+        <% organization.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :abbr_name %>
+    <%= form.text_field :abbr_name, class: "form-field" %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label "Organization Address:" %>
+  </div>
+
+  <div id="hq_address_fields">
+    <%= form.fields_for :hq_address do |address_form| %>
+      <div class="my-5">
+        <%= address_form.label :address_1, "Address 1" %>
+        <%= address_form.text_field :address_1, class: "form-field" %>
+      </div>
+
+      <div class="my-5">
+        <%= address_form.label :address_2, "Address 2" %>
+        <%= address_form.text_field :address_2, class: "form-field" %>
+      </div>
+
+      <div class="my-5">
+        <%= address_form.label :city %>
+        <%= address_form.text_field :city, class: "form-field" %>
+      </div>
+
+      <div class="my-5">
+        <%= address_form.label :state %>
+        <%= address_form.select :state, us_states %>
+      </div>
+
+      <div class="my-5">
+        <%= address_form.label :zip_code %>
+        <%= address_form.text_field :zip_code, class: "form-field" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="billing_address_fields">
+    <div class="form-field">
+      <%= form.label "Billing Address:" %>
+    </div>
+
+    <%= form.fields_for :billing_address do |address_form| %>
+      <div class="my-5">
+        <%= address_form.label :address_1, "Address 1" %>
+        <%= address_form.text_field :address_1, class: "form-field" %>
+      </div>
+
+      <div class="my-5">
+        <%= address_form.label :address_2, "Address 2" %>
+        <%= address_form.text_field :address_2, class: "form-field" %>
+      </div>
+
+      <div class="my-5">
+        <%= address_form.label :city %>
+        <%= address_form.text_field :city, class: "form-field" %>
+      </div>
+
+      <div class="my-5">
+        <%= address_form.label :state %>
+        <%= address_form.select :state, us_states %>
+      </div>
+
+      <div class="my-5">
+        <%= address_form.label :zip_code %>
+        <%= address_form.text_field :zip_code, class: "form-field" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :phone_number %>
+    <%= form.telephone_field :phone_number, class: "form-field", data: { controller: "phone-number" } %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :fax_number %>
+    <%= form.telephone_field :fax_number, class: "form-field", data: { controller: "phone-number" } %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :logo, "Logo (5:3 ratio)" %>
+    <%= form.file_field :logo, accept: 'image/png,image/jpeg,image/jpg' %>
+  </div>
+
+  <div class="my-5">
+    <%= form.check_box :force_2fa, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", id: "admin_checkbox" %>
+    <%= form.label :force_2fa, "Force users to use two factor authentication" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :mcmaster_certificate %>
+    <%= form.password_field :mcmaster_certificate, value: organization.mcmaster_certificate, class: "form-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :mcmaster_username %>
+    <%= form.text_field :mcmaster_username, class: "form-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :mcmaster_password %>
+    <%= form.password_field :mcmaster_password, value: organization.mcmaster_password, class: "form-field" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :job_number_prefix %>
+    <%= form.text_field :job_number_prefix, class: "form-field" %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "button primary" %>
+  </div>
+<% end %>

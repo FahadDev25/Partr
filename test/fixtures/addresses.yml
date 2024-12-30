@@ -1,0 +1,67 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+artificers_address:
+  address_1: 555 N West St
+  address_2: Bldg 3
+  city: Waterdeep
+  state: KS
+  zip_code: 55101-456
+  organization: artificers
+
+submersibles_address:
+  address_1: 444 S East St
+  city: Candlekeep
+  state: NV
+  zip_code: 22563-458
+  organization: artificers
+
+wile_address:
+  address_1: 333 E West St
+  city: Los Angeles
+  state: CA
+  zip_code: 10299-321
+  organization: artificers
+
+zhent_address:
+  address_1: 222 N South St
+  city: Waterdeep
+  state: AZ
+  zip_code: 55121-456
+  organization: artificers
+
+trap_address:
+  address_1: 555 N West St
+  address_2: Apt 201
+  city: Wichita
+  state: KS
+  zip_code: 55555
+  organization: artificers
+
+button_address:
+  address_1: 555 N West St
+  address_2: Apt 201
+  city: Wichita
+  state: KS
+  zip_code: 55555
+  organization: artificers
+
+warner_address:
+  address_1: 123 N West St
+  city: Los Angeles
+  state: CA
+  zip_code: 12345-678
+  organization: artificers
+
+empty_address:
+  address_1: 456 N South St
+  city: Nowhere
+  state: KS
+  zip_code: 98765-432
+  organization: artificers
+
+billing_address:
+  address_1: 555 Test Ave.
+  city: Test
+  state: TN
+  zip_code: 55555
+  organization: artificers

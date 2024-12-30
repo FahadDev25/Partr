@@ -1,0 +1,7 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <%= link_to "Back to Team", team_path(@team), class: "button back-button secondary mb-3 normal-top-margin" %>
+
+  <h1>New Team Member</h1>
+
+  <%= render "form", team: @team, team_member: @team_member %>
+</div>

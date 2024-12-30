@@ -1,0 +1,16 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do%>
+    <h1 class="px-5"><%= @part.label %>: Update Stock</h1>
+  <% end %>
+  <%= form_with url: modify_stock_part_path, method: :patch, class: "contents" do |form| %>
+    <strong>Current Stock: </strong><span><%= @part.in_stock.to_s.sub(/\.0+$/, '') %></span>
+    <div>
+      <%= form.select :mode, ["Add", "Subtract", "Set"] %>
+    </div>
+
+    <%= render partial: "pages/decimal_field", locals: { model: "", attribute: "amount", label: "Amount", preset: 0 } %>
+    <div>
+      <%= form.submit 'Submit', class: "button" %>
+    </div>
+  <% end %>
+<% end %>

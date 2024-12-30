@@ -1,0 +1,15 @@
+<div class="mx-auto md:w-2/3 w-full flex crane-lift-bg">
+  <div class="mx-auto">
+    <%= render partial: "pages/notice", locals: { modal: false } %>
+    <%= link_to "Back to Customers", customers_path, class: "button back-button secondary mb-3 normal-top-margin" %>
+
+    <%= render @customer %>
+
+    <%= render partial: "jobs_table" %>
+
+    <%= link_to "Edit This Customer", edit_customer_path(@customer), class: "button edit-button primary", data: { turbo_frame: "modal" } %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy This Customer", customer_path(@customer), method: :delete, class: "button delete", data: { turbo_confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div>
+  <%= render partial: "pages/notice", locals: { modal: false } %>
+  <h2>Disable Two Factor Authentication</h2>
+  <p>Enter code from your authenticator app to confirm</p>
+  <div class="flex flex-col">
+    <%= form_with url: twofactor_authentication_validate_disable_path, method: :patch do |form| %>
+      <div class="flex flex-col space-y-2">
+        <%= form.label :otp, "OTP" %>
+        <%= form.text_field :otp %>
+        <%= form.submit "Disable" %>
+      </div>
+    <% end %>
+  </div>
+</div>

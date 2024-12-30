@@ -1,0 +1,36 @@
+<table id="unit_<%= unit.id %>_part_list" class="table-auto mt-4">
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Vendor</th>
+      <th>Cost per Unit</th>
+      <th>Quantity</th>
+      <th>Ordered</th>
+      <th>Received</th>
+      <th>Total Cost</th>
+      <% if unit.assembly.parts.where.not(in_stock: 0).any? && !unit.received %>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% unit.assembly.components.each do |c| %>
+      <tr>
+        <td><%= link_to c.part.label, part_path(c.part) %></td>
+        <td><%= c.part.manufacturer && c.part.manufacturer.vendor ? (link_to c.part.manufacturer.vendor.name, vendor_path(c.part.manufacturer.vendor)) : "-" %></td>
+        <td><%= number_to_cost(c.part.cost_per_unit) %></td>
+        <td><%= number_with_precision(c.quantity * unit.quantity, strip_insignificant_zeros: true) %></td>
+        <td><%= link_to unit.parts_ordered.where(part_id: c.part.id).sum(&:quantity).to_s.sub(/\.0+$/, ''), parts_ordered_list_unit_path(part_id: c.part_id), data: { turbo_frame: "modal" } %></td>
+        <td><%= link_to unit.parts_received.where(part_id: c.part.id).sum(&:quantity).to_s.sub(/\.0+$/, ''), parts_received_list_unit_path(part_id: c.part_id), data: { turbo_frame: "modal" } %></td>
+        <td><%= number_to_cost(c.part.cost_per_unit * c.quantity * unit.quantity) %></td>
+        <% if unit.quantity_needed(c) > 0 && c.part.in_stock && c.part.in_stock > 0 %>
+          <td>
+            <div class="flex space-x-2">
+              <%= link_to "Fill From Stock (#{c.part.in_stock.to_s.sub(/\.0+$/, '') || 0})", unit_fill_from_stock_path(unit: unit, component: c), method: :get, class: "button primary" %>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,161 @@
+# Configuration for kamal production deployment. Edit .env for secrets and environment variables
+
+# Name of your application. Used to uniquely configure containers.
+service: partr
+
+# Name of the container image.
+image: mechanical-software-inc/partr
+
+volumes:
+  # persist activestorage across deployments
+  # create /storage folder on host
+  - "/home/storage:/partr/storage"
+  # keep s3cmd config across deployments
+  - "/home/.s3cfg:/root/.s3cfg"
+
+# Deploy to these servers.
+servers:
+  web:
+    hosts:
+      - 137.184.80.207
+    labels:
+      traefik.http.routers.partr.rule: Host(`staging.partr.com`)
+      traefik.http.routers.partr_secure.entrypoints: websecure
+      traefik.http.routers.partr_secure.rule: Host(`staging.partr.com`)
+      traefik.http.routers.partr_secure.tls: true
+      traefik.http.routers.partr_secure.tls.certresolver: letsencrypt
+    options:
+      "add-host": host.docker.internal:host-gateway
+      network: "partr"
+    cmd: "./bin/rails server"
+
+  job:
+    hosts:
+      - 137.184.80.207
+    options:
+      "add-host": host.docker.internal:host-gateway
+      network: "partr"
+    cmd: "bundle exec sidekiq -v"
+
+# Credentials for your image host.
+registry:
+  # Specify the registry server, if you're not using Docker Hub
+  server: ghcr.io
+  username: <%= ENV["GHCR_USERNAME"] %>
+
+  # Always use an access token rather than real password when possible.
+  password: <%= ENV["GHCR_PASSWORD"] %>
+
+# Inject ENV variables into containers (secrets come from .env).
+# Remember to run `kamal env push` after making changes!
+env:
+  clear:
+    RAILS_ENV: staging
+    BUNDLE_WITHOUT: "development test"
+    PORT: 8101
+    DATABASE_NAME: partr
+    DATABASE_USER: postgres
+    DATABASE_HOST: host.docker.internal
+    HOST: staging.partr.com
+  secret: 
+    - RAILS_MASTER_KEY
+    - POSTGRES_PASSWORD
+    - REDIS_PASSWORD
+    - REDIS_URL
+    - SENDGRID_API_KEY
+
+# Use a different ssh user than root
+ssh:
+  user: <%= ENV['SSH_USER'] %>
+
+# Configure builder setup.
+builder:
+  dockerfile: Dockerfile-kamal
+  multiarch: false
+#   args:
+#     RUBY_VERSION: 3.2.0
+  # secrets:
+  #   - GHCR_USERNAME
+  #   - GHCR_PASSWORD
+#   remote:
+#     arch: amd64
+#     host: ssh://app@192.168.0.1
+
+# Use accessory services (secrets come from .env).
+accessories:
+  redis:
+    image: redis:6.2
+    roles:
+      - web
+      - job
+    cmd: "redis-server --requirepass <%= ENV["REDIS_PASSWORD"] %>"
+    port: 6379
+    directories:
+      - /var/lib/redis:/data
+    options:
+      network: "partr"
+  db:
+    image: postgres:14
+    host: 137.184.80.207
+    port: 5432
+    env:
+      clear:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: partr
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - pg-data:/var/lib/postgresql/data
+      - pg-dumps:/pg-dumps
+    options:
+      network: "partr"
+
+# Configure custom arguments for Traefik
+traefik:
+  # host_port: 8101
+  options:
+    publish:
+      - "443:443"
+    volume:
+      - "/letsencrypt/acme.json:/letsencrypt/acme.json"
+    network: "partr"
+
+  args:
+    entryPoints.web.address: ":80"
+    entryPoints.websecure.address: ":443"
+    entryPoints.web.http.redirections.entryPoint.to: websecure
+    entryPoints.web.http.redirections.entryPoint.scheme: https
+    entryPoints.web.http.redirections.entrypoint.permanent: true
+    entrypoints.websecure.http.tls: true
+    certificatesResolvers.letsencrypt.acme.email: "wkindel@bio-next.net"
+    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
+    certificatesResolvers.letsencrypt.acme.httpchallenge: true
+    certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web
+    api.dashboard: true
+    # api.insecure: true
+    # accesslog: true
+    # accesslog.format: json
+  labels:
+    traefik.http.routers.dashboard.rule: Host(`partr.com`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    traefik.http.routers.dashboard.service: api@internal
+    traefik.http.routers.dashboard.middlewares: auth
+    traefik.http.middlewares.auth.basicauth.users: <%= ENV['TRAEFIK_USER'] %>
+
+
+
+# Configure a custom healthcheck (default is /up on port 3000)
+healthcheck:
+  path: /up
+  port: 8101
+  max_attempts: 10
+  interval: 5s
+
+# Bridge fingerprinted assets, like JS and CSS, between versions to avoid
+# hitting 404 on in-flight requests. Combines all files from new and old
+# version inside the asset_path.
+# asset_path: /rails/public/assets
+
+# Configure rolling deploys by setting a wait time between batches of restarts.
+# boot:
+#   limit: 10 # Can also specify as a percentage of total hosts, such as "25%"
+#   wait: 2

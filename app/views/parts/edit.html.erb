@@ -1,0 +1,13 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <%= render partial: "pages/notice", locals: { modal: true } %>
+  <% m.title do %>
+    <div class="flex space-x-2">
+      <%= link_to "Back", part_path(@part), class: "button back-button primary normal-top-margin" %>
+      <h1>Editing Part</h1>
+    </div>
+  <% end %>
+
+  <div class="w-full">
+    <%= render "form", part: @part %>
+  </div>
+<% end %>

@@ -1,0 +1,32 @@
+<div id="<%= dom_id other_part_number %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Type:</strong>
+    <%= other_part_number.company_type %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Company:</strong>
+    <%= other_part_number.company %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Part number:</strong>
+    <%= other_part_number.part_number %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Part:</strong>
+    <%= other_part_number.part_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Organization:</strong>
+    <%= other_part_number.organization_id %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show This Other Part Number", other_part_number, class: "button" %>
+    <%= link_to "Edit This Other Part Number", edit_other_part_number_path(other_part_number), class: "button edit-button primary" %>
+    <hr class="mt-6">
+  <% end %>
+</div>

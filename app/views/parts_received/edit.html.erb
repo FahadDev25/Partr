@@ -1,0 +1,10 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <% if @part_received.shipment_id %>
+    <%= link_to "Back to Shipment", shipment_path(@part_received.shipment_id), class: "button back-button" %>
+  <% end %>
+
+  <h1>Editing Part Received</h1>
+
+  <%= render "form", part_received: @part_received %>
+
+</div>

@@ -1,0 +1,81 @@
+<%= modal(header_divider: false, footer_divider: false) do |m| %>
+  <% m.title do %>
+    <% if @line_item.manual %>
+      <h1 class="font-bold text-4xl">Received</h1>
+    <% else %>
+      <h1 class="font-bold text-4xl"><%= @line_item.part.label %> Parts Received</h1>
+    <% end %>
+  <% end %>
+  <div class="w-full">
+    <div class="flex space-x-5">
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Order:</strong>
+        <%= link_to @line_item.order.po_number, order_path(@line_item.order), data: { turbo_frame: :_top } %>
+      </p>
+      
+      <% if @line_item.manual %>
+        <p class="my-5">
+          <strong class="block font-medium mb-1">Description:</strong>
+          <%= @line_item.description %>
+        </p>
+      <% else %>
+        <p class="my-5">
+          <strong class="block font-medium mb-1">Part:</strong>
+          <%= link_to @line_item.part.label, part_path(@line_item.part) %>
+        </p>
+      <% end %>
+
+      <p class="my-5">
+        <strong class="block font-medium mb-1">Quantity:</strong>
+        <%= @line_item.parts_received_ordered %>
+      </p>
+    </div>
+    <div>
+      <p>From Shipments: </p>
+      <table class= "table-auto">
+        <thead>
+          <tr>
+            <th>Shipment</th>
+            <th>Date</th>
+            <th>Quantity</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @line_item.parts_received.where.not(shipment_id: nil).each do |part_received| %>
+            <tr>
+              <td><%= link_to part_received.shipment.label, shipment_path(part_received.shipment), data: { turbo_frame: :_top } %></td>
+              <td><%= part_received.shipment.date_received %></td>
+              <td><%= number_with_precision(part_received.quantity, strip_insignificant_zeros: true) %></td>
+              <td><%= link_to "Edit", edit_part_received_path(part_received), class: "button edit-button", data: { turbo_frame: :_top } %></td>
+            </tr> 
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <p>Other: </p>
+      <table class= "table-auto">
+        <thead>
+          <tr>
+            <th>Quantity</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @line_item.parts_received.where(shipment_id: nil).each do |part_received| %>
+            <tr>
+              <td><%= number_with_precision(part_received.quantity, strip_insignificant_zeros: true) %></td>
+              <td><%= local_date(part_received.created_at, "%Y-%m-%d") %></td>
+              <td class="flex space-x-2">
+                <%= button_to "Edit", edit_part_received_path(part_received), method: :get, class: "button edit-button", data: { turbo_frame: :_top } %>
+                <%= button_to "Remove", part_received_path(part_received), method: :delete, class: "button delete", data: { turbo_confirm: "Are you sure?" } %>
+              </td>
+            </tr> 
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

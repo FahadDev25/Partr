@@ -1,0 +1,143 @@
+<%= turbo_frame_tag "order_table" do %>
+  <div class="shipments-table-wrapper">
+    <table class="shipments-table order-table" data-controller="table-order" data-turbo-type="order_table">
+      <thead>
+        <tr>
+          <% column_array = [["po_number", "PO Number"], ["job", "Job"], ["vendor", "Vendor"], ["created_at", "Creation Date"], ["total_cost", "Total Cost"],
+                             ["user", "Created By"]] %>
+          <% column_array.each do |column| %>
+            <th data-table-order-target="orderBy" data-order-by=<%= column[0] %> data-order=<%= column[0] == params[:order_by] ? "#{params[:order]}" : "DESC"%>>
+                <div class="flex justify-between"><%= column[1] %><%= image_tag "sort-inverted-arrows.svg", alt: "Sort Ascending", class: "inline-block" %></div></th>
+          <% end %>
+          <th><div class="flex justify-between">Cost <%= image_tag "sort-inverted-arrows.svg", alt: "Sort Ascending", class: "inline-block" %></div></th>
+          <th><div class="flex justify-between">Status <%= image_tag "sort-inverted-arrows.svg", alt: "Sort Ascending", class: "inline-block" %></div></th>
+
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr id="<%= dom_id order %>_row" class="order-table-row <%= cycle("bg-snow","bg-electric-blue") %><%= " not-ordered" if !order.order_date %> ">
+            <td class="order-po-number">
+              <span><%= link_to order.po_number, order, data: { turbo_frame: :_top } %></span>
+            </td>
+            <td>
+              <span><%= order.job ? link_to(order.job.name, order.job, data: { turbo_frame: :_top } ) : "-" %></span>
+            </td>
+            <td>
+              <span><%= order.vendor ? link_to(order.vendor.name, order.vendor, data: { turbo_frame: :_top } ) : "-" %></span>
+            </td>
+            <td>
+              <span><%= local_time(order.created_at, '%Y-%m-%d') %></span>
+            </td>
+            <td>
+              <span><%= order.total_cost ? number_to_currency(order.total_cost) : "-" %></span>
+            </td>
+
+            <td>
+              <span><%= order.user.username %></span>
+            </td>
+            <td></td>
+            <td>
+                <div class="flex items-center gap-[10px]">
+                    <div class="w-[22px] h-[22px]">
+                        <%= image_tag "tick-blue-lined-circular.svg", alt: "Sort Ascending", class: "inline-block w-full" %>
+                    </div>
+                    <p class="text-[#3D8BD3]">Partially Received</p>
+                </div>
+
+                <div class="flex items-center gap-[10px]">
+                    <div class="w-[22px] h-[22px]">
+                        <%= image_tag "clock-red.svg", alt: "Sort Ascending", class: "inline-block w-full" %>
+                    </div>
+                    <p class="text-[#E54444]">Pending</p>
+                </div>
+
+                <div class="flex items-center gap-[10px]">
+                    <div class="w-[22px] h-[22px]">
+                        <%= image_tag "double-check.svg", alt: "Sort Ascending", class: "inline-block w-full" %>
+                    </div>
+                    <p class="text-persian-green">Received</p>
+                </div>
+            </td>
+
+            <td>
+                <button class="order-table-row-collapsable-btn focus:outline-none ">
+                    <%= image_tag "chevron-down-persian-green.svg", alt: "arrow up" %>
+                </button>
+            </td>
+
+            <tr  class="shipments-table-row-collapsable order-table-row-collapsable">
+                <td colspan="11" class="expand-table p-3 hidden">
+                    <table class="shipment-nested-table">
+                        <thead>
+                            <tr>
+                                <th>Parts</th>
+                                <th>Quantity Received</th>
+                                <th>Receiving Date</th>
+                                <th>Received By</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Electrical Copper Wires Rolls</td>
+                                 <td>5</td>
+                                 <td>2018-04-23</td>
+                                 <td>Michael Smith</td>
+                                 <td>
+                                    <div class="text-persian-green flex items-center bg-[#18A99933] rounded-2xl px-4 py-1 gap-3">
+                                        <%= image_tag "double-tick-persian-green.svg", alt: "arrow up" %>
+                                         Received
+                                     </div>
+                                 </td>
+                            </tr>
+                            <tr>
+                                <td>Electrical Copper Wires Rolls</td>
+                                 <td>5</td>
+                                 <td>2018-04-23</td>
+                                 <td>Michael Smith</td>
+                                 <td>
+                                    <div class="text-[#3D8BD3] flex items-center bg-[#3D8BD333] rounded-2xl px-4 py-1 gap-3">
+                                        <%= image_tag "tick-blue-lined-circular.svg", alt: "arrow up" %>
+                                        Partially Received
+                                    </div>
+                                 </td>
+                            </tr>
+
+                            <tr>
+                                <td>Electrical Copper Wires Rolls</td>
+                                 <td>5</td>
+                                 <td>2018-04-23</td>
+                                 <td>Michael Smith</td>
+                                 <td>
+                                    <div class="text-[#E54444] flex items-center bg-[#E5444433] rounded-2xl px-4 py-1 gap-3">
+                                        <%= image_tag "clock-red.svg", alt: "arrow up" %>
+                                        Pending
+                                    </div>
+                                 </td>
+                            </tr>
+
+                            <tr>
+                                <td>Electrical Copper Wires Rolls</td>
+                                 <td>5</td>
+                                 <td>2018-04-23</td>
+                                 <td>Michael Smith</td>
+                                 <td>
+                                    <div class="text-[#3D8BD3] flex items-center bg-[#3D8BD333] rounded-2xl px-4 py-1 gap-3">
+                                        <%= image_tag "tick-blue-lined-circular.svg", alt: "arrow up" %>
+                                        Partially Received
+                                    </div>
+                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= render partial: "pagy/nav", locals: {pagy: @pagy} if @pagy.pages > 1 %>
+<% end %>

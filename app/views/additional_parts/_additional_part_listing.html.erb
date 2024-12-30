@@ -1,0 +1,40 @@
+<tr id="additional_part_<%= additional_part.id %>_row">
+  <td>
+    <span class="th" aria-hidden="true">Part</span>
+    <span><%= link_to additional_part.part.label, part_path(additional_part.part), data: { turbo_frame: "modal" } %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Cost per Unit</span>
+    <span class="no-break"><%= number_to_cost(additional_part.part.cost_per_unit) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Quantity</span>
+    <span><%= number_with_precision(additional_part.quantity, strip_insignificant_zeros: true) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Total Cost</span>
+    <span class="no-break"><%= number_to_cost(additional_part.part.cost_per_unit * additional_part.quantity) %></span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Ordered</span>
+    <span>
+      <%= link_to additional_part.parts_ordered_required, parts_ordered_list_additional_part_path(additional_part), data: { turbo_frame: "modal" } %>
+    </span>
+  </td>
+  <td>
+    <span class="th" aria-hidden="true">Received</span>
+    <span>
+      <%= link_to additional_part.parts_received_required, parts_received_list_additional_part_path(additional_part), data: { turbo_frame: "modal" } %>
+    </span>
+  </td>
+  <td class="td-button-row-parent no-th">
+    <div class="td-button-row">
+      <%= button_to "Edit", edit_additional_part_path(additional_part), method: :get, class: "button edit-button primary", data: { turbo_frame: "modal" } %>
+      <%= button_to "Remove", additional_part, method: :delete, class: "button delete" %>
+      <% if !additional_part.received && additional_part.part.in_stock > 0 %>
+        <%= link_to "Fill From Stock (#{additional_part.part.in_stock.to_s.sub(/\.0+$/, '') || 0})", 
+                      additional_part_fill_from_stock_path(additional_part:), method: :get, class: "button", style: "flex-shrink: 0; width: 140px;" %>
+      <% end %>
+    </div>
+  </td>
+</tr>
